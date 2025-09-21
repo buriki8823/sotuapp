@@ -1,0 +1,8 @@
+<nav class="navbar" style="background: linear-gradient(to right, #34C8E2); height: 70px;">
+  <div class="container-fluid d-flex justify-content-end align-items-center" style="height: 100%;">
+    <%= link_to "PCPACK", (user_signed_in? ? root_path : new_user_session_path),
+      class: "nav-link fw-bold",
+      style: "font-size: 45px; line-height: 50px; color:#31FF57; text-shadow: 1px 1px 0 #8CFE00, -1px -1px 0 #8CFE00;" %>
+  </div>
+</nav>
+
