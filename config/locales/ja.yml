@@ -1,0 +1,54 @@
+ja:
+  user:
+    registration:
+      title: "新規アカウント登録"
+      avatar_button: "挿入"
+      avatar_confirm: "この画像で決定"
+      cancel: "キャンセル"
+    session:
+      catchphrase: "あなたのパソコン部屋紹介しませんか"
+
+
+  helpers:
+    submit:
+      user:
+        create: "登録する"
+      session:
+        create: "ログイン"
+
+
+  devise:
+    sessions:
+      signed_in: "ログインしました"
+      signed_out: "ログアウトしました"
+    registrations:
+      signed_up: "登録が完了しました"
+      updated: "プロフィールを更新しました"
+    links:
+      sign_up: "新規登録"
+      forgot_password: "パスワードを忘れた方"
+
+  activerecord:
+    models:
+      user: ユーザー
+    attributes:
+      user:
+        name: アカウント名
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード確認
+        avatar: 画像ファイルを選択
+
+  errors:
+    messages:
+      blank: "を入力してください"
+      taken: "はすでに使用されています"
+      too_short: "は%{count}文字以上で入力してください"
+      confirmation: "が一致しません"
+      invalid: "が正しくありません"
+    models:
+      user:
+        attributes:
+          password:
+            taken_password: "は他のユーザーと重複しています。別のパスワードを設定してください"
+            blank_only: "は空白のみでは登録できません"

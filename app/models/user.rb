@@ -3,4 +3,25 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  has_one_attached :avatar
+
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
+
+  validate :password_uniqueness_across_users, if: -> { password.present? }
+
+ def password_uniqueness_across_users
+   encrypted = Devise::Encryptor.digest(User, password)
+   if User.where(encrypted_password: encrypted).exists?
+    errors.add(:password, :taken_password)
+   end
+ end
+
+ validate :password_not_blank_only
+
+ def password_not_blank_only
+   if password.present? && password.strip.empty?
+     errors.add(:password, :blank_only)
+   end
+ end
 end

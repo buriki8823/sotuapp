@@ -25,6 +25,8 @@
 
     <%= yield %>
 
-    <%= render "shared/footer" %>
+    <% unless controller_name == "users" && action_name == "new" %>
+      <%= render "shared/footer" %>
+    <% end %>
   </body>
 </html>
