@@ -2,7 +2,7 @@ ja:
   user:
     registration:
       title: "新規アカウント登録"
-      avatar_button: "挿入"
+      avatar_button: "画像削除"
       avatar_confirm: "この画像で決定"
       cancel: "キャンセル"
     session:
