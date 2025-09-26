@@ -29,3 +29,8 @@
 
 en:
   hello: "Hello world"
+  
+  devise:
+    sessions:
+      failure: "Login failed. Please check your email or password."
+

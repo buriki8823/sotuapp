@@ -1,0 +1,18 @@
+<!-- app/views/posts/index.html.erb -->
+<div class="container py-4">
+  <h2 class="text-center fw-bold mb-4">投稿一覧</h2>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <% 6.times do %> <!-- 仮の繰り返し：後で @posts.each に置き換え -->
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <%= image_tag "placeholder.png", class: "card-img-top", alt: "投稿画像" %>
+          <div class="card-body">
+            <h5 class="card-title">タイトル（仮）</h5>
+            <p class="card-text text-muted">投稿者：アカウント名（仮）</p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

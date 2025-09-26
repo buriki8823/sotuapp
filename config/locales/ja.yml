@@ -21,6 +21,7 @@ ja:
     sessions:
       signed_in: "ログインしました"
       signed_out: "ログアウトしました"
+      failure: "ログインに失敗しました。メールアドレスまたはパスワードが正しくありません。"
     registrations:
       signed_up: "登録が完了しました"
       updated: "プロフィールを更新しました"

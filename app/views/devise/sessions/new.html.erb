@@ -4,6 +4,7 @@
   text-shadow: 1px 1px 0 #75FB22, -1px -1px 0 #75FB22; /* 黄緑の外枠風 */
 ">
   <%= t("user.session.catchphrase") %>
+
 </h1>
 
 <div id="login-background" style="background-image: url(<%= asset_path 'login_backimage.png' %>);
@@ -26,7 +27,7 @@
         </div>
       <% end %>
       <div class="d-flex justify-content-center mt-3 text-center">
-       <%= link_to t("devise.links.sign_up"), new_user_path, class: "text-decoration-none", style: "color: #1762A8;" %>
+       <%= link_to t("devise.links.sign_up"), new_user_registration_path, class: "text-decoration-none", style: "color: #1762A8;" %>
        <%= link_to t("devise.links.forgot_password"), new_user_password_path, class: "text-decoration-none", style: "margin-left: 50px; color: #1762A8;" %>
       </div>
     </div>

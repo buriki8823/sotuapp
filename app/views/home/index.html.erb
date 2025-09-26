@@ -1,2 +1,62 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div class="d-flex flex-nowrap justify-content-center gap-4 overflow-auto" style="margin-top: -70px;">
+  <div class="position-relative flex-shrink-0" style="width: 100%; max-width: 350px;">
+    <%= image_tag "オレンジPC.png", class: "img-fluid w-100" %>
+    <div class="position-absolute start-50 translate-x-middle fw-bold text-center"
+         style="top: 35%; transform: translateX(-50%);
+                color: #000000; font-size: clamp(10px, 2vw, 50px); text-shadow: 1px 1px 2px black;">
+      マイページ
+    </div>
+  </div>
+
+  <div class="position-relative flex-shrink-0" style="width: 100%; max-width: 350px;">
+    <%= image_tag "ブルーグリーン.png", class: "img-fluid w-100" %>
+    <div class="position-absolute start-50 translate-x-middle fw-bold text-center"
+         style="top: 35%; transform: translateX(-50%);
+                color: #000000; font-size: clamp(10px, 2vw, 50px); text-shadow: 1px 1px 2px black;">
+      投稿
+    </div>
+  </div>
+
+  <div class="position-relative flex-shrink-0" style="width: 100%; max-width: 350px;">
+    <%= image_tag "青PC.png", class: "img-fluid w-100" %>
+    <div class="position-absolute start-50 translate-x-middle fw-bold text-center"
+         style="top: 35%; transform: translateX(-50%);
+                color: #000000; font-size: clamp(10px, 2vw, 50px); text-shadow: 1px 1px 2px black;">
+      ブックマーク
+    </div>
+  </div>
+</div>
+
+<hr style="border: none; border-bottom: 8px solid #FFF600; width: 80%; margin: -0.5rem auto 0.5rem;">
+
+<div class="d-flex justify-content-center align-items-center gap-3 flex-wrap mt-4">
+  <!-- 投稿一覧ボタン -->
+  <%= link_to "投稿一覧", posts_path, class: "btn btn-dark rounded-pill px-4 py-2 fw-bold", style: "margin-right: 50px;" %>
+
+  <!-- 検索バー -->
+  <form action="/search" method="get" style="max-width: 600px; flex-grow: 1;">
+    <div class="input-group" style="border: 2px solid #000; border-radius: 50px; overflow: hidden;">
+      <input type="search" name="q" class="form-control border-0 px-4"
+             placeholder="キーワードを入力" aria-label="Search"
+             style="height: 48px; border-radius: 0;">
+      <button class="btn btn-light border-0" type="submit"
+              style="height: 48px; border-radius: 0;">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </form>
+</div>
+
+<% if @posts.present? %>
+  <% @posts.each do |post| %>
+    <%= render partial: "shared/search_result", locals: { post: post } %>
+  <% end %>
+<% else %>
+  <p class="d-flex justify-content-center text-muted mt-5">
+    該当する投稿は見つかりませんでした。
+  </p>
+<% end %>
+
+ 
+  <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+
