@@ -35,3 +35,85 @@ footer {
   background-color: #93FD00;
   color: #000; /* 黒文字 */
 }
+
+.mypage-title {
+  font-size: clamp(32px, 8vw, 64px);
+  color: #93FD00;
+  -webkit-text-stroke: 2px #4DE33F;
+}
+
+.mypage-bg {
+  background-image: url("/assets/mypage_bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.logo-text {
+  font-size: clamp(24px, 5vw, 45px);
+  line-height: 1;
+  padding: 0;
+  color: #31FF57;
+  text-shadow: 1px 1px 0 #8CFE00, -1px -1px 0 #8CFE00;
+}
+
+.google-tab {
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+  width: 107px;
+  height: 44px;
+  background-color: white;
+  color: #202124;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.tab-under-bar {
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 978px;
+  height: 45px;
+  background-color: #84BEE3;
+}
+
+.url-bar-box {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 978px;
+  height: 94px;
+  background-color: white;
+  font-size: 14px;
+  color: #5f6368;
+  display: flex;
+  align-items: center;
+}
+
+.arrow-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.url-bar {
+  width: 792px;
+  height: 38px;
+  background-color: #f1f3f4;
+  border: 1px solid #dadce0;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #5f6368;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  margin-left: 30px;
+}

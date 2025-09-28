@@ -1,12 +1,14 @@
 <div class="d-flex flex-nowrap justify-content-center gap-4 overflow-auto" style="margin-top: -70px;">
-  <div class="position-relative flex-shrink-0" style="width: 100%; max-width: 350px;">
-    <%= image_tag "オレンジPC.png", class: "img-fluid w-100" %>
-    <div class="position-absolute start-50 translate-x-middle fw-bold text-center"
-         style="top: 35%; transform: translateX(-50%);
-                color: #000000; font-size: clamp(10px, 2vw, 50px); text-shadow: 1px 1px 2px black;">
-      マイページ
+  <%= link_to mypage_path, class: "text-decoration-none" do %>
+    <div class="position-relative flex-shrink-0" style="width: 100%; max-width: 350px;">
+      <%= image_tag "オレンジPC.png", class: "img-fluid w-100" %>
+      <div class="position-absolute start-50 translate-x-middle fw-bold text-center"
+           style="top: 35%; transform: translateX(-50%);
+                  color: #000000; font-size: clamp(10px, 2vw, 50px); text-shadow: 1px 1px 2px black;">
+        マイページ
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <div class="position-relative flex-shrink-0" style="width: 100%; max-width: 350px;">
     <%= image_tag "ブルーグリーン.png", class: "img-fluid w-100" %>

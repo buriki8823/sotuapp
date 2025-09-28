@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get "posts/index"
   root to: "home#index"
   get "home/index"
+  get 'mypage', to: 'users#mypage'
   resources :posts, only: [:index]
 
   devise_for :users, controllers: {
