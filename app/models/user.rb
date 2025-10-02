@@ -6,6 +6,11 @@ class User < ApplicationRecord
 
   has_many :posts
   has_one_attached :avatar
+  has_one_attached :mypage_background_image
+  has_one_attached :window_background_image
+
+  has_many :bookmarks
+  has_many :bookmarked_posts, through: :bookmarks, source: :post
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 

@@ -6,7 +6,9 @@
     <% 6.times do %> <!-- 仮の繰り返し：後で @posts.each に置き換え -->
       <div class="col">
         <div class="card h-100 shadow-sm">
+          <%= link_to "#", class: "d-block" do %>
           <%= image_tag "placeholder.png", class: "card-img-top", alt: "投稿画像" %>
+          <% end %>
           <div class="card-body">
             <h5 class="card-title">タイトル（仮）</h5>
             <p class="card-text text-muted">投稿者：アカウント名（仮）</p>

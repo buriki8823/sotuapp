@@ -1,0 +1,25 @@
+<div class="container py-5">
+  <h1 class="mb-4 text-center fw-bold">新規投稿（仮）</h1>
+
+  <%= form_with model: @post, local: true, html: { multipart: true } do |f| %>
+    <div class="mb-3">
+      <%= f.label :title, "タイトル" %>
+      <%= f.text_field :title, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :body, "本文" %>
+      <%= f.text_area :body, class: "form-control", rows: 5 %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :image, "画像アップロード" %>
+      <%= f.file_field :image, class: "form-control" %>
+    </div>
+
+    <%= button_tag "投稿する", class: "btn btn-dark", onclick: "alert('開発中です'); return false;" %>
+  <% end %>
+</div>
+<% content_for :footer do %>
+  <%# フッター非表示にしたい場合は空でOK %>
+<% end %>

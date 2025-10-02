@@ -20,20 +20,21 @@
   <body class="d-flex flex-column min-vh-100" style="margin: 0; padding: 0;">
     <%= render "shared/header" %>
 
-    <% if notice.present? %>
-      <p class="notice"><%= notice %></p>
+    <% if flash[:notice] || flash[:alert] %>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          alert("<%= j flash[:notice] || flash[:alert] %>");
+        });
+      </script>
     <% end %>
 
-    <% if alert.present? %>
-      <p class="alert"><%= alert %></p>
-    <% end %>
-
-
-    <main class="flex-grow-1" style="margin-top: 0; padding-top: 0;">
-    <%= yield %>
+    <main class="flex-grow-1">
+      <%= yield %>
     </main>
 
-    <% unless controller_name == "users" && action_name == "new" %>
+    <%= yield :footer %>
+
+    <% unless content_for?(:footer) %>
       <%= render "shared/footer" %>
     <% end %>
   </body>

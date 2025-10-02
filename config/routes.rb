@@ -1,9 +1,18 @@
 Rails.application.routes.draw do
+  get "bookmarks/index"
   get "posts/index"
   root to: "home#index"
   get "home/index"
   get 'mypage', to: 'users#mypage'
-  resources :posts, only: [:index]
+  resources :posts, only: [:index, :show, :new, :create]
+  resources :bookmarks, only: [:index]
+  resources :users, only: [:show, :update] do
+   collection do
+     get :mypage
+     patch :reset_mypage_background
+     patch :reset_window_background
+   end
+  end
 
   devise_for :users, controllers: {
     registrations: 'users/registrations',

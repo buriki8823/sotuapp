@@ -1,38 +1,90 @@
-<div class="mypage-bg text-white text-center py-0" style="margin-top: 0; min-height: 100vh;">
-  <h1 style="position: relative; top: 10px; font-size: clamp(32px, 8vw, 70px); color: #93FD00; -webkit-text-stroke: 2px #4DE33F;">
-    マイページ
-  </h1>
+<div class="mypage-bg text-white text-center py-0"
+     style="background-image: url(<%= current_user.mypage_background_image.attached? ? url_for(current_user.mypage_background_image) : asset_path('mypage_bg.png') %>);">
 
-  <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="mypage-box p-5 rounded shadow position-relative text-center" style="width: 978px; height: 687px; background-color: white;">
+  <!-- 背景変更ボタン -->
+  <div class="bg-control-buttons d-flex justify-content-end gap-3 pt-3" style="margin-right: 40px;">
+    <label for="mypageBgUpload" class="btn btn-outline-light custom-bg-change-button">背景画像を変更</label>
+    <%= button_to "デフォルトに戻す", reset_mypage_background_users_path, method: :patch, class: "btn btn-outline-danger custom-bg-default-button" %>
+  </div>
 
-      <!-- タブ -->
-      <div class="google-tab px-4 py-2 position-absolute">すべて</div>
+  <!-- 背景アップロードフォーム -->
+  <%= form_with model: current_user, url: user_path(current_user), method: :patch, html: { multipart: true } do |f| %>
+    <%= f.file_field :mypage_background_image, id: "mypageBgUpload", accept: "image/*", style: "display: none;", onchange: "this.form.submit();" %>
+  <% end %>
 
-      <!-- 水色バー -->
+  <!-- タイトル -->
+  <h1 class="mypage-title mt-3" style="position: relative; top: -50px;">マイページ</h1>
+
+  <!-- メインボックス -->
+  <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; overflow: auto;">
+    <div class="mypage-box p-5 rounded shadow position-relative text-center"
+         style="width: 978px; min-height: 687px; height: auto; background-color: white; flex-shrink: 0;">
+
+      <!-- タブとバー -->
+      <div class="google-tab position-absolute">マイページ</div>
       <div class="tab-under-bar position-absolute"></div>
 
-      <!-- URL表示 -->
-      <div class="url-bar-box position-absolute d-flex align-items-center">
-
-        <!-- 戻る・進む・更新ボタン -->
-        <div class="d-flex align-items-center gap-2" style="margin-left: 16px;">
+      <!-- URLバー -->
+      <div class="url-bar-box d-flex align-items-center">
+        <div class="d-flex align-items-center gap-2" style="font-size: 30px; margin-left: 16px;">
           <div class="arrow-button">←</div>
-
           <div class="arrow-button">→</div>
-
-          <div class="nav-button">
-            <i class="bi bi-arrow-clockwise"></i>
-          </div>
+          <div class="nav-button"><i class="bi bi-arrow-clockwise"></i></div>
         </div>
+        <div class="url-bar d-flex align-items-center">www.pcppack.jp/mypage</div>
+      </div>
 
-        <!-- URL表示 -->
-        <div class="url-bar px-4 py-3 d-flex align-items-center">
-          www.pcppack.jp/mypage
+      <!-- ウィンドウ背景 -->
+      <div class="windou-bg"
+           style="background-image: url(<%= current_user.window_background_image.attached? ? url_for(current_user.window_background_image) : asset_path('mypage-default_avatar.png') %>);">
+        <div class="bg-control-buttons d-flex justify-content-end gap-3 pt-3" style="padding: 6px 12px; font-size: 10px; margin-right: 30px;">
+          <label for="windowBgUpload" class="btn btn-outline-dark custom-bg-change-button">背景を変更</label>
+          <%= button_to "デフォルトに戻す", reset_window_background_users_path, method: :patch, class: "btn btn-outline-danger custom-bg-default-button" %>
+        </div>
+        <%= form_with model: current_user, method: :patch, html: { multipart: true } do |f| %>
+          <%= f.file_field :window_background_image, id: "windowBgUpload", accept: "image/*", style: "display: none;", onchange: "this.form.submit();" %>
+        <% end %>
+      </div>
+
+      <!-- プロフィール -->
+      <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { multipart: true } do |f| %>
+        <label for="avatar-upload" class="profile-icon position-absolute" style="cursor: pointer;">
+          <%= image_tag(current_user.avatar.attached? ? url_for(current_user.avatar) : 'default_avatar.png',
+                        alt: 'プロフィール画像',
+                        class: 'rounded-circle mypage-avatar',
+                        size: '600x600') %>
+        </label>
+        <%= f.file_field :avatar, id: "avatar-upload", style: "display: none;", onchange: "this.form.submit();" %>
+      <% end %>
+
+      <!-- アカウント名・評価 -->
+      <div class="account-name position-absolute" style="font-size: 50px; color: black; top: 220px; left: 60%; transform: translateX(-50%);"> <%= current_user.name %> </div>
+      <div class="rating-count position-absolute" style="color: black; top: 290px; left: 60%; transform: translateX(-50%);">トータルスコア：※現在未実装</div>
+
+      <!-- ボタン群（通常フローで配置） -->
+      <<div class="d-flex flex-column align-items-center gap-4 mt-5" style="z-index: 2; top: 250px; position: relative;">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-bookmark-star" style="font-size: 32px; color: #000;"></i>
+          <%= link_to "ブックマーク", bookmarks_path, class: "plain-button" %>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-pencil-square" style="font-size: 32px; color: #000;"></i>
+          <%= link_to "投稿", new_post_path, class: "plain-button" %>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-card-list" style="font-size: 32px; color: #000;"></i>
+          <%= link_to "投稿一覧", posts_path, class: "plain-button" %>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-mailbox" style="font-size: 32px; color: #000;"></i>
+          <%= link_to "メール", "#", class: "plain-button", onclick: "alert('開発中です。しばらくお待ちください'); return false;" %>
         </div>
       </div>
 
     </div>
   </div>
-</div>
 
+  <% content_for :footer do %>
+    <%= render "shared/mypage_footer" %>
+  <% end %>
+</div>

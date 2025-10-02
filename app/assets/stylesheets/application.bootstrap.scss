@@ -107,13 +107,160 @@ footer {
 }
 
 .url-bar {
-  width: 792px;
+  width: 700px;
   height: 38px;
   background-color: #f1f3f4;
   border: 1px solid #dadce0;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 15px;
   color: #5f6368;
   box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   margin-left: 30px;
+  padding-left: 40px;
+}
+
+.profile-icon {
+  top: 180px;        
+  left: 250px;
+  width: 150px;
+  height: 150px;
+  z-index: 3;
+}
+
+.profile-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #000; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.plain-button {
+  color: #000;
+  text-decoration: none;
+  font-size: 32px;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.plain-button:hover {
+  text-decoration: underline;
+}
+
+.windou-bg {
+  position: absolute;
+  top: 140px;
+  left: 0;
+  width: 978px;
+  height: 547px;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.flash-popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4DE33F;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 9999;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+}
+
+.custom-bg-change-button {
+  border: 2px solid #93FD00;
+  color: #000;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 3;
+}
+.custom-bg-change-button:hover {
+  background-color: #93FD00;
+  color: #fff;
+  position: relative;
+  z-index: 3;
+}
+
+.custom-bg-default-button {
+  border: 2px solid #dc3545;
+  color: #000;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 3;
+}
+.custom-bg-default-button:hover {
+  background-color: #dc3545;
+  color: #fff;
+  position: relative;
+  z-index: 3;
+}
+
+.app-icon-box {
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 5px 7px; /* 小さめに調整 */
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  height: 45px; /* 高さ制限でフッター内に収める */
+  width: 42px; /* 幅も同様に */
+}
+
+.app-icon-box i {
+  font-size: 22px; /* アイコンも少し小さく */
+  color: #000;
+}
+
+.app-icon-shadow-bar {
+  margin-top: 0;
+  width: 16px;
+  height: 4px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+.fixed-action-button {
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  z-index: 10;
+  padding: clamp(4px, 1vw, 8px) clamp(8px, 2vw, 16px);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  background-color: rgba(255,255,255,0.8);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fixed-action-button i {
+  font-size: clamp(20px, 3vw, 32px);
+  color: #000;
+}
+
+.mypage-box {
+  transform: scale(0.8);
+  transform-origin: top center;
 }
