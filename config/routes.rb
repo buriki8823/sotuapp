@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
 
   unauthenticated do
-    root to: "users/sessions#new"
+    root to: redirect('/users/sign_in')
   end
 
   get 'mypage', to: 'users#mypage'
