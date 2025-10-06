@@ -4,6 +4,8 @@ const initializeImageUpload = () => {
   const modalOk = document.getElementById("modal-ok");
   const modalUploadButton = document.getElementById("modal-image-upload");
   const modalPreview = document.getElementById("modal-image-preview");
+  const background = document.getElementById("login-background");
+  const formContainer = document.getElementById("login-form-container");
   const form = document.querySelector("form");
 
   let currentIndex = null;
@@ -115,6 +117,12 @@ const initializeImageUpload = () => {
       widget.open();
     });
   });
+
+  if (background && formContainer) {
+    background.addEventListener("click", function () {
+      formContainer.classList.add("show");
+    });
+  }
 };
 
 document.addEventListener("DOMContentLoaded", initializeImageUpload);

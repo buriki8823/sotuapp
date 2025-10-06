@@ -13,7 +13,7 @@
             background-position: center;
             height: 110vh;
             cursor: pointer;">
-  <div id="login-form-container" class="container d-flex justify-content-center align-items-center" style="height: 100%;">
+  <div id="login-form-container" class="login-form-container container d-flex justify-content-center align-items-center" style="height: 100%;">
     <div class="card p-4 login-card" style="max-width: 400px; width: 100%;">
       <%= form_with(model: resource, as: resource_name, url: session_path(resource_name), html: { class: "form" }) do |f| %>
         <div class="mb-3">
