@@ -1,8 +1,8 @@
 <div class="search-result-card border rounded p-3 mb-4 d-flex flex-wrap" style="min-height: 200px;">
   <!-- 左側：アイコン＋アカウント名 -->
   <div class="user-info d-flex flex-column align-items-center justify-content-center" style="flex: 0 0 30%;">
-    <%= image_tag(post.user.avatar.attached? ? url_for(post.user.avatar) : "default_avatar.png", class: "rounded-circle mb-2", size: "60x60") %>
-    <span class="fw-bold text-center"><%= post.user.username %></span>
+    <%= image_tag(post.user.avatar.attached? ? url_for(post.user.avatar) : "default_avatar.png", class: "rounded-circle mb-2", size: "200x200") %>
+    <span class="fw-bold text-center"><%= post.user.name %></span>
   </div>
 
   <!-- 右側：投稿画像 -->

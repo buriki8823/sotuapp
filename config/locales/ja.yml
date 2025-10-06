@@ -1,4 +1,8 @@
 ja:
+  time:
+    formats:
+      long: "%Y年%m月%d日 %H:%M"
+
   user:
     registration:
       title: "新規アカウント登録"

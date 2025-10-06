@@ -1,17 +1,29 @@
-<!-- app/views/posts/index.html.erb -->
 <div class="container py-4">
   <h2 class="text-center fw-bold mb-4">投稿一覧</h2>
 
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    <% 6.times do %> <!-- 仮の繰り返し：後で @posts.each に置き換え -->
+    <% @posts.each do |post| %>
       <div class="col">
         <div class="card h-100 shadow-sm">
-          <%= link_to "#", class: "d-block" do %>
-          <%= image_tag "placeholder.png", class: "card-img-top", alt: "投稿画像" %>
+          <%= link_to post_path(post), class: "d-block" do %>
+            <% thumbnail = post.image_urls&.first.presence || "placeholder.png" %>
+            <%= image_tag thumbnail, class: "card-img-top", alt: "投稿画像", style: "height: 250px; object-fit: cover;" %>
           <% end %>
           <div class="card-body">
-            <h5 class="card-title">タイトル（仮）</h5>
-            <p class="card-text text-muted">投稿者：アカウント名（仮）</p>
+            <h5 class="card-title"><%= post.title %></h5>
+            <p class="card-text text-muted">投稿者：<%= post.user.name %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% @dummy_count.times do %>
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <%= image_tag "placeholder.png", class: "card-img-top", alt: "ダミー画像", style: "height: 250px; object-fit: cover;" %>
+          <div class="card-body text-center text-muted">
+            <h5 class="card-title">投稿募集中</h5>
+            <p class="card-text">ここに新しい投稿が表示されます</p>
           </div>
         </div>
       </div>

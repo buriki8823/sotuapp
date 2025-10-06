@@ -1,0 +1,16 @@
+<div class="container my-3">
+  <div class="d-flex justify-content-between align-items-center px-3 shadow-sm rounded-4"
+       style="width: 477px; height: 61px; background-color: #f8f9fa;">
+    
+    <div class="d-flex gap-5 align-items-center" style="position: relative; left: 30px; font-size: 17px;">
+       <%= link_to "ホームページ", root_path, class: "text-decoration-none text-dark fw-semibold" %>
+         <%= link_to "投稿一覧", posts_path, class: "text-decoration-none text-dark fw-semibold" %>
+       <%= link_to "マイページ", mypage_path, class: "text-decoration-none text-dark fw-semibold" %>
+    </div>
+
+    <div>
+      <%= image_tag "mouse.png", alt: "マウスアイコン", width: 90, height: 90, class: "ms-2" %>
+    </div>
+
+  </div>
+</div>

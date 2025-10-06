@@ -4,26 +4,28 @@
       <%= image_tag "オレンジPC.png", class: "img-fluid w-100" %>
       <div class="position-absolute start-50 translate-x-middle fw-bold text-center"
            style="top: 35%; transform: translateX(-50%);
-                  color: #000000; font-size: clamp(10px, 2vw, 50px); text-shadow: 1px 1px 2px black;">
+                  color: #000000; font-size: clamp(10px, 2vw, 40px); text-shadow: 1px 1px 2px black;">
         マイページ
       </div>
     </div>
   <% end %>
 
   <div class="position-relative flex-shrink-0" style="width: 100%; max-width: 350px;">
+   <%= link_to new_post_path, class: "text-decoration-none" do %>
     <%= image_tag "ブルーグリーン.png", class: "img-fluid w-100" %>
     <div class="position-absolute start-50 translate-x-middle fw-bold text-center"
          style="top: 35%; transform: translateX(-50%);
-                color: #000000; font-size: clamp(10px, 2vw, 50px); text-shadow: 1px 1px 2px black;">
+                color: #000000; font-size: clamp(10px, 2vw, 40px); text-shadow: 1px 1px 2px black;">
       投稿
     </div>
   </div>
+   <% end %>
 
   <div class="position-relative flex-shrink-0" style="width: 100%; max-width: 350px;">
     <%= image_tag "青PC.png", class: "img-fluid w-100" %>
     <div class="position-absolute start-50 translate-x-middle fw-bold text-center"
          style="top: 35%; transform: translateX(-50%);
-                color: #000000; font-size: clamp(10px, 2vw, 50px); text-shadow: 1px 1px 2px black;">
+                color: #000000; font-size: clamp(10px, 2vw, 40px); text-shadow: 1px 1px 2px black;">
       ブックマーク
     </div>
   </div>
@@ -49,6 +51,8 @@
   </form>
 </div>
 
+<div class="container-fluid" style="max-width: 1000px; margin: 0 auto;">
+
 <% if @posts.present? %>
   <% @posts.each do |post| %>
     <%= render partial: "shared/search_result", locals: { post: post } %>
@@ -58,6 +62,7 @@
     該当する投稿は見つかりませんでした。
   </p>
 <% end %>
+</div>
 
  
   <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
