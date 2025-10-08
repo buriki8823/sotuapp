@@ -13,12 +13,13 @@
   <% end %>
 
   <!-- タイトル -->
-  <h1 class="mypage-title mt-3" style="position: relative; top: -50px;">マイページ</h1>
+  <h1 class="toukou-title text-center mt-3 mb-5" style="position: relative; top: 30px; font-size: 128px;">マイページ</h1>
 
   <!-- メインボックス -->
-  <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; overflow: auto;">
+  <div class="d-flex justify-content-center align-items-center" style="position: relative; top: -100px; min-height: 80vh; overflow: auto;">
+   <div class="scale-wrapper" style="transform: scale(1.2); transform-origin: top center;">
     <div class="mypage-box p-5 rounded shadow position-relative text-center"
-         style="width: 978px; min-height: 687px; height: auto; background-color: white; flex-shrink: 0;">
+         style="width: 978px; min-height: 687px; height: auto; background-color: white; ">
 
       <!-- タブとバー -->
       <div class="google-tab position-absolute">マイページ</div>
@@ -80,8 +81,8 @@
           <%= link_to "メール", "#", class: "plain-button", onclick: "alert('開発中です。しばらくお待ちください'); return false;" %>
         </div>
       </div>
-
     </div>
+   </div>
   </div>
 
   <% content_for :footer do %>

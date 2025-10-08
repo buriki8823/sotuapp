@@ -1,4 +1,5 @@
-<div class="d-flex flex-nowrap justify-content-center gap-4 overflow-auto" style="margin-top: -10px;">
+<div class="position-relative py-0" style="background-image: url(<%= asset_path('posts-bg.png') %>);background-size: cover; background-position: top center; background-repeat: no-repeat; width: 100%; min-height: 100vh; margin: 0;">
+  <div class="d-flex flex-nowrap justify-content-center gap-4 overflow-auto" style="margin-top: -10px;">
   <%= link_to mypage_path, class: "text-decoration-none" do %>
     <div class="position-relative flex-shrink-0" style="width: 100%; max-width: 350px;">
       <%= image_tag "オレンジPC.png", class: "img-fluid w-100" %>
@@ -22,20 +23,22 @@
    <% end %>
 
   <div class="position-relative flex-shrink-0" style="width: 100%; max-width: 350px;">
+   <%= link_to bookmarks_path, class: "text-decoration-none" do %>
     <%= image_tag "青PC.png", class: "img-fluid w-100" %>
-    <div class="position-absolute start-50 translate-x-middle fw-bold text-center"
+      <div class="position-absolute start-50 translate-x-middle fw-bold text-center"
          style="top: 35%; transform: translateX(-50%);
                 color: #000000; font-size: clamp(10px, 2vw, 40px); text-shadow: 1px 1px 2px black;">
-      ブックマーク
-    </div>
+       ブックマーク
+      </div>
+   <% end %>
   </div>
-</div>
+  </div>
 
-<hr style="border: none; border-bottom: 8px solid #FFF600; width: 80%; margin: -0.5rem auto 0.5rem;">
+  <hr style="border: none; border-bottom: 8px solid #FFF600; width: 80%; margin: -0.5rem auto 0.5rem;">
 
-<div class="d-flex justify-content-center align-items-center gap-3 flex-wrap mt-4">
+  <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap mt-4">
   <!-- 投稿一覧ボタン -->
-  <%= link_to "投稿一覧", posts_path, class: "btn btn-dark rounded-pill px-4 py-2 fw-bold", style: "margin-right: 50px;" %>
+  <%= link_to "投稿一覧", posts_path, class: "btn btn-dark rounded-pill px-4 py-2 fw-bold", style: "margin-right: 50px; z-index: 2" %>
 
   <!-- 検索バー -->
   <form action="/search" method="get" style="max-width: 600px; flex-grow: 1;">
@@ -49,21 +52,20 @@
       </button>
     </div>
   </form>
-</div>
+  </div>
 
-<div class="container-fluid" style="max-width: 1000px; margin: 0 auto;">
-
-<% if @posts.present? %>
-  <% @posts.each do |post| %>
-    <%= render partial: "shared/search_result", locals: { post: post } %>
-  <% end %>
-<% else %>
-  <p class="d-flex justify-content-center text-muted mt-5">
-    該当する投稿は見つかりませんでした。
-  </p>
-<% end %>
-</div>
+  <div class="container-fluid" style="max-width: 1000px; margin: 0 auto;">
+   <% if @posts.present? %>
+    <% @posts.each do |post| %>
+     <%= render "shared/search_result", post: post %>
+    <% end %>
+   <% else %>
+     <p class="d-flex justify-content-center text-muted mt-5">
+       該当する投稿は見つかりませんでした。
+     </p>
+   <% end %>
+  </div>
 
  
   <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
-
+</div>

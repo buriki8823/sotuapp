@@ -1,12 +1,13 @@
-<div class="position-relative">
-  <h1 class="toukou-title text-center mt-3 mb-5" style="position: relative; top: 30px; font-size: 128px;">投稿</h1>
+<div class="position-relative py-0" style="background-image: url(<%= asset_path('posts-bg.png') %>);background-size: cover; background-position: top center; background-repeat: no-repeat; width: 100%; min-height: 100vh; margin: 0;">
+  <div class="position-relative">
+    <h1 class="toukou-title text-center  mb-5" style="position: relative; top: 30px; font-size: 128px;">投稿</h1>
 
-  <div style="position: absolute; top: 0; right: 0; z-index: 10;">
-    <%= render "shared/navigation_box" %>
+    <div style="position: absolute; top: 0; right: 0; z-index: 10;">
+      <%= render "shared/navigation_box" %>
+    </div>
   </div>
-</div>
 
-<div class="position-relative">
+  <div class="position-relative">
   <%= form_with model: @post, local: true, html: { multipart: true } do |f| %>
     <!-- タイトル -->
     <div style="width: 1700px; margin: 0 auto; margin-bottom: 100px;">
@@ -103,7 +104,7 @@
     </div>
 
     <!-- 投稿ボタン -->
-    <div class="text-center mt-4" style="margin-bottom: 200px;">
+    <div class="text-center mt-4" style="position: relative; top: -50px;">
       <%= f.submit "投稿する",
           id: "post-submit-button",
           class: "btn",
@@ -111,6 +112,7 @@
           data: { turbo: false } %>
     </div>
   <% end %>
+  </div>
 </div>
 
 <% content_for :footer do %>

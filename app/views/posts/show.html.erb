@@ -1,23 +1,58 @@
-<div class="position-relative">
-  <h1 class="toukou-title text-center mt-3 mb-5" style="position: relative; top: 30px;font-size: 128px;"><%= @post.title %></h1>
+<div class="position-relative py-0" style="background-image: url(<%= asset_path('posts-bg.png') %>); background-size: cover; background-position: top center; background-repeat: no-repeat; width: 100%; min-height: 100vh; margin: 0;">
+  <h1 class="toukou-title text-center mb-5" style="position: relative; top: 30px; font-size: 128px;"><%= @post.title %></h1>
 
-    <div style="
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: 10;
-      ">
-     <%= render "shared/navigation_box" %>
+    <div style="position: relative; top: 10px; position: absolute; left: 10; right: 0; z-index: 10;">
+      <%= render "shared/navigation_box" %>
     </div>
 
   <% if @post.image_urls.present? %>
-    <div class="d-flex gap-4 justify-content-center mb-5" style="max-width: 2500px; margin: 0 auto;">
+    <div class="d-flex gap-2 justify-content-center mb-5" style="max-width: 2500px; margin: 0 auto;">
     
       <!-- 左：画像 -->
-      <div class="rounded shadow-sm overflow-hidden"
-           style="width: 1500px; height: 1000px; margin-top: 20px; margin-left: 370px;">
-        <%= image_tag @post.image_urls.first, class: "img-fluid w-100 h-100", alt: "投稿画像", style: "object-fit: cover;" %>
+      <div class="swiper mySwiper rounded shadow-sm overflow-hidden"
+           style="width: 1500px; height: 1000px; margin-top: 20px; margin-left:500px;">
+        <div class="swiper-wrapper">
+          <% @post.image_urls.each do |url| %>
+            <div class="swiper-slide">
+              <%= image_tag url, class: "w-100 h-100", alt: "投稿画像", style: "object-fit: cover;" %>
+            </div>
+          <% end %>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
       </div>
+
+      <!-- Swiperのカスタムスタイル -->
+      <style>
+        .swiper-button-next svg,
+        .swiper-button-prev svg {
+          display: none;
+        }
+
+        .swiper-button-next::after {
+          content: '▶'; 
+          color: red; !important;
+          font-size: 32px; !important;
+        }
+
+        .swiper-button-prev::after {
+          content: '◀'; 
+          color: red;  !important;
+          font-size: 32px; !important;
+          font-weight: bold; !important;
+        }
+
+        .swiper-pagination-bullet {
+          background-color: red !important;
+          opacity: 1;
+        }
+
+        .swiper-pagination-bullet-active {
+          background-color: darkred !important;
+        }
+      </style>
+
 
       <!-- 右：投稿者情報ボックス -->
       <div class="p-4 rounded shadow-sm"
@@ -63,8 +98,8 @@
 
 
   <% visible_products.each do |product| %>
-    <div class="d-flex gap-4 align-items-center p-4 shadow-sm rounded mx-auto mb-5"
-         style="width: 1500px; height: 300px; background-color: #ffffff; border: 2px solid #000;">
+    <div class="d-flex gap-4 align-items-center p-4 shadow-sm rounded mx-auto mb-0"
+         style="position: relative; top: -10px; width: 1500px; height: 300px; background-color: #ffffff; border: 2px solid #000;">
       <% if product.image_url.present? %>
         <div style="width: 400px; height: 100%; flex-shrink: 0;">
           <%= image_tag product.image_url, class: "img-fluid w-100 h-100", style: "object-fit: cover;" %>
@@ -84,3 +119,19 @@
     </div>
   <% end %>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Swiper(".mySwiper", {
+      loop: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+  });
+</script>

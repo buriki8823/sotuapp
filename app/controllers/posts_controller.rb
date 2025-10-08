@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all
+    @posts = Post.page(params[:page]).per(9)
     @dummy_count = [9 - @posts.size, 0].max
   end
 
