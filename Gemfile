@@ -65,3 +65,5 @@ gem 'image_processing', '~> 1.2'
 
 gem 'kaminari'
 
+gem "cloudinary"
+gem "activestorage-cloudinary-service"
