@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   has_many :bookmarks
   has_many :bookmarked_posts, through: :bookmarks, source: :post
+  has_many :comments
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 

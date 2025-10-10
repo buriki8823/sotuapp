@@ -41,10 +41,10 @@
   <%= link_to "投稿一覧", posts_path, class: "btn btn-dark rounded-pill px-4 py-2 fw-bold", style: "margin-right: 50px; z-index: 2" %>
 
   <!-- 検索バー -->
-  <form action="/search" method="get" style="max-width: 600px; flex-grow: 1;">
+  <form action="<%= search_path %>" method="get" style="max-width: 600px; flex-grow: 1;">
     <div class="input-group" style="border: 2px solid #000; border-radius: 50px; overflow: hidden;">
       <input type="search" name="q" class="form-control border-0 px-4"
-             placeholder="キーワードを入力" aria-label="Search"
+             placeholder="タイトルまたはアカウント名を入力" aria-label="Search"
              style="height: 48px; border-radius: 0;">
       <button class="btn btn-light border-0" type="submit"
               style="height: 48px; border-radius: 0;">
@@ -52,7 +52,7 @@
       </button>
     </div>
   </form>
-  </div>
+ </div>
 
   <div class="container-fluid" style="max-width: 1000px; margin: 0 auto;">
    <% if @posts.present? %>

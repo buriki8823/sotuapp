@@ -8,12 +8,16 @@ Rails.application.routes.draw do
     root to: "home#index", as: :authenticated_root
   end
 
+  get 'search', to: 'searches#search', as: 'search'
+
   unauthenticated do
     root to: redirect('/users/sign_in')
   end
 
   get 'mypage', to: 'users#mypage'
-  resources :posts, only: [:index, :show, :new, :create]
+  resources :posts, only: [:index, :show, :new, :create] do
+    resources :comments, only: [:create]
+  end
   resources :bookmarks, only: [:index]
   resources :users, only: [:show, :update] do
     collection do

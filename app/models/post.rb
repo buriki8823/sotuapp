@@ -5,6 +5,7 @@ class Post < ApplicationRecord
   has_many :bookmarked_users, through: :bookmarks, source: :user
   has_many :products, dependent: :destroy
   accepts_nested_attributes_for :products
+  has_many :comments, dependent: :destroy
 
 
   validate :must_have_valid_images

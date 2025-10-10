@@ -1,12 +1,16 @@
 <div class="search-result-card rounded p-3 mb-4 d-flex flex-wrap" style="background-color: white; margin-top: 40px; min-height: 200px; border: 2px solid black;">
   <!-- 左側：アイコン＋アカウント名 -->
-  <div class="user-info d-flex flex-column align-items-center justify-content-center" style="position: relative; top: -50px; flex: 0 0 30%;">
-    <%= image_tag(post.user.avatar.attached? ? url_for(post.user.avatar) : "default_avatar.png", class: "rounded-circle mb-2", size: "200x200") %>
+  <div class="user-info d-flex flex-column align-items-center justify-content-center shadow-sm"
+       style="flex: 0 0 30%; border: 2px solid #000; background-color: #fff; border-radius: 12px; padding: 30px;">
+  
+    <%= image_tag(post.user.avatar.attached? ? url_for(post.user.avatar) : "default_avatar.png",
+                  class: "rounded-circle mb-2", size: "200x200") %>
+
     <span class="fw-bold text-center" style="margin-top: 30px; font-size: 50px;"><%= post.user.name %></span>
   </div>
 
   <!-- 右側：投稿画像 -->
-  <div class="post-image" style="border: 1px solid black; flex: 0 0 70%; height: 500px;">
+  <div class="post-image" style="position: relative; left: 10px; border: 1px solid black; flex: 0 0 70%; height: 500px;">
     <%= link_to post_path(post) do %>
       <% if post.image_urls.present? && post.image_urls.first.present? %>
         <%= image_tag post.image_urls.first, class: "rounded", style: "width: 100%; height: 100%; object-fit: cover;" %>

@@ -77,47 +77,79 @@
     <p class="text-center text-muted">画像は投稿されていません</p>
   <% end %>
 
+  <!-- お部屋説明 -->
+  <div style="max-width: 1500px; margin: 0 auto;">
+    <h3 class="fw-bold mb-3" style="text-align: left;">お部屋説明</h3>
 
-
-  <div class="mx-auto rounded-4 shadow-sm p-5 mb-5"
-       style="max-width: 1500px; min-height: 200px; background-color: #ffffff; border: 2px solid #000;">
-    <div style="font-size: 25px; line-height: 0; margin-bottom: 0;"><%= simple_format(@post.body) %></div>
+    <div class="rounded-4 shadow-sm p-5 mb-5"
+         style="background-color: #ffffff; border: 2px solid #000; min-height: 200px;">
+      <div style="font-size: 25px; line-height: 1.6;"><%= simple_format(@post.body) %></div>
+    </div>
   </div>
 
 
-
+  <!-- オススメグッズ -->
   <% visible_products = @post.products.select do |product| %>
     <% [product.title, product.description, product.image_url].any?(&:present?) %>
   <% end %>
-
   <% if visible_products.any? %>
-    <div class="text-center mb-4" style="max-width: 1500px; margin: 0 auto;">
-      <h2 class="fw-bold" style="font-size: 48px;">オススメグッズ</h2>
-    </div>
-  <% end %>
+    <!-- 左上に見出し -->
+    <div style="max-width: 1500px; margin: 0 auto;">
+      <h2 class="fw-bold mb-4" style="font-size: 48px; text-align: left;">オススメグッズ</h2>
 
-
-  <% visible_products.each do |product| %>
-    <div class="d-flex gap-4 align-items-center p-4 shadow-sm rounded mx-auto mb-0"
-         style="position: relative; top: -10px; width: 1500px; height: 300px; background-color: #ffffff; border: 2px solid #000;">
-      <% if product.image_url.present? %>
-        <div style="width: 400px; height: 100%; flex-shrink: 0;">
-          <%= image_tag product.image_url, class: "img-fluid w-100 h-100", style: "object-fit: cover;" %>
-        </div>
-      <% end %>
-      <div class="flex-grow-1">
-        <h2 class="fw-bold fs-2 mb-3" style="position: relative; left: 10px; "><%= product.title %></h2>
-        <div class="p-4 rounded-3 border" style="background-color: #ffffff; border-color: #000;">
-          <p class="fs-5 lh-lg mb-0"><%= simple_format(product.description) %></p>
-        </div>
-        <% if product.url.present? %>
-          <a href="<%= product.url %>" target="_blank" class="btn btn-success mt-3">商品ページを見る</a>
-        <% else %>
-          <p class="text-muted mt-3">URLはありません</p>
+      <!-- 商品カード群 -->
+      <div class="d-flex flex-column gap-5 mb-5">
+        <% visible_products.each do |product| %>
+          <div class="d-flex gap-4 align-items-center p-4 shadow-sm rounded mx-auto mb-0"
+               style="position: relative; top: -10px; width: 1500px; height: 300px; background-color: #ffffff; border: 2px solid #000;">
+            <% if product.image_url.present? %>
+              <div style="width: 400px; height: 100%; flex-shrink: 0;">
+                <%= image_tag product.image_url, class: "img-fluid w-100 h-100", style: "object-fit: cover;" %>
+              </div>
+            <% end %>
+            <div class="flex-grow-1">
+              <h2 class="fw-bold fs-2 mb-3" style="position: relative; left: 10px;"><%= product.title %></h2>
+              <div class="p-4 rounded-3 border" style="background-color: #ffffff; border-color: #000;">
+                <p class="fs-5 lh-lg mb-0"><%= simple_format(product.description) %></p>
+              </div>
+              <% if product.url.present? %>
+                <a href="<%= product.url %>" target="_blank" class="btn btn-success mt-3">商品ページを見る</a>
+              <% else %>
+                <p class="text-muted mt-3">URLはありません</p>
+              <% end %>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>
   <% end %>
+
+
+  <!-- コメントセクション -->
+  <div class="mx-auto " style="max-width: 1500px;">
+    <h3 class="fw-bold mb-3">コメントを投稿する</h3>
+    <%= form_with(model: [@post, Comment.new], local: true) do |f| %>
+      <div class="mb-3">
+        <%= f.text_area :body, rows: 4, class: "form-control", placeholder: "コメントを入力してください" %>
+      </div>
+      <%= f.submit "投稿", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <div class="mx-auto" style="position: relative; top: -20px; margin-top: 50px; max-width: 1500px;">
+    <% if @post.comments.any? %>
+      <h3>コメント一覧</h3>
+      <% @post.comments.each do |comment| %>
+        <div class="p-3 rounded shadow-sm" style="margin-top: 10px; background-color: #fff; border: 1px solid #ccc;">
+          <p class="mb-1"><strong><%= comment.user.name %></strong></p>
+         <hr style="margin-top: 5px; margin-bottom: 10px; border-top: 1px solid #999;">
+          <p class="mb-0"><%= simple_format(comment.body) %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-muted mb-0">まだコメントはありません。</p>
+    <% end %>
+  </div>
 </div>
 
 <script>

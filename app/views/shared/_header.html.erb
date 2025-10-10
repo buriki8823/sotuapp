@@ -1,20 +1,38 @@
 <nav class="navbar" style="background: linear-gradient(to right, #34C8E2); height: 100px; margin-bottom: 0; padding: 0;">
-  <div class="container-fluid d-flex justify-content-between align-items-center" style="height: 100%; padding-top: 0; padding-bottom: 0;">
-    
-    <% if user_signed_in? %>
-      <div class="d-flex align-items-center gap-3">
+  <div class="container-fluid d-flex justify-content-between align-items-center" style="height: 100%; padding: 0 24px;">
+
+    <!-- 左側：ユーザーアイコン＋メール -->
+    <div class="d-flex align-items-center gap-3">
+      <% if user_signed_in? %>
         <% if current_user.avatar.attached? %>
           <%= image_tag url_for(current_user.avatar), width: 60, height: 60, class: "rounded-circle", alt: "ユーザーアイコン" %>
         <% else %>
           <%= image_tag "default_avatar.png", width: 60, height: 60, class: "rounded-circle", alt: "デフォルトアイコン" %>
         <% end %>
         <i class="bi bi-envelope" style="font-size: 40px; color: #31FF57;"></i>
-      </div>
-    <% else %>
-      <div style="width: 100px;"></div>
-    <% end %>
+      <% end %>
+    </div>
 
-    <%= link_to "PCPACK", (user_signed_in? ? root_path : new_user_session_path), class: "nav-link fw-bold logo-text", style: "font-size: 60px;"%>
+    <!-- 右側：メニュー＋ PCPACKロゴ -->
+    <div class="d-flex align-items-center gap-4">
+      <% if user_signed_in? %>
+        <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle fw-bold" type="button" id="menuDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+                  style="font-size: 20px; margin-top: 15px;">
+            メニュー
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
+            <li><%= link_to "投稿", new_post_path, class: "dropdown-item" %></li>
+            <li><%= link_to "投稿一覧", posts_path, class: "dropdown-item" %></li>
+            <li><%= link_to "マイページ", mypage_path, class: "dropdown-item" %></li>
+            <li><%= link_to "ブックマーク", bookmarks_path, class: "dropdown-item" %></li>
+            <li><%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= link_to "PCPACK", (user_signed_in? ? root_path : new_user_session_path),
+                  class: "nav-link fw-bold logo-text", style: "font-size: 60px;" %>
+    </div>
   </div>
 </nav>
-
