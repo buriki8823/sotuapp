@@ -1,22 +1,31 @@
-app = "sotuapp"
+# fly.toml app configuration file generated for sotuapp-v2 on 2025-10-11T20:14:22+09:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'sotuapp-v2'
+primary_region = 'nrt'
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = 'Dockerfile'
+
+[deploy]
+  release_command = "bin/rails runner 'puts \"Release phase check: OK\"'"
 
 [env]
-  RAILS_ENV = "production"
+  RAILS_ENV = 'production'
 
 [[services]]
+  protocol = 'tcp'
   internal_port = 3000
-  protocol = "tcp"
 
   [[services.ports]]
-    handlers = ["http"]
     port = 80
+    handlers = ['http']
 
   [[services.ports]]
-    handlers = ["tls", "http"]
     port = 443
-    
-[deploy]
-  release_command = "bin/rails runner 'puts \"Release phase check: OK\"'"    
+    handlers = ['tls', 'http']
+
+[[vm]]
+  size = 'shared-cpu-1x'
