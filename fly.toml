@@ -17,3 +17,6 @@ app = "sotuapp"
   [[services.ports]]
     handlers = ["tls", "http"]
     port = 443
+    
+[deploy]
+  release_command = "bin/rails runner 'puts \"Release phase check: OK\"'"    
