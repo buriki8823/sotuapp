@@ -1,4 +1,6 @@
 const initializeImageUpload = () => {
+  const form = document.querySelector('form[action="/posts"]');
+
   const modal = document.getElementById("product-modal");
   const modalCancel = document.getElementById("modal-cancel");
   const modalOk = document.getElementById("modal-ok");
@@ -6,7 +8,6 @@ const initializeImageUpload = () => {
   const modalPreview = document.getElementById("modal-image-preview");
   const background = document.getElementById("login-background");
   const formContainer = document.getElementById("login-form-container");
-  const form = document.querySelector("form");
 
   let currentIndex = null;
   let currentSlot = null;

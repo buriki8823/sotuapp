@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
   belongs_to :user
-  has_one_attached :image
+  has_many_attached :images
   has_many :bookmarks
   has_many :bookmarked_users, through: :bookmarks, source: :user
   has_many :products, dependent: :destroy
@@ -8,17 +8,13 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
 
 
-  validate :must_have_valid_images
+  validate :images_count_within_limit
 
   private
 
-  def must_have_valid_images
-    valid_urls = image_urls.reject(&:blank?) if image_urls.is_a?(Array)
-
-    if valid_urls.blank?
-      errors.add(:image_urls, "を1枚以上挿入してください")
-    elsif valid_urls.size > 5
-      errors.add(:image_urls, "は最大5枚までです")
+  def images_count_within_limit
+    if images.attachments.size > 5
+      errors.add(:images, "は最大5枚までです")
     end
   end
 end
