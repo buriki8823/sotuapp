@@ -19,7 +19,7 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to @post, notice: "投稿が完了しました"
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

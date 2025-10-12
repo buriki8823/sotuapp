@@ -22,9 +22,9 @@
 
     <div class="d-flex gap-5 flex-wrap justify-content-start my-4" style="width: 1700px; margin: 0 auto; padding-bottom: 100px;">
       <% 5.times do |i| %>
-        <div class="image-slot rounded-3 border"
-             style="width: 300px; height: 300px; background-color: #f8f9fa; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-          <span style="pointer-events: none; color: #aaa; font-size: 32px">画像を挿入</span>
+        <div class="image-slot rounded-3 border" style="width: 300px; height: 300px;" data-index="<%= i %>">
+          <%= f.file_field :images, multiple: false, direct_upload: true, class: "d-none", id: "image-upload-input-#{i}" %>
+          <span style="color: #aaa; font-size: 32px;">画像を挿入</span>
         </div>
       <% end %>
     </div>
@@ -113,8 +113,34 @@
     </div>
   <% end %>
   </div>
+  <% if @post.errors.any? %>
+  <ul>
+    <% @post.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 </div>
 
 <% content_for :footer do %>
   <div style="display: none;"></div>
 <% end %>
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".image-slot").forEach((slot, index) => {
+    const input = document.getElementById(`image-upload-input-${index}`);
+    slot.addEventListener("click", () => input.click());
+
+    input.addEventListener("change", () => {
+      const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          slot.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  });
+});

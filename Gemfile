@@ -68,4 +68,5 @@ gem 'kaminari'
 
 gem "cloudinary"
 gem "activestorage-cloudinary-service"
+gem 'dotenv-rails', groups: [:development, :test, :production]
 
