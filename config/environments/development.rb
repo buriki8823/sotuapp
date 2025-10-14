@@ -83,4 +83,8 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
 
   config.log_level = :debug
+
+  config.assets.compile = true
+  config.assets.debug = true
+
 end

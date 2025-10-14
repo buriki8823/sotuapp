@@ -1,4 +1,8 @@
+import "jquery"
+window.$ = window.jQuery = require("jquery")
+
 const initializeImageUpload = () => {
+  console.log("initializeImageUpload が呼ばれました");
   const modal = document.getElementById("product-modal");
   const modalCancel = document.getElementById("modal-cancel");
   const modalOk = document.getElementById("modal-ok");
@@ -8,8 +12,10 @@ const initializeImageUpload = () => {
   const formContainer = document.getElementById("login-form-container");
   const form = document.querySelector("form");
 
-  let currentIndex = null;
-  let currentSlot = null;
+  let uploadContext = null;
+  let uploadContextIndex = null;
+
+  
 
   const widget = cloudinary.createUploadWidget({
     cloudName: 'dqjb4apad',
@@ -18,47 +24,84 @@ const initializeImageUpload = () => {
   }, (error, result) => {
     if (!error && result.event === "success") {
       const imageUrl = result.info.secure_url;
-      const img = document.createElement("img");
-      img.src = imageUrl;
-      img.style.width = "100%";
-      img.style.height = "100%";
-      img.style.objectFit = "cover";
-      img.style.borderRadius = "12px";
-      img.style.cursor = "pointer";
 
-      if (widget.context === "modal") {
-        modalPreview.innerHTML = "";
-        modalPreview.appendChild(img);
-        modalPreview.dataset.imageUrl = imageUrl;
+      if (uploadContext === "main" && uploadContextIndex !== null) {
+        const slot = document.getElementById(`image-slot-${uploadContextIndex}`);
+        const checkbox = document.querySelector(`.image-select-checkbox[data-index="${uploadContextIndex}"]`);
+
+        if (slot) {
+          slot.innerHTML = "";
+          const img = document.createElement("img");
+          img.src = imageUrl;
+          img.style.width = "100%";
+          img.style.height = "100%";
+          img.style.objectFit = "cover";
+          img.style.borderRadius = "12px";
+          slot.appendChild(img);
+        }
+
+        if (checkbox) {
+          checkbox.dataset.imageUrl = imageUrl;
+        }
       }
 
-      if (widget.context === "main" && currentSlot) {
-        currentSlot.innerHTML = "";
-        currentSlot.appendChild(img);
-        currentSlot.dataset.filled = "true";
-
-        const hiddenInput = document.createElement("input");
-        hiddenInput.type = "hidden";
-        hiddenInput.name = "post[image_urls][]";
-        hiddenInput.value = imageUrl;
-        form.appendChild(hiddenInput);
-
-        img.addEventListener("click", () => {
-          if (confirm("この画像を削除しますか？")) {
-            currentSlot.innerHTML = `<span style="pointer-events: none; color: #aaa; font-size: 32px">画像を挿入</span>`;
-            currentSlot.dataset.filled = "false";
-            currentSlot = null;
-          }
-        });
+      if (uploadContext === "modal") {
+        modalPreview.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+        img.style.borderRadius = "12px";
+        modalPreview.appendChild(img);
+        modalPreview.dataset.imageUrl = imageUrl;
       }
     }
   });
 
+  document.querySelectorAll(".image-slot-wrapper").forEach(wrapper => {
+    const index = wrapper.dataset.index;
+    const slot = wrapper.querySelector(".image-slot");
+
+    slot?.addEventListener("click", () => {
+      uploadContext = "main";
+      uploadContextIndex = index;
+      widget.open();
+    });
+  });
+
+  document.querySelectorAll(".image-confirm-button").forEach(button => {
+    button.addEventListener("click", () => {
+      console.log("OKボタンが押されました:", button.dataset.index);
+      const index = button.dataset.index;
+      const wrapper = document.querySelector(`.image-slot-wrapper[data-index="${index}"]`);
+      const slot = wrapper?.querySelector(".image-slot");
+      const img = slot?.querySelector("img");
+      const imageUrl = img?.src || "";
+        function ensureHiddenInput(wrapper, id, name, value) {
+        let input = document.getElementById(id);
+        if (!input) {
+          input = document.createElement("input");
+          input.type = "hidden";
+          input.name = name;
+          input.id = id;
+          wrapper.appendChild(input);
+        }
+        input.value = value;
+      }
+
+      ensureHiddenInput(wrapper, `image-url-${index}`, "post[image_urls][]", imageUrl);
+    });
+  });
+
+
+  // モーダル関連（そのまま残す）
   document.querySelectorAll(".product-slot").forEach(slot => {
     slot.addEventListener("click", () => {
-      currentIndex = slot.dataset.index;
-      modal.dataset.slotIndex = currentIndex;
-      widget.context = "modal";
+      const index = slot.dataset.index;
+      modal.dataset.slotIndex = index;
+      uploadContext = "modal";
+      widget.open();
       modal.style.display = "flex";
     });
   });
@@ -94,28 +137,8 @@ const initializeImageUpload = () => {
   });
 
   modalUploadButton?.addEventListener("click", () => {
-    widget.context = "modal";
+    uploadContext = "modal";
     widget.open();
-  });
-
-  document.querySelectorAll(".image-slot").forEach(slot => {
-    slot.dataset.filled = "false";
-
-    slot.addEventListener("click", () => {
-      if (slot.dataset.filled === "true") {
-        const img = slot.querySelector("img");
-        if (img && confirm("この画像を削除しますか？")) {
-          slot.innerHTML = `<span style="pointer-events: none; color: #aaa; font-size: 32px">画像を挿入</span>`;
-          slot.dataset.filled = "false";
-          currentSlot = null;
-        }
-        return;
-      }
-
-      currentSlot = slot;
-      widget.context = "main";
-      widget.open();
-    });
   });
 
   if (background && formContainer) {
@@ -124,6 +147,5 @@ const initializeImageUpload = () => {
     });
   }
 };
-
 document.addEventListener("DOMContentLoaded", initializeImageUpload);
 document.addEventListener("turbo:load", initializeImageUpload);

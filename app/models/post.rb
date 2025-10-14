@@ -1,11 +1,11 @@
 class Post < ApplicationRecord
   belongs_to :user
-  has_one_attached :image
   has_many :bookmarks
   has_many :bookmarked_users, through: :bookmarks, source: :user
   has_many :products, dependent: :destroy
   accepts_nested_attributes_for :products
   has_many :comments, dependent: :destroy
+  attr_accessor :image_urls
 
 
   validate :must_have_valid_images

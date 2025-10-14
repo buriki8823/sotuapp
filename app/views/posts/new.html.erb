@@ -1,3 +1,11 @@
+<% @post ||= Post.new %>
+
+<% if flash[:error] %>
+  <div class="alert alert-danger" style="width: 1700px; margin: 0 auto; margin-bottom: 40px;">
+    <p><%= flash[:error] %></p>
+  </div>
+<% end %>
+
 <div class="position-relative py-0" style="background-image: url(<%= asset_path('posts-bg.png') %>);background-size: cover; background-position: top center; background-repeat: no-repeat; width: 100%; min-height: 100vh; margin: 0;">
   <div class="position-relative">
     <h1 class="toukou-title text-center  mb-5" style="position: relative; top: 30px; font-size: 128px;">投稿</h1>
@@ -11,26 +19,25 @@
   <%= form_with model: @post, local: true, html: { multipart: true } do |f| %>
     <!-- タイトル -->
     <div style="width: 1700px; margin: 0 auto; margin-bottom: 100px;">
-      <%= f.label :title, "タイトル", style: "font-size: 64px;", class: "form-label d-block text-start mb-1" %>
+      <%= f.label :title, "タイトル", style: "font-size: 128px;", class: "form-label d-block text-start mb-1" %>
       <%= f.text_field :title, class: "form-control", style: "height: 65px;" %>
     </div>
 
-      <!-- 画像 -->
-    <div class="mb-3" style="width: 1700px; margin: 0 auto;">
-      <label class="form-label d-block text-start mb-1" style="font-size: 64px;">画像</label>
+  <!-- 画像 -->
+  <div class="mb-3" style="width: 1700px; margin: 0 auto;">
+    <label class="form-label d-block text-start mb-1" style="font-size: 64px;">画像</label>
+  </div>
+
+  <div class="d-flex gap-5 flex-wrap justify-content-start my-4" style="width: 1700px; margin: 0 auto; padding-bottom: 100px;">
+    <div class="image-slot-wrapper" data-index="0">
+      <div class="image-slot rounded-3 border" id="image-slot-0" style="width: 300px; height: 300px;">
+        <span style="color: #aaa;">画像未挿入</span>
+      </div>
+      <button type="button" class="image-confirm-button mt-2" data-index="0">
+        投稿
+      </button>
     </div>
-
-    <div class="d-flex gap-5 flex-wrap justify-content-start my-4" style="width: 1700px; margin: 0 auto; padding-bottom: 100px;">
-      <% 5.times do |i| %>
-        <div class="image-slot rounded-3 border"
-             style="width: 300px; height: 300px; background-color: #f8f9fa; cursor: pointer; display: flex; align-items: center; justify-content: center;">
-          <span style="pointer-events: none; color: #aaa; font-size: 32px">画像を挿入</span>
-        </div>
-      <% end %>
-    </div>
-
-    <button type="button" id="cloudinary-upload-button" class="d-none"></button>
-
+  </div>
 
 
     <!-- 概要 -->
