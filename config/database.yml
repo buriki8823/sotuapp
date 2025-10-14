@@ -8,11 +8,11 @@ default: &default
 
 development:
   <<: *default
-  database: myapp_development
+  database: sotuapp_development
 
 test:
   <<: *default
-  database: myapp_test
+  database: sotuapp_test
 
 production:
   adapter: postgresql
