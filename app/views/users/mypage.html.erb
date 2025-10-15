@@ -48,14 +48,14 @@
       </div>
 
       <!-- プロフィール -->
-      <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { multipart: true } do |f| %>
-        <label for="avatar-upload" class="profile-icon position-absolute" style="cursor: pointer;">
-          <%= image_tag(current_user.avatar.attached? ? url_for(current_user.avatar) : 'default_avatar.png',
-                        alt: 'プロフィール画像',
-                        class: 'rounded-circle mypage-avatar',
-                        size: '600x600') %>
-        </label>
-        <%= f.file_field :avatar, id: "avatar-upload", style: "display: none;", onchange: "this.form.submit();" %>
+      <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { id: "avatar-form" } do |f| %>
+        <%= f.hidden_field :avatar_url, id: "avatar_url_input" %>
+          <label onclick="openCloudinary()" class="profile-icon position-absolute" style="cursor: pointer;">
+          <%= image_tag(current_user.avatar_url&.sub('/upload/', '/upload/c_thumb,w_600,h_600,r_max/') || 'default_avatar.png',
+                  alt: 'プロフィール画像',
+                  class: 'rounded-circle mypage-avatar',
+                  size: '600x600') %>
+          </label>
       <% end %>
 
       <!-- アカウント名・評価 -->
@@ -89,3 +89,19 @@
     <%= render "shared/mypage_footer" %>
   <% end %>
 </div>
+
+<script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
+<script>
+  function openCloudinary() {
+    cloudinary.createUploadWidget({
+      cloudName: 'dqjb4apad',
+      uploadPreset: 'ml_default'
+    }, (error, result) => {
+      if (!error && result.event === "success") {
+        const imageUrl = result.info.secure_url;
+        document.getElementById("avatar_url_input").value = imageUrl;
+        document.getElementById("avatar-form").submit();
+      }
+    }).open();
+  }
+</script>

@@ -60,7 +60,9 @@
         </div>
         <div class="modal-body">
           <%= f.label :avatar, t("activerecord.attributes.user.avatar"), class: "form-label", style: "font-size: 24px;" %>
-          <%= f.file_field :avatar, class: "form-control", onchange: "previewAvatar(event)", style: "margin-bottom: 20px;" %>
+          <button type="button" onclick="openCloudinary()" class="btn btn-outline-success">画像をアップロード</button>
+          <%= f.hidden_field :avatar_url, id: "avatar_url_input" %>
+          <img id="avatar-preview" style="width: 200px; height: 200px; object-fit: cover;" />
           <div style="width: 200px; height: 200px; border-radius: 50%; overflow: hidden; margin: 0 auto; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
             <img id="avatar-preview" style="width: 100%; height: 100%; object-fit: cover;" />
             <label for="position-slider" style="font-size: 18px;">横位置の調整</label>
@@ -83,7 +85,7 @@
   </div>
 <% end %>
 
-
+<script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
 <script>
   function previewAvatar(event) {
     const reader = new FileReader();
@@ -102,6 +104,19 @@
     const input = document.querySelector('input[type="file"]');
     input.value = "";
     document.getElementById('avatar-preview').src = "";
+  }
+
+  function openCloudinary() {
+    cloudinary.createUploadWidget({
+      cloudName: 'dqjb4apad',
+      uploadPreset: 'ml_default'
+    }, (error, result) => {
+      if (!error && result.event === "success") {
+        const imageUrl = result.info.secure_url;
+        document.getElementById("avatar_url_input").value = imageUrl;
+        document.getElementById("avatar-preview").src = imageUrl;
+      }
+    }).open();
   }
 </script>
 
