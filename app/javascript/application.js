@@ -27,6 +27,7 @@ const initializeImageUpload = () => {
 
       if (uploadContext === "main" && uploadContextIndex !== null) {
         const slot = document.getElementById(`image-slot-${uploadContextIndex}`);
+        const hiddenInput = document.getElementById(`image-url-${uploadContextIndex}`);
         const checkbox = document.querySelector(`.image-select-checkbox[data-index="${uploadContextIndex}"]`);
 
         if (slot) {
@@ -39,6 +40,11 @@ const initializeImageUpload = () => {
           img.style.borderRadius = "12px";
           slot.appendChild(img);
         }
+        
+        if (hiddenInput) {
+          hiddenInput.value = imageUrl;
+        }
+
 
         if (checkbox) {
           checkbox.dataset.imageUrl = imageUrl;
@@ -146,6 +152,14 @@ const initializeImageUpload = () => {
       formContainer.classList.add("show");
     });
   }
+
+    document.getElementById("post-submit-button")?.addEventListener("click", () => {
+    document.querySelectorAll('input[type="hidden"][name="post[image_urls][]"]').forEach(input => {
+      if (!input.value || input.value.trim() === "") {
+        input.remove(); // 空の hidden input を削除
+      }
+    });
+  });
 };
 document.addEventListener("DOMContentLoaded", initializeImageUpload);
 document.addEventListener("turbo:load", initializeImageUpload);

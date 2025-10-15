@@ -33,11 +33,40 @@
       <div class="image-slot rounded-3 border" id="image-slot-0" style="width: 300px; height: 300px;">
         <span style="color: #aaa;">画像未挿入</span>
       </div>
-      <button type="button" class="image-confirm-button mt-2" data-index="0">
-        投稿
-      </button>
+    </div>
+
+    <div class="image-slot-wrapper" data-index="1">
+      <div class="image-slot rounded-3 border" id="image-slot-1" style="width: 300px; height: 300px;">
+        <span style="color: #aaa;">画像未挿入</span>
+      </div>
+    </div>
+
+    <div class="image-slot-wrapper" data-index="2">
+      <div class="image-slot rounded-3 border" id="image-slot-2" style="width: 300px; height: 300px;">
+        <span style="color: #aaa;">画像未挿入</span>
+      </div>
+    </div>
+
+    <div class="image-slot-wrapper" data-index="3">
+      <div class="image-slot rounded-3 border" id="image-slot-3" style="width: 300px; height: 300px;">
+        <span style="color: #aaa;">画像未挿入</span>
+      </div>
+    </div>
+
+    <div class="image-slot-wrapper" data-index="4">
+      <div class="image-slot rounded-3 border" id="image-slot-4" style="width: 300px; height: 300px;">
+        <span style="color: #aaa;">画像未挿入</span>
+      </div>
     </div>
   </div>
+
+  <%= hidden_field_tag "post[image_urls][]", "", id: "image-url-0" %>
+  <%= hidden_field_tag "post[image_urls][]", "", id: "image-url-1" %>
+  <%= hidden_field_tag "post[image_urls][]", "", id: "image-url-2" %>
+  <%= hidden_field_tag "post[image_urls][]", "", id: "image-url-3" %>
+  <%= hidden_field_tag "post[image_urls][]", "", id: "image-url-4" %>
+
+  
 
 
     <!-- 概要 -->
