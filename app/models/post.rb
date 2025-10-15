@@ -6,13 +6,31 @@ class Post < ApplicationRecord
   accepts_nested_attributes_for :products
   has_many :comments, dependent: :destroy
 
-
   validate :must_have_valid_images
+
+  def first_image_url_or_placeholder
+    case image_urls
+    when String
+      urls = JSON.parse(image_urls) rescue []
+    when Array
+      urls = image_urls
+    else
+      urls = []
+    end
+
+    urls.first.presence || "placeholder.png"
+  end
 
   private
 
   def must_have_valid_images
-    valid_urls = image_urls.reject(&:blank?) if image_urls.is_a?(Array)
+    urls = case image_urls
+           when String then JSON.parse(image_urls) rescue []
+           when Array then image_urls
+           else []
+           end
+
+    valid_urls = urls.reject(&:blank?)
 
     if valid_urls.blank?
       errors.add(:image_urls, "を1枚以上挿入してください")
