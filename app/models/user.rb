@@ -17,18 +17,23 @@ class User < ApplicationRecord
 
   validate :password_uniqueness_across_users, if: -> { password.present? }
 
- def password_uniqueness_across_users
-   encrypted = Devise::Encryptor.digest(User, password)
-   if User.where(encrypted_password: encrypted).exists?
-    errors.add(:password, :taken_password)
-   end
- end
+  def avatar_url_or_default
+    avatar_url.presence || "default_avatar.png"
+  end
 
- validate :password_not_blank_only
 
- def password_not_blank_only
-   if password.present? && password.strip.empty?
-     errors.add(:password, :blank_only)
-   end
- end
+  def password_uniqueness_across_users
+    encrypted = Devise::Encryptor.digest(User, password)
+    if User.where(encrypted_password: encrypted).exists?
+     errors.add(:password, :taken_password)
+    end
+  end
+
+  validate :password_not_blank_only
+
+  def password_not_blank_only
+    if password.present? && password.strip.empty?
+      errors.add(:password, :blank_only)
+    end
+  end
 end

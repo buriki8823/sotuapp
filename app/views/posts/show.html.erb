@@ -59,7 +59,7 @@
            style="width: 350px; height: 400px; background-color: #ffffff; border: 2px solid #000; overflow-y: auto; margin-top: 20px;">
 
           <div class="d-flex align-items-center mb-4" style="border-bottom: 2px solid #000; padding-bottom: 10px;">
-            <%= image_tag @post.user.avatar, alt: "投稿者アイコン", class: "rounded-circle me-3", style: "position: relative; left: 10px; width: 64px; height: 64px; object-fit: cover;" %>
+            <%= image_tag @post.user.avatar_url.presence || "default_avatar.png", alt: "投稿者アイコン", class: "rounded-circle me-3", style: "position: relative; left: 10px; width: 64px; height: 64px; object-fit: cover;" %>
             <h4 class="fw-bold mb-0" style="position: relative; left: 20px;"><%= @post.user.name %></h4>
           </div>
 
