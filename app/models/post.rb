@@ -5,7 +5,6 @@ class Post < ApplicationRecord
   has_many :products, dependent: :destroy
   accepts_nested_attributes_for :products
   has_many :comments, dependent: :destroy
-  attr_accessor :image_urls
 
 
   validate :must_have_valid_images
