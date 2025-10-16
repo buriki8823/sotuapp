@@ -1,11 +1,33 @@
-<div class="container py-5 text-center">
-  <h1 class="mb-4" style="font-size: clamp(32px, 6vw, 60px); color: #34C8E2;">
-    ブックマーク一覧（仮）
-  </h1>
+<div class="position-relative py-0" style="background-image: url(<%= asset_path('posts-bg.png') %>); background-size: cover; background-position: top center; background-repeat: no-repeat; width: 100%; min-height: 100vh; margin: 0;">
+  <div class="container py-4">
+    <h1 class="toukou-title text-center mt-3 mb-5" style="position: relative; top: 30px; font-size: 128px;">ブックマーク一覧</h1>
 
-  <p class="text-muted" style="font-size: 18px;">
-    ここにブックマークされたアイテムが表示されます。
-  </p>
+    <% if @bookmarked_posts.any? %>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" style="max-width: 1500px; margin: 100px auto;">
+        <% @bookmarked_posts.each do |post| %>
+          <div class="col">
+            <div class="card h-100 shadow-sm">
+              <%= link_to post_path(post), class: "d-block" do %>
+                <%= image_tag post.first_image_url_or_placeholder, alt: "投稿画像", style: "width: calc(100% - 24px); height: 230px; object-fit: cover; margin: 12px; border: 1px solid #ccc; border-radius: 6px;" %>
+              <% end %>
+              <div class="card-body">
+                <h5 class="card-title"><%= post.title %></h5>
+                <p class="card-text text-muted">投稿者：<%= post.user.name %></p>
+                <%= button_to "ブックマーク解除", post_bookmark_path(post), method: :delete, class: "btn btn-sm btn-outline-danger mt-2" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
 
-  <%= link_to "マイページに戻る", "#", class: "btn btn-outline-primary mt-4", onclick: "alert('開発中です。しばらくお待ちください'); return false;" %>
+      <div class="d-flex justify-content-center mt-5">
+        <%= paginate @bookmarked_posts %>
+      </div>
+    <% else %>
+      <div class="text-center mt-5">
+        <p class="text-muted" style="font-size: 24px;">まだブックマークはありません。</p>
+        <%= link_to "投稿一覧を見る", posts_path, class: "btn btn-outline-primary mt-3" %>
+      </div>
+    <% end %>
+  </div>
 </div>

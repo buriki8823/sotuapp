@@ -10,7 +10,7 @@
     
       <!-- 左：画像 -->
       <div class="swiper mySwiper rounded shadow-sm overflow-hidden"
-           style="width: 1500px; height: 1000px; margin-top: 20px; margin-left:500px;">
+           style="flex: 1 1 500px; height: 600px; margin-top: 20px; margin-left:100px;">
         <div class="swiper-wrapper">
           <% @post.image_urls.each do |url| %>
             <div class="swiper-slide">
@@ -56,20 +56,30 @@
 
       <!-- 右：投稿者情報ボックス -->
       <div class="p-4 rounded shadow-sm"
-           style="width: 350px; height: 400px; background-color: #ffffff; border: 2px solid #000; overflow-y: auto; margin-top: 20px;">
+           style="flex: 0 0 300px; height: 400px; background-color: #ffffff; border: 2px solid #000; overflow-y: auto; margin-top: 20px; margin-right: 24px;">
 
           <div class="d-flex align-items-center mb-4" style="border-bottom: 2px solid #000; padding-bottom: 10px;">
             <%= image_tag @post.user.avatar_url.presence || "default_avatar.png", alt: "投稿者アイコン", class: "rounded-circle me-3", style: "position: relative; left: 10px; width: 64px; height: 64px; object-fit: cover;" %>
             <h4 class="fw-bold mb-0" style="position: relative; left: 20px;"><%= @post.user.name %></h4>
           </div>
 
-          <button class="btn mb-4 w-100" style="background-color: orange; color: white;" disabled>
-            <i class="bi bi-bookmark me-2"></i>ブックマークする（開発中）
-          </button>
+          <% if user_signed_in? %>
+            <% if @bookmarked %>
+              <%= button_to post_bookmark_path(@post), method: :delete, class: "btn mb-4 w-100", style: "background-color: #dc3545; color: white;" do %>
+                <i class="bi bi-bookmark-x me-2"></i>ブックマーク解除
+              <% end %>
+            <% else %>
+              <%= button_to post_bookmark_path(@post), method: :post, class: "btn mb-4 w-100", style: "background-color: orange; color: white;" do %>
+                <i class="bi bi-bookmark-plus me-2"></i>ブックマークする
+              <% end %>
+            <% end %>
+          <% else %>
+            <button class="btn mb-4 w-100" style="background-color: gray; color: white;" disabled>
+              <i class="bi bi-bookmark me-2"></i>ログインしてブックマーク
+            </button>
+          <% end %>
 
-          <button class="btn mb-3 w-100" style="background-color: #0d6efd; color: white;" disabled>
-           <i class="bi bi-collection me-2"></i>他の投稿作品（開発中）
-          </button> 
+          <%= link_to "ブックマーク一覧へ", bookmarks_path, class: "btn w-100", style: "background-color: #6c757d; color: white;" %>
       </div>
 
     </div>
