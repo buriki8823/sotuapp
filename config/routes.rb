@@ -15,6 +15,11 @@ Rails.application.routes.draw do
   end
 
   get 'mypage', to: 'users#mypage'
+
+  namespace :mypage do
+    resources :posts, only: [:index, :destroy]
+  end
+
   resources :posts, only: [:index, :show, :new, :create] do
     resources :comments, only: [:create]
     resource :bookmark, only: [:create, :destroy]
