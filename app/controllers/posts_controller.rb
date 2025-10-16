@@ -6,6 +6,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @bookmarked = current_user.bookmarked_posts.exists?(@post.id)
   end
 
   def new
