@@ -19,15 +19,14 @@ class UsersController < ApplicationController
   def update
     @user = current_user
 
-    # window背景画像のアップロード
-    if params[:user][:window_background_image]
-      @user.window_background_image.attach(params[:user][:window_background_image])
+    if params[:user][:mypage_background_url]
+      @user.mypage_background_url = params[:user][:mypage_background_url]
     end
 
-    # mypage背景画像のアップロード（新しく追加する場合）
-    if params[:user][:mypage_background_image]
-      @user.mypage_background_image.attach(params[:user][:mypage_background_image])
+    if params[:user][:window_background_url]
+      @user.window_background_url = params[:user][:window_background_url]
     end
+
 
     if @user.update(user_params)
       redirect_to mypage_users_path, notice: "プロフィールを更新しました"
@@ -38,11 +37,13 @@ class UsersController < ApplicationController
 
   def reset_mypage_background
     current_user.mypage_background_image.purge if current_user.mypage_background_image.attached?
+    current_user.update(mypage_background_url: nil)
     redirect_to mypage_users_path, notice: "背景画像をデフォルトに戻しました"
   end
 
   def reset_window_background
     current_user.window_background_image.purge if current_user.window_background_image.attached?
+    current_user.update(window_background_url: nil)
     redirect_to mypage_users_path, notice: "ウィンドウ背景をデフォルトに戻しました"
   end
 
@@ -50,6 +51,6 @@ class UsersController < ApplicationController
 private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :avatar, :window_background_image, :mypage_background_image, :avatar_url)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :avatar, :window_background_image, :mypage_background_image, :avatar_url, :mypage_background_url, :window_background_url)
   end
 end
