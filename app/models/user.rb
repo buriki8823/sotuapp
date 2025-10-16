@@ -29,6 +29,15 @@ class User < ApplicationRecord
     end
   end
 
+  def mypage_background_url_or_default
+    mypage_background_url.presence
+  end
+
+  def window_background_url_or_default
+    window_background_url.presence
+  end
+
+
   validate :password_not_blank_only
 
   def password_not_blank_only

@@ -3,8 +3,7 @@
   <div class="user-info d-flex flex-column align-items-center justify-content-center shadow-sm"
        style="flex: 0 0 30%; border: 2px solid #000; background-color: #fff; border-radius: 12px; padding: 30px;">
   
-    <%= image_tag(post.user.avatar.attached? ? url_for(post.user.avatar) : "default_avatar.png",
-                  class: "rounded-circle mb-2", size: "200x200") %>
+    <%= image_tag(post.user.avatar_url_or_default, class: "rounded-circle mb-2", size: "200x200") %>
 
     <span class="fw-bold text-center" style="margin-top: 30px; font-size: 50px;"><%= post.user.name %></span>
   </div>
