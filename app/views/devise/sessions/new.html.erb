@@ -28,7 +28,7 @@
       <% end %>
       <div class="d-flex justify-content-center mt-3 text-center">
        <%= link_to t("devise.links.sign_up"), new_user_registration_path, class: "text-decoration-none", style: "color: #1762A8;" %>
-       <%= link_to t("devise.links.forgot_password"), new_user_password_path, class: "text-decoration-none", style: "margin-left: 50px; color: #1762A8;" %>
+       <%= content_tag(:a, t("devise.links.forgot_password"), href: "#", onclick: "alert('開発中です'); return false;", class: "text-decoration-none", style: "margin-left: 50px; color: #1762A8;") %>
       </div>
     </div>
   </div>

@@ -107,8 +107,9 @@ const initializeImageUpload = () => {
       const index = slot.dataset.index;
       modal.dataset.slotIndex = index;
       uploadContext = "modal";
-      widget.open();
-      modal.style.display = "flex";
+      modalPreview.innerHTML = "";
+      modalPreview.dataset.imageUrl = ""; 
+      modal.style.display = "flex"; 
     });
   });
 
