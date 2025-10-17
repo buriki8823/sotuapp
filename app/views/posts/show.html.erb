@@ -1,12 +1,13 @@
 <div class="position-relative py-0" style="background-image: url(<%= asset_path('posts-bg.png') %>); background-size: cover; background-position: top center; background-repeat: no-repeat; width: 100%; min-height: 100vh; margin: 0;">
-  <h1 class="toukou-title text-center mb-5" style="position: relative; top: 30px; font-size: 128px;"><%= @post.title %></h1>
 
-    <div style="position: relative; top: 10px; position: absolute; left: 10; right: 0; z-index: 10;">
-      <%= render "shared/navigation_box" %>
-    </div>
+  <div style="position: absolute; left: 10; right: 0; z-index: 10;">
+    <%= render "shared/navigation_box" %>
+  </div>
+
+  <h1 class="toukou-title text-center mb-5" style="position: relative; top: 70px; font-size: 128px;"><%= @post.title %></h1>  
 
   <% if @post.image_urls.present? %>
-    <div class="d-flex gap-2 justify-content-center mb-5" style="max-width: 2500px; margin: 0 auto;">
+    <div class="d-flex gap-2 justify-content-center mb-5" style="max-width: 1500px; margin: 0 auto;">
     
       <!-- 左：画像 -->
       <div class="swiper mySwiper rounded shadow-sm overflow-hidden"
