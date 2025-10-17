@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
   belongs_to :user
-  has_many :bookmarks
+  has_many :bookmarks, dependent: :destroy
   has_many :bookmarked_users, through: :bookmarks, source: :user
   has_many :products, dependent: :destroy
   accepts_nested_attributes_for :products
