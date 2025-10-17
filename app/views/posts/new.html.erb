@@ -20,7 +20,7 @@
     <!-- タイトル -->
     <div style="width: 1300px; margin: 0 auto; margin-bottom: 100px;">
       <%= f.label :title, "タイトル", style: "font-size: 64px;", class: "form-label d-block text-start mb-1" %>
-      <%= f.text_field :title, class: "form-control", style: "height: 65px;" %>
+      <%= f.text_field :title, class: "form-control", style: "height: 65px;",maxlength: 10, placeholder: "タイトル（10文字以内）" %>
     </div>
 
   <!-- 画像 -->
@@ -37,25 +37,25 @@
 
     <div class="image-slot-wrapper" data-index="1">
       <div class="image-slot rounded-3 border" id="image-slot-1" style="width: 200px; height: 200px; background-color: white; display: flex; align-items: center; justify-content: center;">
-        <span style="color: #aaa;">画像未挿入</span>
+        <span style="color: #aaa;">画像をセット</span>
       </div>
     </div>
 
     <div class="image-slot-wrapper" data-index="2">
       <div class="image-slot rounded-3 border" id="image-slot-2" style="width: 200px; height: 200px; background-color: white; display: flex; align-items: center; justify-content: center;">
-        <span style="color: #aaa;">画像未挿入</span>
+        <span style="color: #aaa;">画像をセット</span>
       </div>
     </div>
 
     <div class="image-slot-wrapper" data-index="3">
       <div class="image-slot rounded-3 border" id="image-slot-3" style="width: 200px; height: 200px; background-color: white; display: flex; align-items: center; justify-content: center;">
-        <span style="color: #aaa;">画像未挿入</span>
+        <span style="color: #aaa;">画像をセット</span>
       </div>
     </div>
 
     <div class="image-slot-wrapper" data-index="4">
       <div class="image-slot rounded-3 border" id="image-slot-4" style="width: 200px; height: 200px; background-color: white; display: flex; align-items: center; justify-content: center;">
-        <span style="color: #aaa;">画像未挿入</span>
+        <span style="color: #aaa;">画像をセット</span>
       </div>
     </div>
   </div>
@@ -72,7 +72,7 @@
     <!-- 概要 -->
     <div style="width: 1300px; margin: 0 auto; margin-bottom: 100px;">
       <%= f.label :body, "概要", style: "font-size: 64px;" %>
-      <%= f.text_area :body, class: "form-control", rows: 20, style: "height: 400px; font-size: 24px;" %>
+      <%= f.text_area :body, class: "form-control", rows: 20, style: "height: 400px; font-size: 24px;", placeholder: "概要（200文字以内）" %>
     </div>
 
     <!-- オススメグッズ -->

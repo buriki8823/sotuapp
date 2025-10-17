@@ -7,6 +7,8 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   validate :must_have_valid_images
+  validates :title, presence: true, length: { maximum: 10 }
+  validates :summary, length: { maximum: 200, message: "は200文字以内で入力してください" }
 
   def first_image_url_or_placeholder
     case image_urls
