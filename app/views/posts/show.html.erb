@@ -1,5 +1,6 @@
 <div class="position-relative py-0" style="background-image: url(<%= asset_path('posts-bg.png') %>); background-size: cover; background-position: top center; background-repeat: no-repeat; width: 100%; min-height: 100vh; margin: 0;">
   <h1 class="toukou-title text-center mb-5" style="position: relative; top: 30px; font-size: 128px;"><%= @post.title %></h1>
+  <%= button_to "削除する", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
 
     <div style="position: relative; top: 10px; position: absolute; left: 10; right: 0; z-index: 10;">
       <%= render "shared/navigation_box" %>
@@ -80,6 +81,7 @@
           <% end %>
 
           <%= link_to "ブックマーク一覧へ", bookmarks_path, class: "btn w-100", style: "background-color: #6c757d; color: white;" %>
+          <%= button_to "削除する", post_path(@post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
       </div>
 
     </div>

@@ -70,4 +70,6 @@ gem "cloudinary"
 gem "activestorage-cloudinary-service"
 
 gem 'jquery-rails'
+gem 'dotenv-rails', groups: [:development, :test]
+
 
