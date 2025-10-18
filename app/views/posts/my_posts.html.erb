@@ -1,0 +1,30 @@
+<div class="position-relative py-0" style="background-image: url(<%= asset_path('posts-bg.png') %>); background-size: cover; background-position: top center; background-repeat: no-repeat; width: 100%; min-height: 100vh; margin: 0;">
+  <div class="container py-4">
+    <h1 class="toukou-title text-center mt-3 mb-5" style="position: relative; top: 30px; font-size: 128px;">自分の投稿一覧</h1>
+
+    <% if @posts.any? %>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" style="max-width: 1500px; margin: 100px auto;">
+        <% @posts.each do |post| %>
+          <div class="col">
+            <div class="card h-100 shadow-sm">
+              <%= link_to post_path(post), class: "d-block" do %>
+                <%= image_tag post.first_image_url_or_placeholder, alt: "投稿画像", style: "width: calc(100% - 24px); height: 230px; object-fit: cover; margin: 12px; border: 1px solid #ccc; border-radius: 6px;" %>
+              <% end %>
+              <div class="card-body">
+                <h5 class="card-title"><%= post.title %></h5>
+                <p class="card-text text-muted">投稿者：<%= post.user.name %></p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- ページネーション -->
+      <div class="d-flex justify-content-center mt-5">
+        <%= paginate @posts %>
+      </div>
+    <% else %>
+      <p class="text-center text-muted mt-5" style="font-size: 24px;">まだ投稿がありません。</p>
+    <% end %>
+  </div>
+</div>

@@ -43,6 +43,10 @@ class PostsController < ApplicationController
     redirect_to posts_path, notice: "投稿と画像を削除しました"
   end
 
+  def my_posts
+    @posts = current_user.posts.page(params[:page]).per(9)
+  end
+
   private
 
   def post_params
