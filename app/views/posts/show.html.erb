@@ -81,13 +81,16 @@
           <% end %>
 
           <%= link_to "ブックマーク一覧へ", bookmarks_path, class: "btn w-100", style: "background-color: #6c757d; color: white;" %>
-          <%= button_to post_path(@post),
-              method: :delete,
-              data: { confirm: "本当に削除しますか？" },
-              params: {},
-              class: "btn btn-danger",
-              style: "z-index: 10; position: absolute; bottom: 8px; right: 8px;" do %>
-            投稿を削除
+          
+          <% if current_user == @post.user %>
+            <%= button_to post_path(@post),
+                method: :delete,
+                data: { confirm: "本当に削除しますか？" },
+                params: {},
+                class: "btn btn-danger",
+                style: "z-index: 10; position: absolute; bottom: 8px; right: 8px;" do %>
+              投稿を削除
+            <% end %>
           <% end %>
       </div>
 
