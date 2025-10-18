@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   get 'mypage', to: 'users#mypage'
 
+  get 'my_posts', to: 'posts#my_posts', as: :my_posts
+
   namespace :mypage do
     resources :posts, only: [:index, :destroy]
   end
