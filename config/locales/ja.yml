@@ -34,6 +34,9 @@ ja:
       forgot_password: "パスワードを忘れた方"
     failure:
       unauthenticated: "ログインしてください"
+    passwords:
+      send_instructions: "パスワード再設定の案内をメールで送信しました"
+      updated: "パスワードが正常に変更されました。"
 
   activerecord:
     models:
