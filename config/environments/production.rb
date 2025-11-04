@@ -79,7 +79,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.default_options = {
-  from: 'sk.typhoon999@gmail.com' # ← SendGridで認証済みのアドレスに変更
+  from: 'PCPACK <sk.typhoon999@gmail.com>' # ← SendGridで認証済みのアドレスに変更
 }
 
   config.action_mailer.default_url_options = { host: 'sotuapp-v2.fly.dev', protocol: 'https' }
