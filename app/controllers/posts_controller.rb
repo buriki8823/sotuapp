@@ -1,7 +1,24 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.page(params[:page]).per(9)
-    @dummy_count = [9 - @posts.size, 0].max
+    sorted_posts = case params[:sort]
+                   when "cute"
+                     Post.order_by_kind("cute")
+                   when "cool"
+                     Post.order_by_kind("cool")
+                   when "stylish"
+                     Post.order_by_kind("stylish")
+                   when "healing"
+                     Post.order_by_kind("healing")
+                   when "aesthetic"
+                     Post.order_by_kind("aesthetic")
+                   when "popular"
+                     Post.order_by_total_evaluations
+                   else
+                     Post.all.order(created_at: :desc)
+                   end
+
+    @posts = sorted_posts.page(params[:page]).per(9)
+    @dummy_count = [9 - @posts.length, 0].max
   end
 
   def show
@@ -50,7 +67,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :body, image_urls: [], products_attributes: [:title, :description, :url, :image_url])
+    params.require(:post).permit(:title, :body, :rating_enabled, image_urls: [], products_attributes: [:title, :description, :url, :image_url])
   end
 
   def extract_public_id(url)

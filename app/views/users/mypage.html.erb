@@ -66,7 +66,20 @@
 
       <!-- アカウント名・評価 -->
       <div class="account-name position-absolute" style="font-size: 50px; color: black; top: 220px; left: 60%; transform: translateX(-50%);"> <%= current_user.name %> </div>
-      <div class="rating-count position-absolute" style="color: black; top: 290px; left: 60%; transform: translateX(-50%);">トータルスコア：※現在未実装</div>
+      <div class="rating-count position-absolute" style="color: black; top: 290px; left: 60%; transform: translateX(-50%);">
+        <h5 class="fw-bold">
+         トータルスコア：
+           <% full_stars = [(@total_score.to_f / @received_star_ratings.count).round, 5].min rescue 0 %>
+           <% (1..5).each do |i| %>
+            <% if i <= full_stars %>
+              <span class="star-icon text-warning"><i class="bi bi-star-fill"></i></span>
+            <% else %>
+              <span class="star-icon text-secondary"><i class="bi bi-star"></i></span>
+            <% end %>
+           <% end %>
+          (<%= @total_score %> 点)
+        </h5>
+      </div>
 
       <!-- ボタン群（通常フローで配置） -->
       <<div class="d-flex flex-column align-items-center gap-4 mt-5" style="z-index: 2; top: 250px; position: relative;">
@@ -80,7 +93,7 @@
         </div>
         <div class="d-flex align-items-center gap-2">
           <i class="bi bi-card-list" style="font-size: 32px; color: #000;"></i>
-          <%= link_to "投稿一覧", my_posts_path, class: "plain-button" %>
+          <%= link_to "#{current_user.name}さんの投稿一覧", my_posts_path, class: "plain-button" %>
         </div>
         <div class="d-flex align-items-center gap-2">
           <i class="bi bi-mailbox" style="font-size: 32px; color: #000;"></i>

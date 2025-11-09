@@ -18,13 +18,26 @@
   <div class="position-relative">
   <%= form_with model: @post, local: true, html: { multipart: true } do |f| %>
     <!-- タイトル -->
-    <div style="width: 1300px; margin: 0 auto; margin-bottom: 100px;">
+    <div style="width: 1300px; margin: 0 auto; margin-bottom: 50px;">
       <%= f.label :title, "タイトル", style: "font-size: 64px;", class: "form-label d-block text-start mb-1" %>
       <%= f.text_field :title, class: "form-control", style: "height: 65px;",maxlength: 10, placeholder: "タイトル（10文字以内）" %>
     </div>
 
+    <div class="mb-3" style="width: 1300px; margin: 0 auto; ">
+      <label class="form-label d-block text-start mb-1" style="font-size: 64px;">評価機能</label>
+      <div class="form-check form-check-inline" style="transform: scale(2.0); margin-top: 30px; margin-left: 40px; margin-right: 100px;">
+        <%= f.radio_button :rating_enabled, 'true', checked: true, class: "form-check-input", id: "rating_on" %>
+        <%= f.label :rating_enabled, "ON", class: "form-check-label", for: "rating_on" %>
+      </div>
+
+      <div class="form-check form-check-inline" style="transform: scale(2.0);">
+        <%= f.radio_button :rating_enabled, 'false', class: "form-check-input", id: "rating_off" %>
+        <%= f.label :rating_enabled, "OFF", class: "form-check-label", for: "rating_off" %>
+      </div>
+    </div>
+
   <!-- 画像 -->
-  <div class="mb-3" style="width: 1300px; margin: 0 auto;">
+  <div class="mb-3" style="width: 1300px; margin: 0 auto; margin-top: 50px;">
     <label class="form-label d-block text-start mb-1" style="font-size: 64px;">画像</label>
   </div>
 

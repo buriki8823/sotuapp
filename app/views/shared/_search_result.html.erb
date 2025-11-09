@@ -5,8 +5,27 @@
   
     <%= image_tag(post.user.avatar_url_or_default, class: "rounded-circle mb-2", size: "200x200") %>
 
-    <span class="fw-bold text-center" style="margin-top: 30px; font-size: 50px;"><%= post.user.name %></span>
-  </div>
+    <span class="fw-bold text-center" style="margin-top: 30px; font-size: 25px;">投稿者：<%= post.user.name %></span>
+
+    <div class="star-row d-flex align-items-center">
+      <% if post.rating_enabled? %>
+       <div class="star-row d-flex flex-column align-items-start">
+         <div class="mb-1" style="font-size: 20px;">この投稿の評価</div>
+         <div class="d-flex align-items-center">
+           <% avg_score = post.average_star_score.to_f.round %>
+           <% (1..5).each do |i| %>
+             <% if i <= avg_score %>
+               <span class="star-icon text-warning"><i class="bi bi-star-fill"></i></span>
+             <% else %>
+              <span class="star-icon text-secondary"><i class="bi bi-star"></i></span>
+             <% end %>
+           <% end %> 
+         </div>
+        </div>   
+       <% else %>
+       <% end %>
+      </div>
+    </div>
 
   <!-- 右側：投稿画像 -->
   <div class="post-image" style="position: relative; left: 10px; border: 1px solid black; flex: 0 0 70%; height: 500px;">

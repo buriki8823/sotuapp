@@ -99,6 +99,49 @@
     <p class="text-center text-muted">画像は投稿されていません</p>
   <% end %>
 
+  <!-- 感性評価ボタン -->
+  <div style="max-width: 1500px; margin: 0 auto;">
+    <div class="d-flex flex-wrap align-items-center justify-content-center gap-4 mb-5">
+
+      <!-- 感性評価ボタン群 -->
+      <div class="d-flex flex-wrap gap-3"style="margin-right: 50px;">
+        <% Evaluation.kinds.each do |kind, _| %>
+          <% evaluated = @post.evaluations.exists?(user: current_user, kind: kind) %>
+
+          <%= form_with url: evaluate_post_path(@post, kind: kind), method: :post, local: false do %>
+            <%= button_tag type: "submit",
+                class: "btn px-4 py-2 rounded-pill kind-button #{evaluated ? 'btn-success' : 'btn-outline-secondary'}",
+                data: { kind: kind } do %>
+              <%= kind_icon(kind) %> <%= kind_label(kind) %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <!-- ★評価 -->
+      <% if @post.rating_enabled? %>
+        <% avg_score = @post.average_star_score.to_f.round %>
+        <div class="star-rating" data-post-id="<%= @post.id %>" style="position: relative;">
+          <div class="star-display" style="cursor: pointer;">
+           <% (1..5).each do |i| %>
+              <span class="star <%= 'selected' if i <= avg_score %>" data-score="<%= i %>">★</span>
+           <% end %>
+            <span class="ms-2 text-muted">（平均：<%= @post.average_star_score %>点）</span>
+          </div>
+
+          <div class="score-dropdown" style="display: none; position: absolute; top: 40px; left: 0; background: white; border: 1px solid #ccc; padding: 8px; border-radius: 4px; z-index: 100;">
+            <% (1..5).each do |i| %>
+              <div class="score-option" data-score="<%= i %>" style="cursor: pointer; padding: 4px 8px;">
+               <%= "★" * i %>（<%= i %>点）
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <% else %>
+      <% end %>
+  </div>
+
   <!-- お部屋説明 -->
   <div style="max-width: 1500px; margin: 0 auto;">
     <h3 class="fw-bold mb-3" style="text-align: left;">お部屋説明</h3>
@@ -186,6 +229,35 @@
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
       },
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".star-rating").forEach(rating => {
+      const display = rating.querySelector(".star-display");
+      const dropdown = rating.querySelector(".score-dropdown");
+      const postId = rating.dataset.postId;
+
+      display.addEventListener("click", () => {
+        dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+      });
+
+      dropdown.querySelectorAll(".score-option").forEach(option => {
+        option.addEventListener("click", () => {
+          const score = parseInt(option.dataset.score);
+          fetch("/star_ratings", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRF-Token": document.querySelector("[name='csrf-token']").content
+            },
+            body: JSON.stringify({ post_id: postId, score: score })
+          }).then(() => {
+            dropdown.style.display = "none";
+            location.reload(); // 平均点更新
+          });
+        });
+      });
     });
   });
 </script>

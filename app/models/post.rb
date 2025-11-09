@@ -5,6 +5,29 @@ class Post < ApplicationRecord
   has_many :products, dependent: :destroy
   accepts_nested_attributes_for :products
   has_many :comments, dependent: :destroy
+  has_many :evaluations, dependent: :destroy
+
+   scope :order_by_total_evaluations, -> {
+      left_joins(:evaluations)
+        .group(:id)
+        .order('COUNT(evaluations.id) DESC')
+    }
+
+    # 特定の感性評価順（例：かわいい）
+    scope :order_by_kind, ->(kind) {
+      kind_value = Evaluation.kinds[kind.to_s]
+      left_joins(:evaluations)
+        .where(evaluations: { kind: kind_value })
+        .group(:id)
+        .order('COUNT(evaluations.id) DESC')
+    }
+
+  has_many :star_ratings, dependent: :destroy
+  attribute :rating_enabled, :boolean
+
+  def average_star_score
+    star_ratings.average(:score)&.round(1) || 0
+  end
 
   validate :must_have_valid_images
   validates :title, presence: true, length: { maximum: 10 }
