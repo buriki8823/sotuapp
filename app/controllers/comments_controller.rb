@@ -5,9 +5,13 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
-      redirect_to post_path(@post), notice: "コメントを投稿しました"
+      render json: {
+        body: @comment.body,
+        user_name: @comment.user.name,
+        created_at: @comment.created_at.strftime("%Y-%m-%d %H:%M")
+      }, status: :created
     else
-      redirect_to post_path(@post), alert: "コメントの投稿に失敗しました"
+      render json: { errors: @comment.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

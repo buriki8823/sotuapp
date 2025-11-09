@@ -99,7 +99,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_09_072643) do
   create_table "star_ratings", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "post_id", null: false
-    t.integer "score"
+    t.integer "score", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_star_ratings_on_post_id"
