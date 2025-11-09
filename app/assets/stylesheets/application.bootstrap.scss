@@ -281,3 +281,22 @@ footer {
     opacity: 1;
   }
 }
+
+.star {
+  font-size: 28px;
+  color: #ccc;
+}
+.star.selected {
+  color: #f5c518;
+}
+.score-option:hover {
+  background-color: #f0f0f0;
+}
+
+.star-icon {
+  font-size: 24px;
+  color: #000000;
+}
+.text-warning {
+  color: #f5c518 !important;
+}

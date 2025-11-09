@@ -4,6 +4,16 @@ class UsersController < ApplicationController
 
   def mypage
    @user = current_user
+   @received_star_ratings = StarRating.joins(:post).where(posts: { user_id: @user.id })
+   @total_score = @received_star_ratings.sum(:score)
+   @average_score = @received_star_ratings.average(:score)&.round(1) || 0
+  end
+
+  def show
+    @user = User.find(params[:id])
+    @received_star_ratings = StarRating.joins(:post).where(posts: { user_id: @user.id })
+    @total_score = @received_star_ratings.sum(:score)
+    @average_score = @received_star_ratings.average(:score)&.round(1) || 0
   end
 
   def create

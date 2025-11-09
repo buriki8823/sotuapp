@@ -24,8 +24,12 @@ Rails.application.routes.draw do
   end
 
   resources :posts, only: [:index, :show, :new, :create, :destroy] do
+    resources :star_ratings, only: [:create]
     resources :comments, only: [:create]
     resource :bookmark, only: [:create, :destroy]
+    member do
+      post 'evaluate/:kind', to: 'evaluations#create', as: :evaluate
+    end
   end
   resources :bookmarks, only: [:index]
   resources :users, only: [:show, :update] do
