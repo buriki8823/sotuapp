@@ -248,16 +248,21 @@
           fetch("/star_ratings", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
-              "X-CSRF-Token": document.querySelector("[name='csrf-token']").content
+               "Content-Type": "application/json",
+               "X-CSRF-Token": document.querySelector("[name='csrf-token']").content
             },
             body: JSON.stringify({ post_id: postId, score: score })
-          }).then(() => {
+          })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("サーバーエラー: " + response.status);
+            }
             dropdown.style.display = "none";
-            location.reload(); // 平均点更新
+            location.reload(); // 成功時のみリロード
           })
           .catch((error) => {
             console.error("評価送信エラー:", error);
+            alert("評価の送信に失敗しました。もう一度お試しください。");
           });
         });
       });
