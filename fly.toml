@@ -11,6 +11,9 @@ primary_region = 'nrt'
 
 [deploy]
   release_command = "bin/rails runner 'puts \"Release phase check: OK\"'"
+  strategy = "rolling"
+  min_machines_running = 0
+
 
 [env]
   RAILS_ENV = 'production'
