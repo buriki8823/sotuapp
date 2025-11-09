@@ -245,7 +245,7 @@
       dropdown.querySelectorAll(".score-option").forEach(option => {
         option.addEventListener("click", () => {
           const score = parseInt(option.dataset.score);
-          fetch("/star_ratings", {
+          fetch(`/posts/${postId}/star_ratings`, {
             method: "POST",
             headers: {
                "Content-Type": "application/json",
