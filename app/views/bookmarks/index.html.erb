@@ -13,7 +13,9 @@
               <div class="card-body">
                 <h5 class="card-title"><%= post.title %></h5>
                 <p class="card-text text-muted">投稿者：<%= post.user.name %></p>
-                <%= button_to "ブックマーク解除", post_bookmark_path(post), method: :delete, class: "btn btn-sm btn-outline-danger mt-2" %>
+                <button class="btn btn-sm btn-outline-danger mt-2 bookmark-remove-button" data-post-id="<%= post.id %>">
+                  ブックマーク解除
+                </button>
               </div>
             </div>
           </div>
@@ -31,3 +33,37 @@
     <% end %>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".bookmark-remove-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const postId = button.dataset.postId;
+        const csrfToken = document.querySelector("[name='csrf-token']").content;
+
+        fetch(`/posts/${postId}/bookmark`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-CSRF-Token": csrfToken
+          }
+        })
+        .then(response => {
+          if (!response.ok) throw new Error("通信失敗");
+
+          // DOMからカードを削除
+          const card = button.closest(".card");
+          if (card) {
+            const col = card.closest(".col");
+            if (col) col.remove();
+          }
+        })
+        .catch(error => {
+          console.error("ブックマーク解除エラー:", error);
+          alert("ブックマーク解除に失敗しました");
+        });
+      });
+    });
+  });
+</script>

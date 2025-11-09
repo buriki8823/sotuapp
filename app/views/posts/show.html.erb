@@ -65,19 +65,12 @@
           </div>
 
           <% if user_signed_in? %>
-            <% if @bookmarked %>
-              <%= button_to post_bookmark_path(@post), method: :delete, class: "btn mb-4 w-100", style: "background-color: #dc3545; color: white;" do %>
-                <i class="bi bi-bookmark-x me-2"></i>ブックマーク解除
-              <% end %>
-            <% else %>
-              <%= button_to post_bookmark_path(@post), method: :post, class: "btn mb-4 w-100", style: "background-color: orange; color: white;" do %>
-                <i class="bi bi-bookmark-plus me-2"></i>ブックマークする
-              <% end %>
-            <% end %>
-          <% else %>
-            <button class="btn mb-4 w-100" style="background-color: gray; color: white;" disabled>
-              <i class="bi bi-bookmark me-2"></i>ログインしてブックマーク
-            </button>
+            <div class="bookmark-toggle" data-post-id="<%= @post.id %>" data-bookmarked="<%= @bookmarked %>">
+              <button class="btn w-100 bookmark-button" style="background-color: <%= @bookmarked ? '#dc3545' : 'orange' %>; color: white; margin-bottom: 10px;">
+                <i class="bi <%= @bookmarked ? 'bi-bookmark-x' : 'bi-bookmark-plus' %> me-2"></i>
+                <%= @bookmarked ? 'ブックマーク解除' : 'ブックマークする' %>
+              </button>
+            </div>
           <% end %>
 
           <%= link_to "ブックマーク一覧へ", bookmarks_path, class: "btn w-100", style: "background-color: #6c757d; color: white;" %>
@@ -190,10 +183,10 @@
   <% end %>
 
 
-  <!-- コメントセクション -->
-  <div class="mx-auto " style="max-width: 1500px;">
+  <!-- コメント投稿フォーム -->
+  <div id="comment-form" class="mx-auto" style="max-width: 1500px;">
     <h3 class="fw-bold mb-3">コメントを投稿する</h3>
-    <%= form_with(model: [@post, Comment.new], local: true) do |f| %>
+    <%= form_with(model: [@post, Comment.new], local: false, data: { turbo: false }, id: "comment-form") do |f| %>
       <div class="mb-3">
         <%= f.text_area :body, rows: 4, class: "form-control", placeholder: "コメントを入力してください" %>
       </div>
@@ -201,21 +194,20 @@
     <% end %>
   </div>
 
+  <!-- コメント一覧 -->
   <div class="mx-auto" style="position: relative; top: -20px; margin-top: 50px; max-width: 1500px;">
-    <% if @post.comments.any? %>
-      <h3>コメント一覧</h3>
+    <h3>コメント一覧</h3>
+    <div id="comment-list">
       <% @post.comments.each do |comment| %>
         <div class="p-3 rounded shadow-sm" style="margin-top: 10px; background-color: #fff; border: 1px solid #ccc;">
           <p class="mb-1"><strong><%= comment.user.name %></strong></p>
-         <hr style="margin-top: 5px; margin-bottom: 10px; border-top: 1px solid #999;">
+          <hr style="margin-top: 5px; margin-bottom: 10px; border-top: 1px solid #999;">
           <p class="mb-0"><%= simple_format(comment.body) %></p>
         </div>
       <% end %>
-    <% else %>
-      <p class="text-muted mb-0">まだコメントはありません。</p>
-    <% end %>
+    </div>
   </div>
-</div>
+
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -268,4 +260,75 @@
       });
     });
   });
+
+  document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".bookmark-toggle").forEach(container => {
+    const button = container.querySelector(".bookmark-button");
+    const postId = container.dataset.postId;
+    let bookmarked = container.dataset.bookmarked === "true";
+
+    button.addEventListener("click", () => {
+      const method = bookmarked ? "DELETE" : "POST";
+      const csrfToken = document.querySelector("[name='csrf-token']").content;
+
+      fetch(`/posts/${postId}/bookmark`, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken
+        }
+      })
+      .then(response => {
+        if (!response.ok) throw new Error("通信失敗: " + response.status);
+        // 状態切り替え
+        bookmarked = !bookmarked;
+        container.dataset.bookmarked = bookmarked;
+        button.innerHTML = bookmarked
+          ? '<i class="bi bi-bookmark-x me-2"></i>ブックマーク解除'
+          : '<i class="bi bi-bookmark-plus me-2"></i>ブックマークする';
+        button.style.backgroundColor = bookmarked ? "#dc3545" : "orange";
+      })
+      .catch(error => {
+        console.error("ブックマークエラー:", error);
+        alert("ブックマークの切り替えに失敗しました");
+      });
+    });
+  });
+});
+
+document.addEventListener("submit", (event) => {
+  event.preventDefault(); // ← これがないと遷移する
+  const form = event.target;
+
+  fetch(form.action, {
+    method: form.method,
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": document.querySelector("[name='csrf-token']").content
+    },
+    body: JSON.stringify({
+      comment: {
+        body: form.querySelector("textarea[name='comment[body]']").value
+      }
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    const commentList = document.querySelector("#comment-list");
+    const newComment = document.createElement("div");
+    newComment.className = "p-3 rounded shadow-sm";
+    newComment.style = "margin-top: 10px; background-color: #fff; border: 1px solid #ccc;";
+    newComment.innerHTML = `
+      <p class="mb-1"><strong>${data.user_name}</strong></p>
+      <hr style="margin-top: 5px; margin-bottom: 10px; border-top: 1px solid #999;">
+      <p class="mb-0">${data.body}</p>
+    `;
+    commentList.prepend(newComment);
+    form.reset();
+  })
+  .catch(error => {
+    console.error("コメント送信エラー:", error);
+    alert("コメントの投稿に失敗しました");
+  });
+});
 </script>
