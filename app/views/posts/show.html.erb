@@ -255,6 +255,9 @@
           }).then(() => {
             dropdown.style.display = "none";
             location.reload(); // 平均点更新
+          })
+          .catch((error) => {
+            console.error("評価送信エラー:", error);
           });
         });
       });
