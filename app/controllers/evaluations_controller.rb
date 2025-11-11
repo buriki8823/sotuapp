@@ -1,21 +1,23 @@
 class EvaluationsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_post
 
   def create
-    @post = Post.find(params[:id])
     kind = params[:kind]
-
     evaluation = @post.evaluations.find_by(user: current_user, kind: kind)
 
     if evaluation
       evaluation.destroy
+      render json: { status: "unevaluated", kind: kind }, status: :ok
     else
       @post.evaluations.create(user: current_user, kind: kind)
+      render json: { status: "evaluated", kind: kind }, status: :created
     end
+  end
 
-    respond_to do |format|
-      format.js
-      format.html { redirect_to @post } # fallback
-    end
+  private
+
+  def set_post
+    @post = Post.find(params[:id])
   end
 end

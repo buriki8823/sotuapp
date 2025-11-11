@@ -35,35 +35,42 @@
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".bookmark-remove-button").forEach(button => {
-      button.addEventListener("click", () => {
-        const postId = button.dataset.postId;
-        const csrfToken = document.querySelector("[name='csrf-token']").content;
+document.addEventListener("DOMContentLoaded", () => {
+  const buttons = document.querySelectorAll(".bookmark-remove-button");
+  if (buttons.length === 0) return;
 
-        fetch(`/posts/${postId}/bookmark`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "X-CSRF-Token": csrfToken
-          }
-        })
-        .then(response => {
-          if (!response.ok) throw new Error("通信失敗");
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      const postId = button.dataset.postId;
+      const csrfToken = document.querySelector("[name='csrf-token']")?.content;
+      if (!csrfToken || !postId) return;
 
-          // DOMからカードを削除
+      fetch(`/posts/${postId}/bookmark`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "X-CSRF-Token": csrfToken
+        }
+      })
+      .then(response => {
+        if (!response.ok) throw new Error("通信失敗");
+        return response.json(); // ← JSONを期待する
+      })
+      .then(data => {
+        if (data.status === "unbookmarked") {
           const card = button.closest(".card");
           if (card) {
             const col = card.closest(".col");
             if (col) col.remove();
           }
-        })
-        .catch(error => {
-          console.error("ブックマーク解除エラー:", error);
-          alert("ブックマーク解除に失敗しました");
-        });
+        }
+      })
+      .catch(error => {
+        console.error("ブックマーク解除エラー:", error);
+        alert("ブックマーク解除に失敗しました");
       });
     });
   });
+});
 </script>
