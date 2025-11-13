@@ -1,7 +1,7 @@
 <div class="position-relative py-0" style="background-image: url(<%= asset_path('posts-bg.png') %>);background-size: cover; background-position: top center; background-repeat: no-repeat; width: 100%; min-height: 100vh; margin: 0;">
   <div class="d-flex flex-nowrap justify-content-center gap-4 overflow-auto" style="margin-top: -10px;">
-  <%= link_to mypage_path, class: "text-decoration-none" do %>
     <div class="position-relative flex-shrink-0" style="width: 100%; max-width: 350px;">
+    <%= link_to mypage_path, class: "text-decoration-none" do %>
       <%= image_tag "オレンジPC.png", class: "img-fluid w-100" %>
       <div class="position-absolute start-50 translate-x-middle fw-bold text-center"
            style="top: 35%; transform: translateX(-50%);
@@ -66,3 +66,32 @@
    <% end %>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const input = document.querySelector("input[name='q']");
+    const suggestionBox = document.createElement("div");
+    suggestionBox.className = "autocomplete-box";
+    input.parentNode.appendChild(suggestionBox);
+
+    input.addEventListener("input", async (e) => {
+      const query = e.target.value;
+      if (query.length < 2) return suggestionBox.innerHTML = "";
+
+      const res = await fetch(`/search/autocomplete?q=${encodeURIComponent(query)}`);
+      const suggestions = await res.json();
+
+      suggestionBox.innerHTML = "";
+      suggestions.forEach(s => {
+        const item = document.createElement("div");
+        item.textContent = s;
+        item.className = "autocomplete-item";
+        item.onclick = () => {
+          input.value = s;
+         suggestionBox.innerHTML = "";
+        };
+        suggestionBox.appendChild(item);
+      });
+    });
+  });
+</script>
