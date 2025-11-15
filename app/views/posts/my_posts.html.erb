@@ -10,7 +10,7 @@
           <div class="col">
             <div class="card h-100 shadow-sm">
               <%= link_to post_path(post), class: "d-block" do %>
-                <%= image_tag post.first_image_url_or_placeholder, alt: "投稿画像", style: "width: calc(100% - 24px); height: 230px; object-fit: cover; margin: 12px; border: 1px solid #ccc; border-radius: 6px;" %>
+                <%= image_tag post.first_image_url_or_placeholder.sub("/upload/", "/upload/c_fill,g_auto,w_600,h_230/"), alt: "投稿画像", style: "width: calc(100% - 24px); height: 230px; object-fit: cover; margin: 12px; border: 1px solid #ccc; border-radius: 6px;" %>
               <% end %>
               <div class="card-body">
                 <h5 class="card-title"><%= post.title %></h5>

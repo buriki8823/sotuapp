@@ -124,7 +124,7 @@ const initializeImageUpload = () => {
     const imageUrl = modalPreview?.dataset.imageUrl;
     const index = modal.dataset.slotIndex;
 
-    if (!title && !description && !imageUrl) {
+    if (!title || !description || !imageUrl) {
       alert("タイトル・説明・画像は必須です");
       return;
     }

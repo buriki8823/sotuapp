@@ -15,7 +15,7 @@
         <div class="swiper-wrapper">
           <% @post.image_urls.each do |url| %>
             <div class="swiper-slide">
-              <%= image_tag url, class: "w-100 h-100", alt: "投稿画像", style: "object-fit: cover;" %>
+              <%= image_tag url.sub("/upload/", "/upload/c_fill,w_800,h_600,g_auto/"), class: "w-100 h-100", alt: "投稿画像", style: "object-fit: cover;" %>
             </div>
           <% end %>
         </div>
