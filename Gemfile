@@ -72,5 +72,6 @@ gem "activestorage-cloudinary-service"
 
 gem 'jquery-rails'
 gem 'dotenv-rails', groups: [:development, :test]
+gem 'mini_magick'
 
 
