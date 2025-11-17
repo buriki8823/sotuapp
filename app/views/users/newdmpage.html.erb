@@ -1,0 +1,27 @@
+<h1 class="dmpage-title text-center" style="font-size: 50px; color: #93FD00; background-color: #7EBFFB; padding: 10px; margin-bottom: 0;">
+  新規メール作成
+</h1>
+
+<div class="container-fluid" style="height: 80vh;">
+    <div class="row h-80">
+      <div class="col-md-12 d-flex flex-column justify-content-center align-items-center" style="height: 80vh; background-color: #DEEAEE; margin-left: 0; margin-right: 0;">
+        <%= form_with url: send_user_message_path(current_user), method: :post, local: true, class: "w-75" do |f| %>
+          <div class="mb-4">
+            <%= f.label :recipient_id, "宛先", class: "form-label", style:"font-size: 40px;" %>
+            <%= f.select :recipient_id, options_from_collection_for_select(@all_users, :id, :name), { prompt: "ユーザーを選択" }, class: "form-select" %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :subject, "件名", class: "form-label", style:"font-size: 40px;" %>
+            <%= f.text_field :subject, class: "form-control", maxlength: 100, placeholder: "件名（100文字まで）" %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :body, "メッセージ内容", class: "form-label", style:"font-size: 40px;" %>
+            <%= f.text_area :body, rows: 5, class: "form-control", required: true, maxlength: 1000, placeholder: "メッセージ内容（1000文字まで）"  %>
+          </div>
+          <%= f.submit "送信", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+</div>

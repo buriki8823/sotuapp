@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+
   def new
   end
 
@@ -57,6 +59,87 @@ class UsersController < ApplicationController
     redirect_to mypage_users_path, notice: "ウィンドウ背景をデフォルトに戻しました"
   end
 
+  def dmpage
+    @entries = Entry.where(user_id: current_user.id)
+    @messages = Message.where(room_id: params[:room_id]).order(:created_at)
+
+    @focused_message = Message.find_by(id: params[:message_id])
+
+    # 既読処理
+    if @focused_message && @focused_message.user_id != current_user.id && !@focused_message.read?
+      @focused_message.update(read: true)
+    end
+
+    # 未読通知の再評価
+    @has_new_messages = Message.joins("INNER JOIN entries ON entries.room_id = messages.room_id")
+                              .where(entries: { user_id: current_user.id })
+                              .where.not(user_id: current_user.id)
+                              .where(read: false)
+                              .exists?
+
+    @received_messages = Message.includes(:user)
+                           .joins("INNER JOIN entries ON entries.room_id = messages.room_id")
+                           .where(entries: { user_id: current_user.id })
+                           .where.not(user_id: current_user.id)
+                           .order(created_at: :desc)
+  end
+
+  def send_message
+    recipient = User.find(params[:recipient_id])
+    room = Room.joins(:entries)
+               .where("CAST(entries.user_id AS BIGINT) IN (?)", [current_user.id, recipient.id])
+               .group('rooms.id')
+               .having('COUNT(DISTINCT entries.user_id) = 2')
+               .first
+
+    unless room
+      room = Room.create!
+      Entry.create(user_id: current_user.id, room_id: room.id, partner_id: recipient.id)
+      Entry.create(user_id: recipient.id, room_id: room.id, partner_id: current_user.id)
+    end
+
+    Message.create!(
+      user_id: current_user.id,
+      room_id: room.id,
+      subject: params[:subject],
+      body: params[:body]
+    )
+
+    redirect_to user_dmpage_path(current_user, room_id: room.id)
+
+    @message = Message.new(
+      user_id: current_user.id,
+      room_id: room.id,
+      subject: params[:subject],
+      body: params[:body]
+    )
+    if @message.save
+      redirect_to user_dmpage_path(current_user, room_id: room.id)
+    else
+      flash[:alert] = "メッセージの送信に失敗しました: " + @message.errors.full_messages.join(", ")
+      redirect_to user_dmpage_path(current_user, room_id: room.id)
+    end
+  end
+
+  def newdmpage
+    @user = current_user
+    @all_users = User.where.not(id: @user.id)
+  end
+
+  def search
+    users = User.where("name LIKE ?", "%#{params[:q]}%")
+    render json: users.select(:id, :name)
+  end
+  
+  def reply
+    @message = Message.find(params[:id])
+    @reply = @message.replies.create(user: current_user, body: params[:body], recipient_id: params[:recipient_id])
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to user_dmpage_path(current_user, message_id: @message.id) }
+    end
+  end
 
 private
 

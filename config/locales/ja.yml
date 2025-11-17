@@ -2,6 +2,8 @@ ja:
   time:
     formats:
       long: "%Y年%m月%d日 %H:%M"
+      short: "%Y/%m/%d %H:%M"
+      default: "%Y年%m月%d日 %H:%M"
 
   user:
     registration:
