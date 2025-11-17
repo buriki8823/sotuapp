@@ -4,9 +4,21 @@
     <!-- 左側：ユーザーアイコン＋メール -->
     <div class="d-flex align-items-center gap-3">
       <% if user_signed_in? %>
-        <%= image_tag current_user.avatar_url.presence.sub('/upload/', '/upload/c_thumb,w_600,h_600,r_max/') || "default_avatar.png",
+        <%= image_tag current_user.avatar_url.presence&.sub('/upload/', '/upload/c_thumb,w_600,h_600,r_max/') || "default_avatar.png",
                       width: 60, height: 60, class: "rounded-circle", alt: "ユーザーアイコン" %>
-        <i class="bi bi-envelope" style="font-size: 40px; color: #31FF57;"></i>
+
+        <div class="position-relative d-inline-block">
+          <%= link_to user_dmpage_path(current_user), class: "text-decoration-none" do %>
+            <i class="bi bi-envelope" style="font-size: 40px; color: #31FF57;"></i>
+            <% if @has_new_messages %>
+              <span class="position-absolute badge rounded-pill"
+                    style="top: 4px; left: 32px; background-color: #dc3545; color: white; font-size: 0.6rem; padding: 0.4em;">
+                ●
+                <span class="visually-hidden">新着メッセージあり</span>
+              </span>
+            <% end %>
+          <% end %>
+        </div>
       <% end %>
     </div>
 

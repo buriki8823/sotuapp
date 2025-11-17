@@ -35,13 +35,21 @@ Rails.application.routes.draw do
   post 'posts/:id/evaluate/:kind', to: 'evaluations#create', as: :evaluate_post
 
   resources :bookmarks, only: [:index]
+  get 'users/search', to: 'users#search', as: 'users_search'
   resources :users, only: [:show, :update] do
     collection do
       get :mypage
       patch :reset_mypage_background
       patch :reset_window_background
     end
+    get 'newdmpage', on: :member
+    resources :messages, only: [] do
+      post 'reply', on: :member, to: 'messages#reply', as: :reply
+    end
   end
+
+  get 'users/:id/dmpage', to: 'users#dmpage', as: 'user_dmpage'
+  post 'users/:id/send_message', to: 'users#send_message', as: 'send_user_message'
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"

@@ -1,0 +1,114 @@
+<h1 class="dmpage-title text-center" style="font-size: 50px; color: #93FD00; background-color: #7EBFFB; padding: 10px; margin-bottom: 0;">
+  <%= current_user.name %>さんのメールBOX
+</h1>
+
+<div class="container-fluid px-0" style="height: 80vh;">
+    <div class="row gx-0 h-80">
+      <!-- 左側：メッセージ表示 -->
+      <div class="col-md-3 d-flex flex-column px-0 pt-0 pb-3 border-end border-dark",style="height: 80vh; background-color: #DEEAEE;">
+        <!-- 固定ヘッダー -->
+        <div class="sticky-top" style="top: 0; z-index: 1020; background-color: #DEEAEE;">
+          <%= link_to "新規メール作成", newdmpage_user_path(current_user),
+            class: "btn w-100 mb-0",
+            style: "color: #FFFFFF; background-color: #69F7B0; border: none; border-radius: 0; font-weight: bold;" %>
+
+          <h4 class="text-success text-center mb-0"
+              style="border-bottom: 1px solid #000000; padding: 10px;">
+            受信一覧
+          </h4>
+        </div>
+
+        <!-- スクロール領域 -->
+        <div class="flex-grow-1 overflow-auto">
+          <% @received_messages.each do |message| %>
+            <% sender = message.user %>
+            <%= link_to user_dmpage_path(current_user, message_id: message.id),
+                class: "text-decoration-none text-dark" do %>
+              <div class="p-2 border-bottom border-dark d-flex align-items-center gap-3"
+                   style="background-color: <%= message.read ? '#ffffff' : '#DEEAEE' %>;">
+                <% if sender.avatar_url.present? %>
+                  <%= image_tag sender.avatar_url.sub('/upload/', '/upload/c_thumb,w_100,h_100,r_max/'),
+                      alt: "#{sender.name}のアイコン",
+                      class: "rounded-circle",
+                      style: "width: 60px; height: 60px; object-fit: cover;" %>
+                  <% end %>
+
+                  <div class="flex-grow-1">
+                    <strong>送信者：<%= sender.name %></strong><br>
+                    <strong>件名：<%= message.subject || "（件名なし）" %></strong><br>
+                    <small class="text-muted">
+                      <%= l(message.created_at, format: :short) %>
+                    </small>
+                  </div>
+                </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+        
+        <!-- 右側：メッセージ表示 -->
+        <div class="col-md-9 d-flex flex-column px-0 pt-0" style="height: 80vh;">
+          <% if @focused_message %>
+            <% sender = @focused_message.user %>
+            <% recipient_entry = Entry.find_by(room_id: @focused_message.room_id, user_id: current_user.id == sender.id ? nil : current_user.id) %>
+            <% recipient = recipient_entry ? User.find(recipient_entry.user_id) : nil %>
+
+            <!-- 固定ヘッダー：送信者・宛先・件名 -->
+            <div class="p-3 border-bottom bg-light d-flex align-items-center gap-3">
+              <% if sender.avatar_url.present? %>
+                <%= image_tag sender.avatar_url.sub('/upload/', '/upload/c_thumb,w_200,h_200,r_max/'),
+                    alt: "#{sender.name}のアイコン",
+                    class: "rounded-circle",
+                    style: "width: 100px; height: 100px; object-fit: cover;" %>
+              <% end %>
+              <div>
+                <strong>送信者：<%= sender.name %></strong><br>
+                <% if recipient %>
+                  <strong>宛先：<%= recipient.name %></strong><br>
+                <% end %>
+                <strong>件名：<%= @focused_message.subject.presence || "（件名なし）" %></strong><br>
+                <small class="text-muted">送信日時：<%= l(@focused_message.created_at, format: :long) %></small>
+              </div>
+            </div>
+
+
+            <!-- スクロール領域：本文＋返信一覧 -->
+            <div class="flex-grow-1 overflow-auto px-0 py-0 bg-light">
+              <div class="p-2 bg-light border-top mb-0" style="border-top: 1px solid #ffffff;">
+                <strong>コメント</strong>
+                <div class="border p-2 rounded bg-white w-100 mb-3" style="line-height: 1.4; word-break: break-word;">
+                  <%= simple_format(@focused_message.body) %>
+                </div>
+              </div>
+
+              <div id="replies">
+                <% @focused_message.replies.each do |reply| %>
+                  <div class="p-2 bg-light border-top mb-0" style="border-top: 1px solid #ffffff;">
+                    <strong>返信者：<%= reply.user.name %></strong><br>
+                    <strong>コメント</strong>
+                    <div class="border p-2 rounded bg-white w-100" style="line-height: 1.4; word-break: break-word;">
+                      <%= simple_format(reply.body) %>
+                    </div>
+                    <small class="text-muted d-block"><%= l(reply.created_at, format: :short) %></small>
+                  </div>
+                <% end %>
+            </div>
+          </div>
+
+          <!-- 固定フッター：返信フォーム -->
+          <turbo-frame id="reply_form" class="px-3 pt-2 border-top bg-light">
+            <%= form_with url: reply_user_message_path(current_user, @focused_message), method: :post, data: { turbo_frame: "reply_form" } do |f| %>
+              <div class="mb-2">
+                <%= f.label :body, "返信コメント", class: "form-label" %>
+                <%= f.text_area :body, rows: 2, class: "form-control" %>
+              </div>
+              <%= f.hidden_field :recipient_id, value: @focused_message.user_id %>
+              <%= f.submit "返信", class: "btn btn-success", style: "margin-bottom: 4px;" %>
+            <% end %>
+          </turbo-frame>
+          <% else %>
+            <div class="text-muted p-3">メッセージを選択してください。</div>
+          <% end %>
+        </div>
+    </div>
+</div>

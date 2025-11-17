@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_09_072643) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_16_122857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,6 +61,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_09_072643) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "entries", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "partner_id"
+    t.bigint "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_entries_on_user_id"
+  end
+
   create_table "evaluations", force: :cascade do |t|
     t.bigint "post_id", null: false
     t.bigint "user_id", null: false
@@ -69,6 +78,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_09_072643) do
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_evaluations_on_post_id"
     t.index ["user_id"], name: "index_evaluations_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "room_id", null: false
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "subject"
+    t.boolean "read", default: false, null: false
+    t.index ["room_id"], name: "index_messages_on_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -82,6 +103,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_09_072643) do
     t.json "products"
     t.string "image_public_id"
     t.boolean "rating_enabled", default: true
+    t.text "modal_image_urls", default: [], array: true
+    t.jsonb "square_image_urls", default: []
+    t.text "thumbnail_image_urls", default: [], array: true
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -96,10 +120,26 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_09_072643) do
     t.index ["post_id"], name: "index_products_on_post_id"
   end
 
+  create_table "replies", force: :cascade do |t|
+    t.text "body"
+    t.bigint "user_id", null: false
+    t.bigint "message_id", null: false
+    t.integer "recipient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id"], name: "index_replies_on_message_id"
+    t.index ["user_id"], name: "index_replies_on_user_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "star_ratings", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "post_id", null: false
-    t.integer "score"
+    t.integer "score", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_star_ratings_on_post_id"
@@ -129,10 +169,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_09_072643) do
   add_foreign_key "bookmarks", "users"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "entries", "users"
   add_foreign_key "evaluations", "posts"
   add_foreign_key "evaluations", "users"
+  add_foreign_key "messages", "rooms"
+  add_foreign_key "messages", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "products", "posts"
+  add_foreign_key "replies", "messages"
+  add_foreign_key "replies", "users"
   add_foreign_key "star_ratings", "posts"
   add_foreign_key "star_ratings", "users"
 end

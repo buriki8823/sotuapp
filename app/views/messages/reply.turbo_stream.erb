@@ -1,0 +1,9 @@
+<turbo-stream action="append" target="replies">
+  <template>
+    <div class="mt-2 p-2 border rounded bg-light">
+      <strong><%= @reply.user.name %></strong>：
+      <%= simple_format(@reply.body) %>
+      <small class="text-muted d-block"><%= l(@reply.created_at, format: :short) %></small>
+    </div>
+  </template>
+</turbo-stream>
