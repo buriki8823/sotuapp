@@ -39,3 +39,10 @@
 /config/credentials/production.key
 config/credentials.yml.enc
 config/master.key
+
+.env
+.env.production
+
+bfg.jar
+sotuapp-mirror/
+sotuapp-mirror.bfg-report/
