@@ -39,6 +39,9 @@ ja:
     passwords:
       send_instructions: "パスワード再設定の案内をメールで送信しました"
       updated: "パスワードが正常に変更されました。"
+    omniauth_callbacks:
+      success: "%{kind}アカウントで認証に成功しました。"
+      failure: "%{kind}アカウントでの認証に失敗しました。理由：%{reason}"
 
   activerecord:
     models:

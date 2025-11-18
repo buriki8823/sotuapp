@@ -87,4 +87,6 @@ Rails.application.configure do
   config.assets.compile = true
   config.assets.debug = true
 
+  config.hosts << "localhost"
+
 end

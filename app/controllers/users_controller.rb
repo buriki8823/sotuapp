@@ -98,23 +98,17 @@ class UsersController < ApplicationController
       Entry.create(user_id: recipient.id, room_id: room.id, partner_id: current_user.id)
     end
 
-    Message.create!(
-      user_id: current_user.id,
-      room_id: room.id,
-      subject: params[:subject],
-      body: params[:body]
-    )
-
-    redirect_to user_dmpage_path(current_user, room_id: room.id)
-
     @message = Message.new(
       user_id: current_user.id,
       room_id: room.id,
       subject: params[:subject],
-      body: params[:body]
+      body: params[:body],
+      recipient_id: recipient.id,
+      read: false
     )
+
     if @message.save
-      redirect_to user_dmpage_path(current_user, room_id: room.id)
+    redirect_to user_dmpage_path(current_user, room_id: room.id)
     else
       flash[:alert] = "メッセージの送信に失敗しました: " + @message.errors.full_messages.join(", ")
       redirect_to user_dmpage_path(current_user, room_id: room.id)

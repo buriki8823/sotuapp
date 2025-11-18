@@ -74,4 +74,6 @@ gem 'jquery-rails'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'mini_magick'
 
-
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'

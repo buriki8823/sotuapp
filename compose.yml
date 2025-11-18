@@ -5,8 +5,9 @@ services:
     environment:
       TZ: Asia/Tokyo
       POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-      - postgresql_data:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     healthcheck:
@@ -33,7 +34,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-
+    env_file:
+      - .env
 volumes:
   bundle_data:
   postgresql_data:

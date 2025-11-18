@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_16_122857) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_17_162237) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -88,6 +88,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_16_122857) do
     t.datetime "updated_at", null: false
     t.string "subject"
     t.boolean "read", default: false, null: false
+    t.integer "recipient_id"
     t.index ["room_id"], name: "index_messages_on_room_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
@@ -103,9 +104,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_16_122857) do
     t.json "products"
     t.string "image_public_id"
     t.boolean "rating_enabled", default: true
-    t.text "modal_image_urls", default: [], array: true
-    t.jsonb "square_image_urls", default: []
-    t.text "thumbnail_image_urls", default: [], array: true
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -139,7 +137,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_16_122857) do
   create_table "star_ratings", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "post_id", null: false
-    t.integer "score", null: false
+    t.integer "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_star_ratings_on_post_id"
@@ -158,6 +156,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_16_122857) do
     t.string "avatar_url"
     t.string "mypage_background_url"
     t.string "window_background_url"
+    t.string "provider"
+    t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

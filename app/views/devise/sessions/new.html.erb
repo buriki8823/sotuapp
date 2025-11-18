@@ -19,9 +19,16 @@
         <div class="mb-3">
           <%= f.email_field :email, class: "form-control", placeholder: t("activerecord.attributes.user.email") %>
         </div>
+
         <div class="mb-3">
           <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: t("activerecord.attributes.user.password") %>
         </div>
+
+        <div class="form-check mb-3">
+          <%= f.check_box :remember_me, class: "form-check-input" %>
+          <%= f.label :remember_me, "ログイン状態を保持する", class: "form-check-label" %>
+        </div>
+
         <div class="d-flex justify-content-center mt-3">
           <%= f.submit t("helpers.submit.session.create"), class: "btn btn-primary fw-bold px-4 py-2" %>
         </div>
@@ -30,6 +37,39 @@
        <%= link_to t("devise.links.sign_up"), new_user_registration_path, class: "text-decoration-none", style: "color: #1762A8;" %>
        <%= link_to t("devise.links.forgot_password"), new_user_password_path, class: "text-decoration-none", style: "margin-left: 50px; color: #1762A8;" %>
       </div>
+      <%= link_to user_google_oauth2_omniauth_authorize_path, method: :post, class: "google-login-button" do %>
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" class="google-logo">
+        Google でログイン
+      <% end %>
     </div>
   </div>
 </div>
+
+<style>
+.google-login-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  color: #444;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 10px 16px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  transition: background-color 0.2s ease;
+  margin-top: 20px;
+}
+
+.google-login-button:hover {
+  background-color: #f7f7f7;
+}
+
+.google-logo {
+  height: 20px;
+  width: 20px;
+  margin-right: 8px;
+}
+</style>
