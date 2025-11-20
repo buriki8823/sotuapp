@@ -82,7 +82,7 @@ Rails.application.configure do
   from: 'PCPACK <sk.typhoon999@gmail.com>' # ← SendGridで認証済みのアドレスに変更
 }
 
-  config.action_mailer.default_url_options = { host: 'sotuapp-v2.fly.dev', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: 'pcpack-app.com', protocol: 'https' }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -114,6 +114,7 @@ Rails.application.configure do
   # Enable DNS rebinding protection and other `Host` header attacks.
   config.hosts << "localhost"
   config.hosts += ["sotuapp-v2.fly.dev", /.*\.fly\.dev/]
+  config.hosts << "pcpack-app.com"
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
   #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`

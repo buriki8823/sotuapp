@@ -18,7 +18,7 @@ class PagesController < ApplicationController
                     title: @ogp_title,
                     description: "あなたのPC部屋や仕事部屋を美しく共有しよう。",
                     image: @ogp_image_url,
-                    url: request.original_url
+                    url: "https://pcpack-app.com/share"
                   },
                   twitter: {
                     card: "summary_large_image",
