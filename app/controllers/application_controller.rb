@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!, unless: :devise_controller?
   before_action :set_new_message_flag
-  before_action :redirect_to_custom_domain
 
 
   def after_sign_in_path_for(resource)
@@ -30,15 +29,5 @@ class ApplicationController < ActionController::Base
                                   .where(read: false)
                                   .exists?
     end
-  end
-
-  def redirect_to_custom_domain
-    return unless request.host == "sotuapp-v2.fly.dev"
-
-    # 静的ファイルや内部エンドポイントは除外
-    excluded_paths = ["/assets", "/rails", "/favicon.ico", "/robots.txt"]
-    return if excluded_paths.any? { |path| request.path.start_with?(path) }
-
-    redirect_to "https://pcpack-app.com#{request.fullpath}", status: :moved_permanently
   end
 end
