@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!, unless: :devise_controller?
   before_action :set_new_message_flag
+  before_action :redirect_to_custom_domain
+
 
   def after_sign_in_path_for(resource)
     authenticated_root_path
@@ -27,6 +29,12 @@ class ApplicationController < ActionController::Base
                                   .where.not(user_id: current_user.id)
                                   .where(read: false)
                                   .exists?
+    end
+  end
+
+  def redirect_to_custom_domain
+    if request.host == "sotuapp-v2.fly.dev"
+      redirect_to "https://pcpack-app.com#{request.fullpath}", status: :moved_permanently
     end
   end
 end
