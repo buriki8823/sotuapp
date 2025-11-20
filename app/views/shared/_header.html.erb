@@ -20,6 +20,12 @@
           <% end %>
         </div>
       <% end %>
+      <div class="position-relative d-inline-block">
+        <button class="btn btn-outline-light d-flex align-items-center gap-2" onclick="copyShareLink()" style="font-size: 16px;">
+          <i class="bi bi-link-45deg" style="font-size: 24px;"></i>
+        共有リンク
+        </button>
+      </div>
     </div>
 
     <!-- 右側：メニュー＋ PCPACKロゴ -->
@@ -45,3 +51,14 @@
     </div>
   </div>
 </nav>
+
+<script>
+  function copyShareLink() {
+    const shareUrl = "https://pcpack-app.com/share";
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      alert("共有リンクをコピーしました！");
+    }).catch(() => {
+      alert("コピーに失敗しました。");
+    });
+  }
+</script>
