@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include MetaTags::ViewHelper
+  
   def kind_icon(kind)
     case kind.to_s
     when "cool"     then "😎"
@@ -19,5 +21,10 @@ module ApplicationHelper
     when "aesthetic" then "映える"
     else kind.to_s
     end
+  end
+
+  def full_title(page_title = "")
+    base_title = "PCPACK"
+    page_title.present? ? "#{page_title} | #{base_title}" : base_title
   end
 end

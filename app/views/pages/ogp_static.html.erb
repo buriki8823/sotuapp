@@ -1,0 +1,18 @@
+<div class="container py-5 text-center">
+  <h1>OGPプレビュー（静的）</h1>
+
+  <img src="<%= @ogp_image_url %>" alt="OGP画像" class="img-fluid mb-4" style="max-width: 800px;">
+  <p class="lead"><%= @ogp_description %></p>
+
+  <hr class="my-5">
+
+  <h2 class="mb-4">🔍 OGPメタ情報（送信される内容）</h2>
+  <div class="text-start mx-auto" style="max-width: 720px;">
+    <p><strong>og:title:</strong> <code><%= @ogp_title %></code></p>
+    <p><strong>og:description:</strong> <code><%= @ogp_description %></code></p>
+    <p><strong>og:image:</strong> <code><%= @ogp_image_url %></code></p>
+    <p><strong>og:url:</strong> <code><%= request.original_url %></code></p>
+    <p><strong>twitter:card:</strong> <code>summary_large_image</code></p>
+    <p><strong>twitter:image:</strong> <code><%= @ogp_image_url %></code></p>
+  </div>
+</div>

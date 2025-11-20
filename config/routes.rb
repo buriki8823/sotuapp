@@ -24,6 +24,9 @@ Rails.application.routes.draw do
 
   get 'my_posts', to: 'posts#my_posts', as: :my_posts
 
+  get "ogp_static", to: "pages#ogp_static"
+
+
   namespace :mypage do
     resources :posts, only: [:index, :destroy]
   end

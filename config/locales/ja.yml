@@ -31,18 +31,30 @@ ja:
     registrations:
       signed_up: "登録が完了しました"
       updated: "プロフィールを更新しました"
+      destroyed: "アカウントを削除しました。"
     links:
       sign_up: "新規登録"
       forgot_password: "パスワードを忘れた方"
     failure:
       unauthenticated: "ログインしてください"
+      already_authenticated: "ログイン中です"
+      invalid: "メールアドレスまたはパスワードが違います。"
+      not_found_in_database: "メールアドレスまたはパスワードが違います。"
+      timeout: "セッションがタイムアウトしました。もう一度ログインしてください。"
+      inactive: "アカウントが有効化されていません。"
     passwords:
       send_instructions: "パスワード再設定の案内をメールで送信しました"
       updated: "パスワードが正常に変更されました。"
     omniauth_callbacks:
       success: "%{kind}アカウントで認証に成功しました。"
       failure: "%{kind}アカウントでの認証に失敗しました。理由：%{reason}"
-
+    confirmations:
+      send_instructions: "確認用の案内をメールで送信しました"
+      confirmed: "アカウントが確認されました。"
+    unlocks:
+      send_instructions: "アカウントロック解除の案内をメールで送信しました"
+      unlocked: "アカウントのロックが解除されました。"
+      
   activerecord:
     models:
       user: ユーザー
