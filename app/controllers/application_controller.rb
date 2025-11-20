@@ -33,8 +33,12 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_custom_domain
-    if request.host == "sotuapp-v2.fly.dev"
-      redirect_to "https://pcpack-app.com#{request.fullpath}", status: :moved_permanently
-    end
+    return unless request.host == "sotuapp-v2.fly.dev"
+
+    # 静的ファイルや内部エンドポイントは除外
+    excluded_paths = ["/assets", "/rails", "/favicon.ico", "/robots.txt"]
+    return if excluded_paths.any? { |path| request.path.start_with?(path) }
+
+    redirect_to "https://pcpack-app.com#{request.fullpath}", status: :moved_permanently
   end
 end
