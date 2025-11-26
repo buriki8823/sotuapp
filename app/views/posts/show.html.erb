@@ -62,27 +62,30 @@
             <h4 class="fw-bold mb-0" style="position: relative; left: 20px;"><%= @post.user.name %></h4>
           </div>
 
-          <% if user_signed_in? %>
-            <div class="bookmark-toggle" data-post-id="<%= @post.id %>" data-bookmarked="<%= @bookmarked %>">
-              <button class="btn bookmark-button" style="background-color: <%= @bookmarked ? '#dc3545' : 'orange' %>; color: white; margin-bottom: 10px;">
-                <i class="bi <%= @bookmarked ? 'bi-bookmark-x' : 'bi-bookmark-plus' %> me-2"></i>
-                <%= @bookmarked ? 'ブックマーク解除' : 'ブックマークする' %>
-              </button>
-            </div>
-          <% end %>
 
-          <%= link_to "ブックマーク一覧へ", bookmarks_path, class: "btn w-100", style: "background-color: #6c757d; color: white;" %>
-          
-          <% if current_user == @post.user %>
-            <%= button_to post_path(@post),
-                method: :delete,
-                data: { confirm: "本当に削除しますか？" },
-                params: {},
-                class: "btn btn-danger",
-                style: "z-index: 10; position: absolute; bottom: 8px; right: 8px;" do %>
-              投稿を削除
+          <div class="button-group">
+            <% if user_signed_in? %>
+              <div class="bookmark-toggle" data-post-id="<%= @post.id %>" data-bookmarked="<%= @bookmarked %>">
+                <button class="btn bookmark-button" style="background-color: <%= @bookmarked ? '#dc3545' : 'orange' %>; color: white; margin-bottom: 10px;">
+                  <i class="bi <%= @bookmarked ? 'bi-bookmark-x' : 'bi-bookmark-plus' %> me-2"></i>
+                  <%= @bookmarked ? '解除' : 'ブックマーク' %>
+                </button>
+              </div>
             <% end %>
-          <% end %>
+
+            <%= link_to "ブックマーク一覧へ", bookmarks_path, class: "btn w-100", style: "background-color: #6c757d; color: white;" %>
+          
+            <% if current_user == @post.user %>
+              <%= button_to post_path(@post),
+                  method: :delete,
+                  data: { confirm: "本当に削除しますか？" },
+                  params: {},
+                  class: "btn btn-danger",
+                  style: "z-index: 10; position: absolute; bottom: 8px; right: 8px;" do %>
+                投稿を削除
+              <% end %>
+            <% end %>
+          </div>
       </div>
 
     </div>
@@ -482,7 +485,7 @@
 
   .p-4.rounded.shadow-sm img.rounded-circle.me-3 {
     position: relative !important;
-    left: 50px !important;
+    left: 30px !important;
   }
 
   .p-4.rounded.shadow-sm .d-flex.align-items-center {
@@ -490,14 +493,14 @@
     padding-bottom: 4px !important;
     width: 250px !important;
     position: relative !important;
-    left: 35px !important;
+    left: 25px !important;
   }
 
   .p-4.rounded.shadow-sm h4 {
     font-size: 24px !important;
     margin: 0 !important;
     position: relative !important;
-    left: 60px !important;
+    left: 30px !important;
   }
 
   .swiper.mySwiper {
@@ -506,40 +509,47 @@
     margin: 0 auto !important;
   }
 
+  .button-group {
+    display: flex;
+    flex-direction: row;       /* 横並びに切り替え */
+    justify-content: center;   /* 中央寄せ */
+    flex-wrap: nowrap;           /* はみ出す場合は折り返し */
+    gap: 8px;                  /* ボタン間の余白 */
+  }
+
+  .button-group .btn {
+    flex: 0 0 100px;           /* 幅固定 */
+    height: 30px;
+    font-size: 12px;
+    padding: 4px;
+  }
+
   /* 投稿削除ボタン */
   .p-4.rounded.shadow-sm .btn-danger {
     position: static !important;
-    width: 110px !important;
-    haight: 30px !important;
+    width: 100px !important;
+    height: 30px !important;
     font-size: 12px !important;
     padding: 4px !important;
     margin-bottom: 5px !important;
-    position: relative !important;
-    left: 230px !important;
-    top: -65px !important;
   }
 
   /* ブックマークボタン */
   .btn.bookmark-button {
     width: 110px !important;
-    haight: 30px !important;
+    height: 30px !important;
     font-size: 12px !important;
     padding: 4px !important;
     margin-bottom: 5px !important;
-    position: relative !important;
-    left: 0px !important;
   }
 
   /* ブックマーク一覧ボタン */
   .btn.w-100 {
     width: 110px !important;
-    haight: 30px !important;
+    height: 30px !important;
     font-size: 12px !important;
     padding: 4px !important;
     margin-bottom: 5px !important;
-    position: relative !important;
-    left: 115px !important;
-    top: -32px !important;
   }
 
 

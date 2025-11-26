@@ -32,7 +32,7 @@
     <div class="d-flex align-items-center gap-4">
       <% if user_signed_in? %>
         <div class="dropdown">
-          <button class="btn btn-light dropdown-toggle fw-bold menu-btn" type="button" id="menuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-light dropdown-toggle fw-bold menu-btn" type="button" id="menuDropdown" data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false">
             <span class="share-text">menu</span>
           </button>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
@@ -110,10 +110,20 @@
     margin-top: 3px !important;
   }
 
-  .dropdown-menu {
-    z-index: 9000;
+  .dropdown {
+    position: static !important; /* relativeを解除してbody基準に展開 */
   }
 
+  .dropdown-menu {
+    z-index: 9000 !important;
+  }
+
+  .dropdown-menu.show {
+    position: fixed !important;
+    top: 60px;   /* ヘッダーの高さに合わせて調整 */
+    right: 12px; /* 右寄せ */
+    z-index: 9999 !important;
+  }
 
 
   .btn.btn-outline-light.d-flex.align-items-center.gap-2 {
