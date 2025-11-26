@@ -202,3 +202,188 @@
 <% content_for :footer do %>
   <div style="display: none;"></div>
 <% end %>
+
+<style>
+/* スマホ表示用 */
+@media (max-width: 768px) {
+  /* タイトル */
+  .toukou-title {
+    font-size: 38px !important;   /* 投稿タイトルを小さく */
+    top: 70px !important;
+    margin-bottom: 80px !important;
+  }
+
+  /* フォーム全体の幅 */
+  form div[style*="width: 768px"] {
+    width: 30% !important;        /* スマホでは画面幅にフィット */
+    margin: 0 auto !important;
+  }
+
+  /* ラベルの文字サイズ */
+  .form-label {
+    font-size: 20px !important;
+  }
+
+  #post_title {
+    height: 40px !important;     /* 高さを縮小 */
+    width: 100% !important;    /* 画面幅にフィット */
+    margin: 0px !important;
+    font-size: 16px !important;  /* 文字サイズを小さく */
+  }
+
+  /* タイトルラベル */
+  label[for="post_title"] {
+    font-size: 20px !important;  /* ラベル文字も縮小 */
+  }
+
+
+  /* 入力欄 */
+  .form-control {
+    font-size: 16px !important;
+    width: 100% !important;
+    height: 200px !important;
+    margin: 0px !important;
+  }
+
+  /* 概要ラベル */
+  label[for="post_body"] {
+    font-size: 20px !important;  /* ← 64px → 20px に縮小 */
+  }
+
+  /* 概要テキストエリア */
+  #post_body.form-control {
+    font-size: 14px !important;  /* ← 24px → 14px に縮小 */
+    width: 100% !important;     /* 画面幅にフィット */
+    height: 200px !important;    /* ← 高さも半分に */
+  }
+
+  /* コンテナ幅も調整 */
+  div[style*="width: 1300px"] {
+    width: 95% !important;
+    margin: 0 auto !important;
+    margin-bottom: 40px !important;
+  }
+
+
+  /* 評価機能のラジオボタン */
+  .form-check-inline {
+    transform: scale(1.2) !important; /* スマホでは少し小さめに */
+    margin: 10px !important;
+  }
+
+  .d-flex.gap-5.flex-wrap.justify-content-start.my-4 {
+    width: fit-content !important;       /* 画面幅にフィット */
+    margin-left: 15px !important;
+    gap: 20px !important;        /* 余白を小さく */
+    padding-bottom: 20px !important;
+  }
+
+  /* 画像スロット */
+  .image-slot {
+    width: 60px !important;
+    height: 60px !important;
+    font-size: 10px !important;
+  }
+
+  label[for="products"]:first-of-type {
+    font-size: 20px !important;  /* ← 64px → 20px に縮小 */
+  }
+
+  /* 補足説明のラベル */
+  label[for="products"]:last-of-type {
+    font-size: 14px !important;  /* ← 32px → 14px に縮小 */
+    margin-top: 6px !important;  /* 余白も少し詰める */
+  }
+
+  /* コンテナ幅も調整 */
+  div[style*="width: 1300px"] {
+    width: 95% !important;
+    margin: 0 auto !important;
+    margin-bottom: 40px !important;
+  }
+
+  .d-flex.flex-wrap.justify-content-start.my-4 {
+    display: grid !important;
+    grid-template-columns: repeat(5, 55px); /* 横5つ並び */
+    gap: 10px !important;
+    justify-content: center;
+    width: fit-content !important; 
+    margin: 0 auto !important;
+    padding-bottom: 20px !important;
+  }
+
+  /* スロットの中身を中央揃えに */
+  .d-flex.flex-column.align-items-center {
+    width: auto !important;
+    display: contents !important; /* Gridの中で余計なラッパーを消す */
+  }
+
+  .product-slot {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .product-slot span {
+    font-size: 7px !important;
+  }
+
+  /* 投稿ボタン */
+  #post-submit-button {
+    font-size: 20px !important;
+    margin-top: 30px !important;
+    padding: 12px 24px !important;
+    width: 40% !important;        /* スマホでは横幅いっぱいに */
+  }
+
+  /* モーダル本体のサイズ調整 */
+  #product-modal .rounded-4 {
+    width: 95% !important;           /* 画面幅にフィット */
+    padding: 20px !important;
+    max-height: 80vh !important;     /* 高さも少し広げてスクロールしやすく */
+    overflow-y: auto !important;
+  }
+
+  /* モーダル内の見出し */
+  #product-modal h2 {
+    font-size: 18px !important;
+  }
+
+  /* ラベルと入力欄のサイズ調整 */
+  #product-modal .form-label {
+    font-size: 14px !important;
+  }
+
+  #product-modal .form-control {
+    font-size: 14px !important;
+    height: auto !important;
+  }
+
+  #product-modal .d-flex.justify-content-end.mt-4 {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+
+
+  /* アップロードボタンの位置調整 */
+  #modal-image-upload {
+    margin-right: 0 !important;
+    width: 100% !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* OK・キャンセルボタンの並び調整 */
+  #modal-ok,
+  #modal-cancel {
+    font-size: 14px !important;
+    padding: 8px 16px !important;
+    margin: 5px 0 !important;
+  }
+
+  /* 画像プレビュー領域の高さ調整 */
+  #modal-image-preview {
+    height: 200px !important;
+  }
+
+}
+</style>

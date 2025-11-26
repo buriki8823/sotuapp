@@ -112,3 +112,84 @@
         </div>
     </div>
 </div>
+
+<style>
+.col-md-3 .flex-grow-1 {
+  max-height: 73vh;
+}
+
+@media (max-width: 768px) {
+  /* タイトル */
+  .dmpage-title {
+    font-size: 24px !important;
+    padding: 8px !important;
+  }
+
+  /* 左右カラムを縦並びに */
+  .col-md-3, .col-md-9 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    border: none !important; /* スマホでは境界線を外す */
+  }
+
+  /* 左側リスト */
+  .col-md-3 .rounded-circle {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .col-md-3 {
+    display: flex;
+    flex-direction: column;
+    height: 80vh; /* 全体高さを固定 */
+  }
+
+  .col-md-3 .flex-grow-1 {
+    flex: 1;                /* 残り高さにフィット */
+    overflow-y: auto;
+    max-height: 15vh;        /* 縦スクロール */
+    padding-bottom: 8px;     /* フッターにかぶらない余白 */
+  }
+
+
+  /* 右側詳細 */
+  .col-md-9 {
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .col-md-9 .flex-grow-1 {
+    flex: 1;
+    max-height: 24vh; 
+    overflow-y: auto;
+  }
+
+  #reply_form {
+    flex-shrink: 0;
+  }
+
+  .col-md-9 .rounded-circle {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  /* 受信一覧の見出し */
+  .col-md-3 h4 {
+    font-size: 18px !important;
+    padding: 6px !important;
+  }
+
+  /* 本文と返信 */
+  .col-md-9 .border, .col-md-9 .form-control {
+    font-size: 14px !important;
+  }
+
+  /* ボタン */
+  .btn {
+    font-size: 14px !important;
+    padding: 6px 10px !important;
+  }
+}
+</style>

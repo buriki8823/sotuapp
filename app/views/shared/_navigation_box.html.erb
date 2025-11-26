@@ -14,3 +14,28 @@
 
   </div>
 </div>
+
+<style>
+/* スマホ表示用 */
+@media (max-width: 768px) {
+  /* ナビゲーション全体の枠 */
+  .container .d-flex {
+    width: 100% !important;   /* 横幅を画面にフィット */
+    height: 30px !important; /* 高さを縮小 */
+    padding: 0 8px !important;
+  }
+
+  /* リンク部分 */
+  .container .d-flex .d-flex {
+    left: 10px !important;
+    gap: 12px !important;     /* リンク間の余白を縮小 */
+    font-size: 12px !important; /* フォントサイズを小さく */
+  }
+
+  /* アイコン画像 */
+  .container img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+</style>

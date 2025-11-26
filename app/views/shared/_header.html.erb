@@ -3,12 +3,12 @@
 
     <!-- 左側：ユーザーアイコン＋メール -->
     <div class="d-flex align-items-center gap-3">
-      <% if user_signed_in? %>
+    <% if user_signed_in? %>
         <%= image_tag current_user.avatar_url.presence&.sub('/upload/', '/upload/c_thumb,w_600,h_600,r_max/') || "default_avatar.png",
-                      width: 60, height: 60, class: "rounded-circle", alt: "ユーザーアイコン" %>
-
+                      class: "rounded-circle user-avatar",
+                      alt: "ユーザーアイコン" %>
         <div class="position-relative d-inline-block">
-          <%= link_to user_dmpage_path(current_user), class: "text-decoration-none" do %>
+        <%= link_to user_dmpage_path(current_user), class: "text-decoration-none" do %>
             <i class="bi bi-envelope" style="font-size: 40px; color: #31FF57;"></i>
             <% if @has_new_messages %>
               <span class="position-absolute badge rounded-pill"
@@ -16,14 +16,14 @@
                 ●
                 <span class="visually-hidden">新着メッセージあり</span>
               </span>
-            <% end %>
+        <% end %>
           <% end %>
-        </div>
-      <% end %>
+      </div>
+        <% end %>
       <div class="position-relative d-inline-block">
         <button class="btn btn-outline-light d-flex align-items-center gap-2" onclick="copyShareLink()" style="font-size: 16px;">
           <i class="bi bi-link-45deg" style="font-size: 24px;"></i>
-        共有リンク
+          <span class="share-text">共有</span>
         </button>
       </div>
     </div>
@@ -32,9 +32,8 @@
     <div class="d-flex align-items-center gap-4">
       <% if user_signed_in? %>
         <div class="dropdown">
-          <button class="btn btn-light dropdown-toggle fw-bold" type="button" id="menuDropdown" data-bs-toggle="dropdown" aria-expanded="false"
-                  style="font-size: 20px; margin-top: 15px;">
-            メニュー
+          <button class="btn btn-light dropdown-toggle fw-bold menu-btn" type="button" id="menuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="share-text">menu</span>
           </button>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
             <li><%= link_to "投稿", new_post_path, class: "dropdown-item" %></li>
@@ -46,10 +45,10 @@
         </div>
       <% end %>
 
-      <%= link_to "PCPACK", (user_signed_in? ? root_path : new_user_session_path),
+        <%= link_to "PCPACK", (user_signed_in? ? root_path : new_user_session_path),
                   class: "nav-link fw-bold logo-text", style: "font-size: 60px;" %>
     </div>
-  </div>
+    </div>
 </nav>
 
 <script>
@@ -62,3 +61,113 @@
     });
   }
 </script>
+
+<style>
+.menu-btn {
+  font-size: 20px;
+  padding: 0.25rem 0.5rem;
+  margin-top: 8px;
+}
+
+.user-avatar {
+  width: 60px; 
+  height: 60px;
+}
+
+
+@media (max-width: 768px) {
+  .container-fluid {
+    flex-wrap: nowrap !important; /* 折り返し禁止 */
+    overflow-x: auto;             /* はみ出たら横スクロール */
+    margin-bottom: 5px !important;
+  }
+
+  .navbar {
+    height: auto !important; /* 高さを自動にして折り返しに対応 */
+    padding: 0.5rem 1rem !important;
+  }
+
+  .navbar,
+  .container-fluid {
+    overflow: visible !important; /* はみ出し許可 */
+    position: relative !important; /* z-indexの基準を作る */
+    z-index: 1000; /* ドロップダウンより下に設定 */
+  }
+
+  .user-avatar {
+    width: 40px; 
+    height: 40px;
+  }
+
+
+  .d-flex.align-items-center.gap-3 {
+    gap: 0.5rem !important;
+  }
+
+  button#menuDropdown.menu-btn {
+    font-size: 12px !important;
+    padding: 0.25rem 0.5rem !important;
+    margin-top: 3px !important;
+  }
+
+  .dropdown-menu {
+    z-index: 9000;
+  }
+
+
+
+  .btn.btn-outline-light.d-flex.align-items-center.gap-2 {
+    font-size: 5px !important;
+    padding: 0 !important;
+    margin-raight: 8px !important;
+  }
+
+  .bi.bi-link-45deg {
+    font-size: 12px !important;
+  }
+
+  .share-text {
+    display: none;
+  }
+
+  .container-fluid {
+    padding: 0 12px !important;
+  }
+
+  .logo-text {
+    flex-shrink: 0; /* 潰れ防止 */
+    max-width: 100%; /* はみ出し防止 */
+    white-space: nowrap; /* 改行防止 */
+    font-size: 30px !important;
+  }
+
+  .dropdown-toggle {
+    font-size: 16px !important;
+    margin-top: 8px !important;
+  }
+
+  .d-flex.gap-4 {
+    gap: 0.5rem !important;
+  }
+
+  .d-flex.align-items-center.gap-4 {
+    justify-content: flex-start !important; /* 左寄せ */
+    gap: 0.5rem !important; /* 間隔を縮める */
+  }
+
+
+  .btn-outline-light {
+    font-size: 14px !important;
+  }
+
+  .bi-envelope {
+    font-size: 28px !important;
+  }
+
+  .icon-group {
+    max-width: calc(100% - 120px); /* ロゴ分のスペースを確保 */
+    overflow: hidden;
+  }
+}
+</style>
+

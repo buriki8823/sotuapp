@@ -10,8 +10,7 @@
     <div class="d-flex gap-2 justify-content-center mb-5" style="max-width: 1500px; margin: 0 auto;">
     
       <!-- 左：画像 -->
-      <div class="swiper mySwiper rounded shadow-sm overflow-hidden"
-           style="flex: 1 1 500px; height: 600px; margin-top: 20px; margin-left:100px;">
+      <div class="swiper mySwiper rounded shadow-sm overflow-hidden">
         <div class="swiper-wrapper">
           <% @post.image_urls.each do |url| %>
             <div class="swiper-slide">
@@ -57,8 +56,7 @@
 
       <!-- 右：投稿者情報ボックス -->
       <div class="p-4 rounded shadow-sm"
-           style="position: relative; flex: 0 0 300px; height: 400px; background-color: #ffffff; border: 2px solid #000; overflow-y: auto; margin-top: 20px; margin-right: 24px;">
-
+           style="position: relative; background-color: #ffffff; border: 2px solid #000; overflow-y: auto; margin-top: 20px; margin-right: 24px;">
           <div class="d-flex align-items-center mb-4" style="border-bottom: 2px solid #000; padding-bottom: 10px;">
             <%= image_tag @post.user.avatar_url.presence || "default_avatar.png", alt: "投稿者アイコン", class: "rounded-circle me-3", style: "position: relative; left: 10px; width: 64px; height: 64px; object-fit: cover;" %>
             <h4 class="fw-bold mb-0" style="position: relative; left: 20px;"><%= @post.user.name %></h4>
@@ -66,7 +64,7 @@
 
           <% if user_signed_in? %>
             <div class="bookmark-toggle" data-post-id="<%= @post.id %>" data-bookmarked="<%= @bookmarked %>">
-              <button class="btn w-100 bookmark-button" style="background-color: <%= @bookmarked ? '#dc3545' : 'orange' %>; color: white; margin-bottom: 10px;">
+              <button class="btn bookmark-button" style="background-color: <%= @bookmarked ? '#dc3545' : 'orange' %>; color: white; margin-bottom: 10px;">
                 <i class="bi <%= @bookmarked ? 'bi-bookmark-x' : 'bi-bookmark-plus' %> me-2"></i>
                 <%= @bookmarked ? 'ブックマーク解除' : 'ブックマークする' %>
               </button>
@@ -139,7 +137,7 @@
   <div style="max-width: 1500px; margin: 0 auto;">
     <h3 class="fw-bold mb-3" style="text-align: left;">お部屋説明</h3>
 
-    <div class="rounded-4 shadow-sm p-5 mb-5"
+    <div class="rounded-4 shadow-sm p-2 mb-5"
          style="background-color: #ffffff; border: 2px solid #000; min-height: 200px;">
       <div style="font-size: 25px; line-height: 1.6;"><%= simple_format(@post.body) %></div>
     </div>
@@ -153,7 +151,7 @@
   <% if visible_products.any? %>
     <!-- 左上に見出し -->
     <div style="max-width: 1500px; margin: 0 auto;">
-      <h2 class="fw-bold mb-4" style="font-size: 48px; text-align: left;">オススメグッズ</h2>
+      <h2 class="fw-bold mb-4">オススメグッズ</h2>
 
       <!-- 商品カード群 -->
       <div class="d-flex flex-column gap-5 mb-5">
@@ -161,13 +159,13 @@
           <div class="d-flex gap-4 align-items-center p-4 shadow-sm rounded mx-auto mb-0"
                style="position: relative; top: -10px; width: 1500px; height: 300px; background-color: #ffffff; border: 2px solid #000;">
             <% if product.image_url.present? %>
-              <div style="width: 400px; height: 100%; flex-shrink: 0;">
-                <%= image_tag product.image_url, class: "img-fluid w-100 h-100", style: "object-fit: cover;" %>
+              <div class="product-image-wrapper">
+                <%= image_tag product.image_url, class: "product-image" %>
               </div>
             <% end %>
-            <div class="flex-grow-1">
+            <div class="product-text-area">
               <h2 class="fw-bold fs-2 mb-3" style="position: relative; left: 10px;"><%= product.title %></h2>
-              <div class="p-4 rounded-3 border" style="background-color: #ffffff; border-color: #000;">
+              <div class="p-1 rounded-3 border" style="background-color: #ffffff; border-color: #000;">
                 <p class="fs-5 lh-lg mb-0"><%= simple_format(product.description) %></p>
               </div>
               <% if product.url.present? %>
@@ -380,3 +378,283 @@
     });
   });
 </script>
+
+<style>
+@media (min-width: 769px) {
+  .p-4.rounded.shadow-sm {
+    height: 400px !important;   /* ← PCでは固定高さ */
+    width: 300px;
+    flex: 0 0 auto; /* ← 必要なら柔軟に */
+  }
+
+  .btn.bookmark-button {
+    width: 100% !important;
+  }
+
+  .swiper.mySwiper {
+    width: 1300px;       /* PC用横幅 */
+    height: 600px;      /* PC用高さ */
+    margin: 20px 0 0 100px;
+  }
+  
+  .product-image-wrapper {
+    width: 400px;
+    height: 100%;
+    flex-shrink: 0;
+  }
+
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-text-area {
+    flex: 1 1 auto;   /* 必要な分だけ広がる */
+    width: 100%;      /* スマホでは幅いっぱい */
+  }
+
+  .fw-bold mb-4 {
+    font-size: 48px
+    text-align: left;
+  }
+}
+
+@media (max-width: 768px) {
+  /* タイトル */
+  .toukou-title {
+    font-size: 32px !important;
+    margin-bottom: 70px !important;
+    top: 50px !important;
+  }
+
+  /* Swiper画像 */
+  .swiper-slide {
+    height: 200px !important;
+  }
+
+
+  .swiper.mySwiper {
+    height: 200px !important;
+    margin: 0 auto !important; /* 中央寄せ */
+  }
+
+
+  .swiper.mySwiper img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+  }
+
+  #swiper-wrapper {
+    height: 200px !important;
+  }
+
+
+  /* 親コンテナを縦並びに */
+  .d-flex.gap-2.justify-content-center {
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 0 0 20px 0 !important;
+  }
+
+
+  .w-100.h-100 {
+    height: 200px !important;   /* ← スマホ用に高さを調整 */
+    object-fit: cover !important;
+  }
+
+  /* 投稿者情報ボックス */
+  .p-4.rounded.shadow-sm {
+    order: -1;
+    width: 95% !important;
+    height: 130px !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 15px !important;
+  }
+
+
+  .p-4.rounded.shadow-sm img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .p-4.rounded.shadow-sm img.rounded-circle.me-3 {
+    position: relative !important;
+    left: 50px !important;
+  }
+
+  .p-4.rounded.shadow-sm .d-flex.align-items-center {
+    margin-bottom: 8px !important;
+    padding-bottom: 4px !important;
+    width: 250px !important;
+    position: relative !important;
+    left: 35px !important;
+  }
+
+  .p-4.rounded.shadow-sm h4 {
+    font-size: 24px !important;
+    margin: 0 !important;
+    position: relative !important;
+    left: 60px !important;
+  }
+
+  .swiper.mySwiper {
+    width: 95% !important;
+    height: 250px !important;
+    margin: 0 auto !important;
+  }
+
+  /* 投稿削除ボタン */
+  .p-4.rounded.shadow-sm .btn-danger {
+    position: static !important;
+    width: 110px !important;
+    haight: 30px !important;
+    font-size: 12px !important;
+    padding: 4px !important;
+    margin-bottom: 5px !important;
+    position: relative !important;
+    left: 230px !important;
+    top: -65px !important;
+  }
+
+  /* ブックマークボタン */
+  .btn.bookmark-button {
+    width: 110px !important;
+    haight: 30px !important;
+    font-size: 12px !important;
+    padding: 4px !important;
+    margin-bottom: 5px !important;
+    position: relative !important;
+    left: 0px !important;
+  }
+
+  /* ブックマーク一覧ボタン */
+  .btn.w-100 {
+    width: 110px !important;
+    haight: 30px !important;
+    font-size: 12px !important;
+    padding: 4px !important;
+    margin-bottom: 5px !important;
+    position: relative !important;
+    left: 115px !important;
+    top: -32px !important;
+  }
+
+
+  /* 感性評価ボタン群 */
+  .d-flex.flex-wrap.gap-3 {
+    display: flex !important;
+    flex-direction: row !important;     /* 横方向 */
+    justify-content: center !important; /* 中央寄せ */
+    gap: 8px !important;                /* ボタン間の余白 */
+    flex-wrap: wrap;                    /* はみ出す場合は折り返し */
+    margin: 20px 10px 0px 0px !important;
+  }
+
+  /* ボタンの調整 */
+  .kind-button {
+    width: auto !important;             /* 横並び用に幅を自動に */
+    flex: 1;                            /* 均等に広げたい場合 */
+    font-size: 14px !important;
+    padding: 6px 12px !important;
+  }
+
+  /* form_with が block 要素なので横並びにする */
+  .d-flex.flex-wrap.gap-3 form {
+    display: inline-block !important;
+    margin: 0; /* 不要な余白を消す */
+  }
+
+  /* 星評価 */
+  .star-rating {
+    font-size: 18px !important;
+    margin-top: 10px !important;
+  }
+
+  /* お部屋説明 */
+  .rounded-4.shadow-sm.p-2.mb-5 {
+    padding: 5px 10px !important;
+    font-size: 14px !important;
+    margin: 0 10px 20px 10px !important;
+    line-height: 0 !important;
+  }
+
+  /* オススメグッズカード */
+  h2.fw-bold.mb-4 {
+    font-size: 28px !important;  /* スマホでは小さめに */
+    text-align: start !important; /* 中央寄せもおすすめ */
+    margin-bottom: 1rem !important;
+  }
+
+  .d-flex.gap-4.align-items-center.p-4.shadow-sm.rounded.mx-auto.mb-0 {
+    flex-direction: column !important;  /* 横並び → 縦並び */
+    align-items: stretch !important;    /* 高さ方向に広げる */
+    height: auto !important;            /* 親の高さ制限を解除 */
+    width: 100% !important;
+    maragin: 0 10px 0 10px !important;
+  }
+
+
+  .d-flex.gap-4.align-items-center.p-4.shadow-sm.rounded.mx-auto.mb-0 > div:first-child {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .d-flex.gap-4.align-items-center.p-4.shadow-sm.rounded.mx-auto.mb-0 img {
+    width: 100% !important;
+    height: 200px !important;           /* スマホでは画像を大きく */
+    object-fit: cover !important;
+  }
+
+  .product-card {
+    flex-direction: column !important;
+    height: auto !important;
+    width: 100% !important;
+    align-items: center !important;
+  }
+
+  .product-image-wrapper {
+    width: 100% !important;
+    height: auto !important;
+    flex-shrink: 1 !important;
+  }
+
+  .product-image {
+    width: 100% !important;
+    height: 200px !important; /* ← スマホでは大きく見せる */
+    object-fit: cover !important;
+  }
+  .product-text-area {
+    width: 100% !important;
+    padding-top: 1rem;
+  }
+
+
+
+  /* コメントフォーム */
+  #comment-form {
+    width: 95% !important;
+    margin: 20px auto !important;
+  }
+
+  #comment-form .form-control {
+    font-size: 14px !important;
+  }
+
+  /* コメント一覧 */
+  #comment-list .p-3.rounded.shadow-sm {
+    font-size: 14px !important;
+    margin: 10px auto !important;
+    width: 95% !important;
+  }
+
+  /* ブックマークボタン */
+  .bookmark-button {
+    width: 100% !important;
+    font-size: 14px !important;
+    padding: 10px !important;
+  }
+}
+</style>

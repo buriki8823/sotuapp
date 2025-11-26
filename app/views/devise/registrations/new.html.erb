@@ -1,6 +1,6 @@
 <h1 class="text-center fw-bold" style="
   font-size: 80px;
-  color: #93FD00; /* 黄緑 */    
+  color: #93FD00 !important; /* 黄緑 */    
   text-shadow: 1px 1px 0 #4DE33F, -1px -1px 0 #4DE33F; /* 黄緑の外枠風 */
 ">
   <%= t("user.registration.title") %>
@@ -83,6 +83,50 @@
     <%= f.submit t("helpers.submit.user.create"), class: "btn btn-outline-lime" %>
   </div>
 <% end %>
+
+<style>
+  @media (max-width: 768px) {
+    /* タイトル系（h1のみ） */
+    h1.text-center.fw-bold {
+      font-size: 32px !important;
+      -webkit-text-stroke: 1px #4DE33F;
+      text-shadow: 0.5px 0.5px 0 #4DE33F, -0.5px -0.5px 0 #4DE33F;
+    }
+
+    /* 入力欄・フォーム系 */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    .form-control {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 44px !important;
+      font-size: 16px !important;
+    }
+
+    label {
+      font-size: 18px !important;
+      margin-bottom: 4px !important;
+    }
+
+    /* ボタン系 */
+    .btn-outline-lime,
+    .btn-outline-success {
+      font-size: 16px !important;
+      padding: 8px 16px !important;
+    }
+
+    /* モーダル内の画像プレビュー */
+    #avatarModal .modal-body div {
+      width: 150px !important;
+      height: 150px !important;
+    }
+
+    #avatarModal .modal-body input[type="range"] {
+      width: 150px !important;
+    }
+  }
+</style>
 
 <script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
 <script>

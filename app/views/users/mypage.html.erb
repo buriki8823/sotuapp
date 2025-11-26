@@ -1,15 +1,6 @@
 <div class="mypage-bg text-white text-center py-0"
      style="background-image: url(<%= current_user.mypage_background_url_or_default || asset_path('mypage_bg.png') %>)">
-  <div class="bg-control-buttons d-flex justify-content-end gap-3 pt-3" style="margin-right: 40px;">
-
-    <!-- Cloudinaryアップロード用フォーム -->
-    <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { id: "mypage-form" } do |f| %>
-      <%= f.hidden_field :mypage_background_url, id: "mypage_background_url_input" %>
-      <label onclick="openCloudinaryForBackground('mypage')" class="btn btn-outline-light custom-bg-change-button">背景画像を変更</label>
-    <% end %>
-
-    <!-- デフォルトに戻すボタン（別フォーム） -->
-    <%= button_to "デフォルトに戻す", reset_mypage_background_users_path, method: :patch, class: "btn btn-outline-danger custom-bg-default-button" %>
+  <div class="bg-control-buttons d-flex justify-content-end gap-3 pt-3" style="margin-right: 20px;">
   </div>
 
   <!-- 背景アップロードフォーム -->
@@ -21,7 +12,7 @@
   <h1 class="toukou-title text-center mt-3 mb-5" style="position: relative; top: 30px; font-size: 128px;">マイページ</h1>
 
   <!-- メインボックス -->
-  <div class="d-flex justify-content-center align-items-center" style="margin-bottom: 30px; position: relative; min-height: 80vh; overflow: auto;">
+  <div class="d-flex justify-content-center align-items-center" style="position: relative; min-height: 70vh; overflow: auto;">
    <div class="scale-wrapper" style="transform: scale(1); transform-origin: top center;">
     <div class="mypage-box p-5 rounded shadow position-relative text-center"
          style="width: 978px; min-height: 687px; height: auto; background-color: white; ">
@@ -31,7 +22,7 @@
       <div class="tab-under-bar position-absolute"></div>
 
       <!-- URLバー -->
-      <div class="url-bar-box d-flex align-items-center">
+      <div class="url-bar-box d-flex align-items-center" style="top: 50px; z-index: 2;">
         <div class="d-flex align-items-center gap-2" style="font-size: 30px; margin-left: 16px;">
           <div class="arrow-button">←</div>
           <div class="arrow-button">→</div>
@@ -41,17 +32,14 @@
       </div>
 
       <!-- ウィンドウ背景 -->
-      <div class="windou-bg"
-           style="background-image: url(<%= current_user.window_background_url_or_default || asset_path('mypage-default_avatar.png') %>)">
-        <div class="bg-control-buttons d-flex justify-content-end gap-3 pt-3" style="padding: 6px 12px; font-size: 10px; margin-right: 30px;">
-
-          <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { id: "window-form" } do |f| %>
-            <%= f.hidden_field :window_background_url, id: "window_background_url_input" %>
-            <label onclick="openCloudinaryForBackground('window')" class="btn btn-outline-dark custom-bg-change-button">背景を変更</label>
-          <% end %>
-          <%= button_to "デフォルトに戻す", reset_window_background_users_path, method: :patch, class: "btn btn-outline-danger custom-bg-default-button" %>
+      <div class="windou-bg position-relative"
+           style="background-image: url(<%= current_user.window_background_url_or_default || asset_path('mypage-default_avatar.png') %>);
+                  background-size: cover; background-position: center;">
+        <!-- 歯車アイコン -->
+        <div class="settings-icon" onclick="toggleModal()">
+         <i class="bi bi-gear-fill"></i>
         </div>
-      </div>
+
 
       <!-- プロフィール -->
       <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { id: "avatar-form" } do |f| %>
@@ -65,8 +53,8 @@
       <% end %>
 
       <!-- アカウント名・評価 -->
-      <div class="account-name position-absolute" style="font-size: 50px; color: black; top: 220px; left: 60%; transform: translateX(-50%);"> <%= current_user.name %> </div>
-      <div class="rating-count position-absolute" style="color: black; top: 290px; left: 60%; transform: translateX(-50%);">
+      <div class="account-name position-absolute" style="font-size: 50px; color: black; top: 100px; left: 60%; transform: translateX(-50%); z-index: 1;"> <%= current_user.name %> </div>
+      <div class="rating-count position-absolute" style="color: black; top: 180px; left: 60%; transform: translateX(-50%); z-index: 1;">
         <h5 class="fw-bold">
          トータルスコア：
            <% full_stars = [(@total_score.to_f / @received_star_ratings.count).round, 5].min rescue 0 %>
@@ -81,8 +69,36 @@
         </h5>
       </div>
 
+              <!-- モーダル -->
+        <div id="backgroundModal" class="background-modal d-none">
+          <div class="modal-content">
+
+            <!-- 背景① -->
+            <div class="d-flex justify-content-center gap-2 mb-3">
+              <span class="fw-bold text-dark">背景①：</span>
+              <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { id: "window-form" } do |f| %>
+                <%= f.hidden_field :window_background_url, id: "window_background_url_input" %>
+                <label onclick="openCloudinaryForBackground('window')" class="btn btn-outline-dark custom-bg-change-button">背景を変更</label>
+              <% end %>
+              <%= button_to "デフォルトに戻す", reset_window_background_users_path, method: :patch, class: "btn btn-outline-danger custom-bg-default-button" %>
+            </div>
+
+            <!-- 背景② -->
+            <div class="d-flex justify-content-center gap-2">
+              <span class="fw-bold text-dark">背景②：</span>
+              <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { id: "mypage-form" } do |f| %>
+                <%= f.hidden_field :mypage_background_url, id: "mypage_background_url_input" %>
+                <label onclick="openCloudinaryForBackground('mypage')" class="btn btn-outline-light custom-bg-change-button">背景を変更</label>
+              <% end %>
+              <%= button_to "デフォルトに戻す", reset_mypage_background_users_path, method: :patch, class: "btn btn-outline-danger custom-bg-default-button" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <!-- ボタン群（通常フローで配置） -->
-      <<div class="d-flex flex-column align-items-center gap-4 mt-5" style="z-index: 2; top: 250px; position: relative;">
+      <div class="d-flex flex-column align-items-center gap-4 mt-5" style="z-index: 2; top: 320px; position: relative;">
         <div class="d-flex align-items-center gap-2">
           <i class="bi bi-bookmark-star" style="font-size: 32px; color: #000;"></i>
           <%= link_to "ブックマーク", bookmarks_path, class: "plain-button" %>
@@ -93,7 +109,8 @@
         </div>
         <div class="d-flex align-items-center gap-2">
           <i class="bi bi-card-list" style="font-size: 32px; color: #000;"></i>
-          <%= link_to "#{current_user.name}さんの投稿一覧", my_posts_path, class: "plain-button" %>
+          <%= link_to "#{current_user.name}さんの投稿一覧", my_posts_path, class: "plain-button account-name-full" %>
+          <%= link_to "ユーザーさんの投稿一覧", my_posts_path, class: "plain-button account-name-mobile" %>
         </div>
         <div class="d-flex align-items-center gap-2">
           <i class="bi bi-mailbox" style="font-size: 32px; color: #000;"></i>
@@ -136,4 +153,306 @@
       }
     }).open();
   }
+
+  function toggleModal() {
+    const modal = document.getElementById('backgroundModal');
+    modal.classList.toggle('d-none');
+  }
 </script>
+
+<style>
+  .settings-icon {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    font-size: 34px;
+    color: #333;
+    cursor: pointer;
+    z-index: 5000;
+  }
+
+  .background-modal {
+    position: absolute;
+    top: 40px; 
+    right: 12px;
+    width: 400px;
+    background: rgba(255,255,255,0.95);
+    padding: 16px;
+    border-radius: 8px;
+    z-index: 5500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+
+  .background-modal.d-none {
+    display: none;
+  }
+
+  .custom-bg-change-button,
+  .custom-bg-default-button {
+    min-width: 140px;
+    text-align: center;
+  }
+
+  .windou-bg {
+    position: absolute !important;
+    top: 140px;
+    left: 0;
+    width: 100%;
+    height: 600px;
+    z-index: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+  }
+
+  .account-name {
+    max-width: 80%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .account-name-mobile {
+    display: none;
+  }
+
+@media (max-width: 768px) {
+  /* 背景全体 */
+  .mypage-bg {
+    width: 100% !important;           /* ← 画面幅にフィット */
+    margin: 0 auto !important;        /* ← 中央揃え（必要なら） */
+    padding-left: 0 !important;       /* ← 左余白をなくす */
+    padding-right: 0 !important;      /* ← 右余白をなくす */
+  }
+
+
+  /* タイトル */
+  .toukou-title {
+    font-size: 36px !important;
+    top: 0 !important;
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .google-tab {
+    display: none !important;
+  }
+
+
+  /* 外枠コンテナ */
+  .d-flex.justify-content-center.align-items-center {
+    width: 100% !important;
+    max-width: 95% !important;   /* ← 横幅を画面にフィットさせる */
+    padding: 0 12px !important;  /* ← 左右に余白を確保して中央寄せ */
+    margin: 0 auto !important;   /* ← 中央に配置 */
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    margin-bottom: 0 !important;
+  }
+
+
+  /* 中身のスケール調整 */
+  .scale-wrapper {
+    transform: scale(0.8) !important;   /* 全体を縮小 */
+    transform-origin: top center !important;
+    width: 100% !important;
+  }
+
+  /* メインボックス */
+  .mypage-box {
+    width: 95% !important;
+    padding: 16px !important;
+    min-height: auto !important;
+    margin-bottom: 40px !important;
+  }
+
+  /* プロフィール画像 */
+  .mypage-avatar {
+    width: 120px !important;
+    height: 120px !important;
+  }
+
+  /* アカウント名 */
+  .account-name {
+    font-size: 18px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    top: 140px !important;
+    max-width: 90%;
+  }
+
+  /* ボタン群 */
+  .plain-button {
+    font-size: 14px !important;
+    padding: 8px 12px !important;
+  }
+
+  .d-flex.flex-column.align-items-center.gap-4.mt-5 {
+    font-size: 20px !important; 
+    gap: 16px !important;
+    margin-top: 0px !important;
+    top: 400px !important;
+  }
+
+  .plain-button {
+    font-size: 20px !important;   /* ← 好きなサイズに変更 */
+    font-weight: 500;             /* ← 少し太字にすると見やすい */
+    color: #000;                  /* ← 必要なら色も指定 */
+  }
+
+  .d-flex.flex-column.align-items-center.gap-4.mt-5 .plain-button {
+    white-space: nowrap;        /* 改行禁止 */
+    overflow: hidden;           /* はみ出しを隠す */
+    text-overflow: ellipsis;    /* 長すぎる場合は「…」で省略 */
+    display: inline-block;      /* ellipsisを効かせるために必要 */
+    max-width: 90%;             /* 横幅を制限（必要に応じて調整） */
+  }
+    
+  .account-name-full {
+    display: none !important;
+  }
+  .account-name-mobile {
+    display: inline !important;
+  }
+
+  /* アイコンサイズ調整 */
+  .bi {
+    font-size: inherit !important;
+  }
+
+  .tab-under-bar {
+    width: 100% !important;            
+    left: 50% !important;             
+    transform: translateX(-50%) !important;
+    bottom: 0 !important;             
+    height: 70px !important;           
+    background-color: #84BEE3 !important;
+    border-radius: 2px;               
+  }
+
+  /* URLバー・ナビゲーション */
+  .url-bar-box {
+    flex-direction: column !important;     /* ← 縦並びに変更 */
+    align-items: center !important;        /* ← 中央寄せ */
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    padding: 0 12px !important;
+    margin-bottom: 16px;
+  }
+
+
+  .url-bar {
+    justify-content: center !important;
+    font-size: 12px !important;
+    width: 100% !important;
+    text-align: center !important;
+    padding: 6px 8px !important;
+    background-color: #f5f5f5;             /* ← 背景色が必要なら */
+    border-radius: 6px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.1);
+    margin-left: 10px !important; /* ← 左に10px寄せる */
+  }
+
+  /* ナビゲーションアイコン群（← → ⟳） */
+  .url-bar-box > .d-flex {
+    justify-content: center !important;
+    gap: 12px !important;
+    font-size: 18px !important;
+  }
+
+  .url-bar-box > .d-flex.align-items-center.gap-2 {
+    display: none !important; /* ← スマホでは非表示 */
+  }
+
+
+  /* 背景変更ボタン群 */
+  .custom-bg-change-button,
+  .custom-bg-default-button {
+    min-width: 50px;
+    text-align: center;
+  }
+
+  /* ウィンドウ背景 */
+  .windou-bg {
+    width: 100% !important;         /* ← 画面幅にフィット */
+    max-width: 100% !important;
+    background-size: cover !important;
+    background-position: center !important;
+    margin: 0 auto !important;
+    overflow: hidden !important;    /* はみ出し防止 */
+    border-radius: 8px;             /* スマホ用に角丸もおすすめ */
+  }
+
+  /* ヘッダーは position を上書きしない */
+  header, .mypage-header {
+    display: block !important;
+    z-index: 9999 !important; /* 前面に出すだけ */
+  }
+
+  #avatar-form .profile-icon {
+    position: relative !important;
+    left: -100px !important;   /* ← 左にズラす */
+    top: 100px !important;
+  }
+
+  .mypage-avatar {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  .account-name {
+    top: 120px !important;
+    font-size: 24px !important;
+  }
+
+  .rating-count {
+    top: 200px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .rating-count h5 {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 4px !important;
+    flex-direction: row !important;
+  }
+
+  .star-icon {
+    font-size: 16px !important;
+    white-space: nowrap !important;
+  }
+
+
+  .bg-control-buttons {
+    flex-direction: row !important;     /* ← 横並びにする */
+    justify-content: center !important; /* ← 中央寄せ（必要なら） */
+    align-items: center !important;
+    gap: 8px !important;                /* ← ボタン間の余白調整 */
+    margin: 0 auto !important;
+    padding: 12px !important;
+  }
+
+  .background-modal {
+    width: 300px !important;  /* ← 幅を狭くする */
+    top: 80px !important;    /* ← 上に寄せる */
+  }
+
+  .custom-bg-change-button,
+  .custom-bg-default-button {
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+    min-width: 50px !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+}
+</style>

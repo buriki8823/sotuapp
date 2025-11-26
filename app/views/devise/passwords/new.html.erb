@@ -1,4 +1,4 @@
-<h1 class="toukou-title text-center mb-5" style="font-size: 100px; margin-top: 60px;">
+<h1 class="toukou-title text-center mb-5" style="font-size: 80px; margin-top: 60px;">
   パスワードをリセットしますか？
 </h1>
 
@@ -20,3 +20,48 @@
     <%= link_to "ログイン画面に戻る", new_user_session_path, class: "text-decoration-none", style: "font-size: 18px; color: #1762A8;" %>
   </div>
 </div>
+
+<style>
+  @media (max-width: 768px) {
+    /* タイトル */
+    h1.toukou-title {
+      font-size: 28px !important;
+      margin-top: 30px !important;
+      -webkit-text-stroke: 1px #4DE33F;
+      text-shadow: 0.5px 0.5px 0 #4DE33F, -0.5px -0.5px 0 #4DE33F;
+    }
+
+    /* コンテナ */
+    .container {
+      max-width: 95% !important;
+      padding: 0 12px;
+    }
+
+    /* 入力欄 */
+    .form-control {
+      width: 100% !important;
+      font-size: 16px !important;
+      padding: 8px !important;
+      height: 44px !important;
+    }
+
+    /* ラベル */
+    .form-label {
+      font-size: 18px !important;
+      margin-bottom: 4px !important;
+    }
+
+    /* ボタン */
+    .btn-primary {
+      font-size: 16px !important;
+      padding: 10px 16px !important;
+      width: 100% !important;
+      max-width: 320px;
+    }
+
+    /* 戻るリンク */
+    .text-center a {
+      font-size: 14px !important;
+    }
+  }
+</style>

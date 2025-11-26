@@ -1,6 +1,6 @@
 <div class="position-relative py-0" style="background-image: url(<%= asset_path('posts-bg.png') %>);background-size: cover; background-position: top center; background-repeat: no-repeat; width: 100%; min-height: 100vh; margin: 0;">
   <div class="container py-4">
-    <h1 class="toukou-title text-center mt-3 mb-5" style="position: relative; top: 30px; font-size: 128px;">投稿一覧</h1>
+    <h1 class="toukou-title text-center mt-3 mb-5" style="position: relative; top: 30px; font-size: 100px;">投稿一覧</h1>
 
     <!-- カード群とソートボタンのラッパー -->
     <div style="max-width: 1500px; margin: 0 auto;">
@@ -60,7 +60,6 @@
               <%= image_tag "placeholder.png", class: "card-img-top", alt: "ダミー画像", style: "height: 250px; object-fit: cover;" %>
               <div class="card-body text-center text-muted">
                 <h5 class="card-title">投稿募集中</h5>
-                <p class="card-text">ここに新しい投稿が表示されます</p>
               </div>
             </div>
           </div>
@@ -74,3 +73,13 @@
     </div>
   </div>
 </div>
+
+<style>
+@media (max-width: 768px) {
+  .toukou-title {
+    font-size: 50px !important;
+    margin-top: 20px !important;
+    margin-bottom: 30px !important;
+  }
+}
+</style>

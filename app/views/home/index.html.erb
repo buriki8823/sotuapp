@@ -95,3 +95,82 @@
     });
   });
 </script>
+
+<style>
+@media (max-width: 768px) {
+  /* 横並びのコンテナ */
+  .d-flex.flex-nowrap {
+    gap: 8px !important;       /* 隙間を少し狭く */
+    overflow-x: auto !important; /* 横スクロール可能に */
+    padding: 0 8px;
+  }
+
+  /* 各カード */
+  .position-relative.flex-shrink-0 {
+    max-width: 120px !important; /* 横幅を縮小 */
+    flex: 0 0 auto !important;   /* 横並びを維持 */
+  }
+
+  /* 画像 */
+  .position-relative.flex-shrink-0 img {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* テキスト（マイページ・投稿・ブックマーク） */
+  .position-relative.flex-shrink-0 div {
+    font-size: 12px !important; /* 文字サイズ縮小 */
+    top: 30% !important;
+    text-shadow: 0.5px 0.5px 1px black;
+  }
+
+
+  /* 区切り線 */
+  hr {
+    width: 90% !important;
+    border-bottom: 4px solid #FFF600 !important;
+    margin: 1rem auto !important;
+  }
+
+  /* 投稿一覧ボタン */
+  .btn.btn-dark {
+    font-size: 16px !important;
+    padding: 8px 16px !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: 320px;
+  }
+
+  /* 検索バー */
+  form[action*="search"] {
+    max-width: 100% !important;
+    margin-top: 12px;
+  }
+
+  form[action*="search"] .input-group {
+    border-radius: 30px !important;
+  }
+
+  form[action*="search"] input[type="search"] {
+    font-size: 14px !important;
+    height: 40px !important;
+    padding: 6px 12px !important;
+  }
+
+  form[action*="search"] button {
+    height: 40px !important;
+    font-size: 14px !important;
+  }
+
+  /* 投稿一覧コンテナ */
+  .container-fluid {
+    max-width: 95% !important;
+    padding: 0 12px;
+  }
+
+  .container-fluid p {
+    font-size: 14px !important;
+    text-align: center;
+  }
+}
+</style>
