@@ -46,6 +46,10 @@ class Post < ApplicationRecord
     urls.first.presence || "placeholder.png"
   end
 
+  def to_param
+    uuid
+  end
+
   private
 
   def must_have_valid_images

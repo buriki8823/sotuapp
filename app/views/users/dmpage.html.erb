@@ -22,7 +22,7 @@
         <div class="flex-grow-1 overflow-auto">
           <% @received_messages.each do |message| %>
             <% sender = message.user %>
-            <%= link_to user_dmpage_path(current_user, message_id: message.id),
+            <%= link_to user_dmpage_path(current_user, message_id: message.uuid),
                 class: "text-decoration-none text-dark" do %>
               <div class="p-2 border-bottom border-dark d-flex align-items-center gap-3"
                    style="background-color: <%= message.read ? '#ffffff' : '#DEEAEE' %>;">

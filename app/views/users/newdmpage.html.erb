@@ -8,7 +8,7 @@
         <%= form_with url: send_user_message_path(current_user), method: :post, local: true, class: "w-75" do |f| %>
           <div class="mb-4">
             <%= f.label :recipient_id, "宛先", class: "form-label", style:"font-size: 40px;" %>
-            <%= f.select :recipient_id, options_from_collection_for_select(@all_users, :id, :name), { prompt: "ユーザーを選択" }, class: "form-select" %>
+            <%= f.select :recipient_id, options_from_collection_for_select(@all_users, :uuid, :name), { prompt: "ユーザーを選択" }, class: "form-select" %>
           </div>
 
           <div class="mb-4">

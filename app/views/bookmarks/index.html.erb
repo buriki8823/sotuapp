@@ -13,7 +13,7 @@
               <div class="card-body">
                 <h5 class="card-title"><%= post.title %></h5>
                 <p class="card-text text-muted">投稿者：<%= post.user.name %></p>
-                <button class="btn btn-sm btn-outline-danger mt-2 bookmark-remove-button" data-post-id="<%= post.id %>">
+                <button class="btn btn-sm btn-outline-danger mt-2 bookmark-remove-button" data-post-id="<%= post.uuid %>">
                   ブックマーク解除
                 </button>
               </div>

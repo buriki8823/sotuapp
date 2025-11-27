@@ -18,6 +18,6 @@ class EvaluationsController < ApplicationController
   private
 
   def set_post
-    @post = Post.find(params[:id])
+    @post = Post.find_by(uuid: params[:id])
   end
 end

@@ -3,7 +3,8 @@ class BookmarksController < ApplicationController
   before_action :set_post, only: [:create, :destroy]
 
   def create
-    current_user.bookmarked_posts << @post unless current_user.bookmarked_posts.exists?(@post.id)
+    # UUID 化に対応 → exists?(@post.uuid) に変更
+    current_user.bookmarked_posts << @post unless current_user.bookmarked_posts.exists?(@post.uuid)
 
     respond_to do |format|
       format.html { redirect_to @post, notice: "ブックマークしました" }
@@ -12,6 +13,7 @@ class BookmarksController < ApplicationController
   end
 
   def destroy
+    # post: @post のままでOK（外部キーは id のまま残す方針）
     current_user.bookmarks.find_by(post: @post)&.destroy
 
     respond_to do |format|
@@ -27,6 +29,7 @@ class BookmarksController < ApplicationController
   private
 
   def set_post
-    @post = Post.find(params[:post_id])
+    # UUID 化に対応
+    @post = Post.find_by(uuid: params[:post_id])
   end
 end

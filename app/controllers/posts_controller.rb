@@ -22,8 +22,8 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
-    @bookmarked = current_user.bookmarked_posts.exists?(@post.id)
+    @post = Post.find_by(uuid: params[:id])
+    @bookmarked = current_user.bookmarked_posts.exists?(@post.uuid)
   end
 
   def new
@@ -43,7 +43,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    post = current_user.posts.find(params[:id])
+    post = current_user.posts.find_by(uuid: params[:id])
 
     urls = case post.image_urls
            when String then JSON.parse(post.image_urls) rescue []

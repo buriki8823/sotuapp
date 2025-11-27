@@ -25,6 +25,9 @@ class Message < ApplicationRecord
     end
   end
 
+  def to_param
+    uuid
+  end
 
   private 
   

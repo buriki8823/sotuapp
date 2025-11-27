@@ -65,7 +65,7 @@
 
           <div class="button-group">
             <% if user_signed_in? %>
-              <div class="bookmark-toggle" data-post-id="<%= @post.id %>" data-bookmarked="<%= @bookmarked %>">
+              <div class="bookmark-toggle" data-post-id="<%= @post.uuid %>" data-bookmarked="<%= @bookmarked %>">
                 <button class="btn bookmark-button" style="background-color: <%= @bookmarked ? '#dc3545' : 'orange' %>; color: white; margin-bottom: 10px;">
                   <i class="bi <%= @bookmarked ? 'bi-bookmark-x' : 'bi-bookmark-plus' %> me-2"></i>
                   <%= @bookmarked ? '解除' : 'ブックマーク' %>
@@ -105,7 +105,7 @@
           <%= form_with url: evaluate_post_path(@post, kind: kind), method: :post, local: false do %>
             <%= button_tag type: "submit",
                 class: "btn px-4 py-2 rounded-pill kind-button #{evaluated ? 'btn-success' : 'btn-outline-secondary'}",
-                data: { kind: kind, post_id: @post.id } do %>
+                data: { kind: kind, post_id: @post.uuid } do %>
               <%= kind_icon(kind) %> <%= kind_label(kind) %>
             <% end %>
           <% end %>
@@ -115,7 +115,7 @@
       <!-- ★評価 -->
       <% if @post.rating_enabled? %>
         <% avg_score = @post.average_star_score.to_f.round %>
-        <div class="star-rating" data-post-id="<%= @post.id %>" style="position: relative;">
+        <div class="star-rating" data-post-id="<%= @post.uuid %>" style="position: relative;">
           <div class="star-display" style="cursor: pointer;">
            <% (1..5).each do |i| %>
               <span class="star <%= 'selected' if i <= avg_score %>" data-score="<%= i %>">★</span>

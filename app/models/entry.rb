@@ -4,4 +4,8 @@ class Entry < ApplicationRecord
   belongs_to :partner, class_name: 'User'
 
   validates :room_id, presence: true
+
+  def to_param
+    uuid
+  end
 end

@@ -1,6 +1,8 @@
 class CommentsController < ApplicationController
   def create
-    @post = Post.find(params[:post_id])
+    # UUIDで投稿を取得
+    @post = Post.find_by(uuid: params[:post_id])
+
     @comment = @post.comments.build(comment_params)
     @comment.user = current_user
 

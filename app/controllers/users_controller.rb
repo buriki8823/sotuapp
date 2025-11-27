@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.find_by(uuid: params[:id])
     @received_star_ratings = StarRating.joins(:post).where(posts: { user_id: @user.id })
     @total_score = @received_star_ratings.sum(:score)
     @average_score = @received_star_ratings.average(:score)&.round(1) || 0
@@ -85,7 +85,7 @@ class UsersController < ApplicationController
   end
 
   def send_message
-    recipient = User.find(params[:recipient_id])
+    recipient = User.find_by(uuid: params[:recipient_id])
     room = Room.joins(:entries)
                .where("CAST(entries.user_id AS BIGINT) IN (?)", [current_user.id, recipient.id])
                .group('rooms.id')
@@ -122,7 +122,7 @@ class UsersController < ApplicationController
 
   def search
     users = User.where("name LIKE ?", "%#{params[:q]}%")
-    render json: users.select(:id, :name)
+    render json: users.select(:uuid, :name)
   end
   
   def reply

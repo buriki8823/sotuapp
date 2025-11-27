@@ -50,6 +50,9 @@ class User < ApplicationRecord
     window_background_url.presence
   end
 
+  def to_param
+    uuid
+  end
 
   validate :password_not_blank_only
 
