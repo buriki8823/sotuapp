@@ -28,7 +28,7 @@ services:
       - node_modules:/sotuapp/node_modules
     environment:
       TZ: Asia/Tokyo
-      RAILS_ENV: development
+      RAILS_ENV: ${RAILS_ENV:-development}
     ports:
       - "3000:3000"
     depends_on:

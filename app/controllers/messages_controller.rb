@@ -1,15 +1,17 @@
 class MessagesController < ApplicationController
   def reply
-    # UUIDでメッセージを取得
     @message = Message.find_by(uuid: params[:id])
-
-    # recipient_id も UUID 化するなら find_by(uuid: …) に変更が必要
     recipient = User.find_by(uuid: params[:recipient_id])
+
+    unless recipient
+      redirect_to user_dmpage_path(current_user, message_id: @message.uuid),
+                  alert: "宛先が指定されていません" and return
+    end
 
     @reply = @message.replies.create(
       user: current_user,
       body: params[:body],
-      recipient_id: recipient.id # 外部キーがまだ整数idならこのまま
+      recipient_id: recipient.id
     )
 
     respond_to do |format|
@@ -19,7 +21,6 @@ class MessagesController < ApplicationController
   end
 
   def show
-    # UUIDでメッセージを取得
     @focused_message = Message.find_by(uuid: params[:message_id])
 
     if @focused_message&.user_id == current_user.id && !@focused_message.read?

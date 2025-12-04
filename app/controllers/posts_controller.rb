@@ -23,7 +23,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find_by(uuid: params[:id])
-    @bookmarked = current_user.bookmarked_posts.exists?(@post.uuid)
+    @bookmarked = current_user.bookmarked_posts.exists?(uuid: @post.uuid)
   end
 
   def new

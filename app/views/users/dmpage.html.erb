@@ -102,7 +102,7 @@
                 <%= f.label :body, "返信コメント", class: "form-label" %>
                 <%= f.text_area :body, rows: 2, class: "form-control" %>
               </div>
-              <%= f.hidden_field :recipient_id, value: @focused_message.user_id %>
+              <%= f.hidden_field :recipient_id, value: @focused_message.user.uuid %>
               <%= f.submit "返信", class: "btn btn-success", style: "margin-bottom: 4px;" %>
             <% end %>
           </turbo-frame>

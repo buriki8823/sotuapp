@@ -68,7 +68,7 @@
               <div class="bookmark-toggle" data-post-id="<%= @post.uuid %>" data-bookmarked="<%= @bookmarked %>">
                 <button class="btn bookmark-button" style="background-color: <%= @bookmarked ? '#dc3545' : 'orange' %>; color: white; margin-bottom: 10px;">
                   <i class="bi <%= @bookmarked ? 'bi-bookmark-x' : 'bi-bookmark-plus' %> me-2"></i>
-                  <%= @bookmarked ? '解除' : 'ブックマーク' %>
+                  <%= @bookmarked ? 'ブックマーク解除' : 'ブックマークする' %>
                 </button>
               </div>
             <% end %>

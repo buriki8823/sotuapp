@@ -2,6 +2,10 @@
   新規メール作成
 </h1>
 
+<% if flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+
 <div class="container-fluid" style="height: 80vh;">
     <div class="row h-80">
       <div class="col-md-12 d-flex flex-column justify-content-center align-items-center" style="height: 80vh; background-color: #DEEAEE; margin-left: 0; margin-right: 0;">

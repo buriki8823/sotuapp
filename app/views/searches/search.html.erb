@@ -28,6 +28,19 @@
               <div class="card-body">
                 <h5 class="card-title"><%= post.title %></h5>
                 <p class="card-text text-muted">投稿者：<%= post.user.name %></p>
+
+                <% if post.rating_enabled? %>
+                  <div class="d-flex align-items-center flex-wrap mt-1">
+                    <% avg_score = post.average_star_score.to_f.round %>
+                    <% (1..5).each do |i| %>
+                      <% if i <= avg_score %>
+                        <span class="star-icon text-warning"><i class="bi bi-star-fill"></i></span>
+                      <% else %>
+                        <span class="star-icon text-secondary"><i class="bi bi-star"></i></span>
+                      <% end %>
+                    <% end %>
+                  </div>
+                <% end %>
               </div>
             </div>
           </div>

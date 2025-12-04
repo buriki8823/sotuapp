@@ -58,6 +58,17 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
+  if Rails.env.development? || Rails.env.test?
+    get '/test_login', to: proc { |env|
+      request = ActionDispatch::Request.new(env)
+      user_id = request.params['user_id']
+      user = User.find(user_id)
+      env['warden'].set_user(user, scope: :user)
+      request.session[:user_id] = user.id
+      [302, { 'Location' => '/' }, []]
+    }
+  end
+
   # PWA関連
   get "up" => "rails/health#show", as: :rails_health_check
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker

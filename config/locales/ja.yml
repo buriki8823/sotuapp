@@ -57,6 +57,7 @@ ja:
       
   activerecord:
     models:
+      message: メッセージ
       user: ユーザー
     attributes:
       user:
@@ -65,14 +66,29 @@ ja:
         password: パスワード
         password_confirmation: パスワード確認
         avatar: 画像ファイルを選択
-
+      message:
+        subject: 件名
+        body: 本文
+        recipient_id: 宛先
+    errors:
+      messages:
+        record_invalid: "バリデーションに失敗しました: %{errors}"
+      models:
+        message:
+          attributes:
+            body:
+              blank: "本文を入力してください"
   errors:
     messages:
       blank: "を入力してください"
+      inclusion: "は一覧に含まれていません"
       taken: "はすでに使用されています"
       too_short: "は%{count}文字以上で入力してください"
+      too_long: "は%{count}文字以内で入力してください"
       confirmation: "が一致しません"
       invalid: "が正しくありません"
+      not_found: "メールアドレスは見つかりませんでした"
+      not_saved: "保存に失敗しました"
     models:
       user:
         attributes:

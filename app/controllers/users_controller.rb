@@ -63,7 +63,7 @@ class UsersController < ApplicationController
     @entries = Entry.where(user_id: current_user.id)
     @messages = Message.where(room_id: params[:room_id]).order(:created_at)
 
-    @focused_message = Message.find_by(id: params[:message_id])
+    @focused_message = Message.find_by(uuid: params[:message_id])
 
     # 既読処理
     if @focused_message && @focused_message.user_id != current_user.id && !@focused_message.read?
@@ -86,6 +86,11 @@ class UsersController < ApplicationController
 
   def send_message
     recipient = User.find_by(uuid: params[:recipient_id])
+    unless recipient
+      flash[:alert] = "宛先を選択してください"
+      redirect_to newdmpage_user_path(current_user) and return
+    end
+
     room = Room.joins(:entries)
                .where("CAST(entries.user_id AS BIGINT) IN (?)", [current_user.id, recipient.id])
                .group('rooms.id')
@@ -108,10 +113,11 @@ class UsersController < ApplicationController
     )
 
     if @message.save
-    redirect_to user_dmpage_path(current_user, room_id: room.id)
-    else
-      flash[:alert] = "メッセージの送信に失敗しました: " + @message.errors.full_messages.join(", ")
       redirect_to user_dmpage_path(current_user, room_id: room.id)
+    else
+      @all_users = User.where.not(id: current_user.id)
+      flash.now[:alert] = @message.errors.full_messages.join(", ")
+      render :newdmpage
     end
   end
 
@@ -126,8 +132,19 @@ class UsersController < ApplicationController
   end
   
   def reply
-    @message = Message.find(params[:id])
-    @reply = @message.replies.create(user: current_user, body: params[:body], recipient_id: params[:recipient_id])
+    @message = Message.find_by(uuid: params[:id])
+    recipient = User.find_by(uuid: params[:recipient_id])
+
+    unless recipient_id.present?
+      redirect_to user_dmpage_path(current_user, message_id: @message.id),
+                  alert: "宛先が指定されていません" and return
+    end
+
+    @reply = @message.replies.create(
+      user: current_user,
+      body: params[:body],
+      recipient_id: recipient_id
+    )
 
     respond_to do |format|
       format.turbo_stream
