@@ -1,6 +1,6 @@
 module ApplicationHelper
   include MetaTags::ViewHelper
-  
+
   def kind_icon(kind)
     case kind.to_s
     when "cool"     then "😎"

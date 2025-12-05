@@ -47,42 +47,40 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-  gem 'rspec-rails'
-
+  gem "rspec-rails"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem 'letter_opener'
-  gem 'letter_opener_web'
+  gem "letter_opener"
+  gem "letter_opener_web"
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem 'database_cleaner-active_record'
-  gem 'factory_bot_rails' 
-  gem 'shoulda-matchers', '~> 5.0'
+  gem "database_cleaner-active_record"
+  gem "factory_bot_rails"
+  gem "shoulda-matchers", "~> 5.0"
 end
 
-gem 'devise'
+gem "devise"
 
-gem 'image_processing', '~> 1.2'
+gem "image_processing", "~> 1.2"
 
-gem 'kaminari'
+gem "kaminari"
 
 gem "cloudinary"
 gem "activestorage-cloudinary-service"
 
-gem 'jquery-rails'
-gem 'dotenv-rails', groups: [:development, :test]
-gem 'mini_magick'
+gem "jquery-rails"
+gem "dotenv-rails", groups: [ :development, :test ]
+gem "mini_magick"
 
-gem 'omniauth'
-gem 'omniauth-google-oauth2'
-gem 'omniauth-rails_csrf_protection'
+gem "omniauth"
+gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection"
 
-gem 'meta-tags'
-
+gem "meta-tags"

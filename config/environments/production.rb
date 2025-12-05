@@ -79,17 +79,17 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.default_options = {
-  from: 'PCPACK <sk.typhoon999@gmail.com>' # ← SendGridで認証済みのアドレスに変更
+  from: "PCPACK <sk.typhoon999@gmail.com>" # ← SendGridで認証済みのアドレスに変更
 }
 
-  config.action_mailer.default_url_options = { host: 'pcpack-app.com', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: "pcpack-app.com", protocol: "https" }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              'smtp.sendgrid.net',
+    address:              "smtp.sendgrid.net",
     port:                 587,
-    user_name:            'apikey',
-    password:             ENV['SENDGRID_API_KEY'],
+    user_name:            "apikey",
+    password:             ENV["SENDGRID_API_KEY"],
     authentication:       :plain,
     enable_starttls_auto: true
   }
@@ -113,7 +113,7 @@ Rails.application.configure do
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   config.hosts << "localhost"
-  config.hosts += ["sotuapp-v2.fly.dev", /.*\.fly\.dev/]
+  config.hosts += [ "sotuapp-v2.fly.dev", /.*\.fly\.dev/ ]
   config.hosts << "pcpack-app.com"
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
@@ -122,5 +122,4 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
   config.consider_all_requests_local = false
-
 end

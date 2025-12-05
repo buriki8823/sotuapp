@@ -14,7 +14,7 @@ RSpec.describe Bookmark, type: :model do
       title: "テスト投稿",
       body: "本文",
       user: user,
-      image_urls: ["https://example.com/test.png"]
+      image_urls: [ "https://example.com/test.png" ]
     )
   end
 

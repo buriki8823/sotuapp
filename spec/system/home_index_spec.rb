@@ -14,7 +14,7 @@ RSpec.describe "Home index page", type: :system do
       title: "テスト投稿",
       body: "本文テスト",
       user: user,
-      image_urls: ["https://example.com/test.png"]
+      image_urls: [ "https://example.com/test.png" ]
     )
   end
 

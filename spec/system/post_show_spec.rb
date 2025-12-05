@@ -10,7 +10,7 @@ RSpec.describe "Post show page interactions", type: :system, js: true do
       user: user,
       title: "テスト投稿",
       body: "本文",
-      image_urls: ["https://via.placeholder.com/800x600.png"]
+      image_urls: [ "https://via.placeholder.com/800x600.png" ]
     )
   end
 

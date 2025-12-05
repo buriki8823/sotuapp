@@ -1,6 +1,6 @@
 namespace :posts do
   desc "List recent posts"
-  task :list => :environment do
+  task list: :environment do
     Post.order(created_at: :desc).limit(10).each do |post|
       puts "📝 ID: #{post.id}"
       puts "📄 Content: #{post.content}"

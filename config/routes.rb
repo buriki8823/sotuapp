@@ -1,71 +1,71 @@
 Rails.application.routes.draw do
   get "pages/terms"
   devise_for :users, controllers: {
-    registrations: 'users/registrations',
-    sessions: 'users/sessions',
-    passwords: 'users/passwords',
-    omniauth_callbacks: 'users/omniauth_callbacks'
+    registrations: "users/registrations",
+    sessions: "users/sessions",
+    passwords: "users/passwords",
+    omniauth_callbacks: "users/omniauth_callbacks"
   }
 
   authenticated :user do
     root to: "home#index", as: :authenticated_root
   end
 
-  get 'search', to: 'searches#search', as: 'search'
+  get "search", to: "searches#search", as: "search"
 
-  get 'terms', to: 'pages#terms'
-  get 'privacy_policy', to: 'pages#privacy_policy'
+  get "terms", to: "pages#terms"
+  get "privacy_policy", to: "pages#privacy_policy"
 
   unauthenticated do
-    root to: redirect('/users/sign_in')
+    root to: redirect("/users/sign_in")
   end
 
-  get 'mypage', to: 'users#mypage'
+  get "mypage", to: "users#mypage"
 
-  get 'my_posts', to: 'posts#my_posts', as: :my_posts
+  get "my_posts", to: "posts#my_posts", as: :my_posts
 
   get "share", to: "pages#ogp_static"
 
   namespace :mypage do
-    resources :posts, only: [:index, :destroy]
+    resources :posts, only: [ :index, :destroy ]
   end
 
-  resources :posts, only: [:index, :show, :new, :create, :destroy] do
-    resources :star_ratings, only: [:create]
-    resources :comments, only: [:create]
-    resource :bookmark, only: [:create, :destroy]
+  resources :posts, only: [ :index, :show, :new, :create, :destroy ] do
+    resources :star_ratings, only: [ :create ]
+    resources :comments, only: [ :create ]
+    resource :bookmark, only: [ :create, :destroy ]
   end
-  post 'posts/:id/evaluate/:kind', to: 'evaluations#create', as: :evaluate_post
+  post "posts/:id/evaluate/:kind", to: "evaluations#create", as: :evaluate_post
 
-  resources :bookmarks, only: [:index]
-  get 'users/search', to: 'users#search', as: 'users_search'
-  resources :users, only: [:show, :update] do
+  resources :bookmarks, only: [ :index ]
+  get "users/search", to: "users#search", as: "users_search"
+  resources :users, only: [ :show, :update ] do
     collection do
       get :mypage
       patch :reset_mypage_background
       patch :reset_window_background
     end
-    get 'newdmpage', on: :member
+    get "newdmpage", on: :member
     resources :messages, only: [] do
-      post 'reply', on: :member, to: 'messages#reply', as: :reply
+      post "reply", on: :member, to: "messages#reply", as: :reply
     end
   end
 
-  get 'users/:id/dmpage', to: 'users#dmpage', as: 'user_dmpage'
-  post 'users/:id/send_message', to: 'users#send_message', as: 'send_user_message'
+  get "users/:id/dmpage", to: "users#dmpage", as: "user_dmpage"
+  post "users/:id/send_message", to: "users#send_message", as: "send_user_message"
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
   if Rails.env.development? || Rails.env.test?
-    get '/test_login', to: proc { |env|
+    get "/test_login", to: proc { |env|
       request = ActionDispatch::Request.new(env)
-      user_id = request.params['user_id']
+      user_id = request.params["user_id"]
       user = User.find(user_id)
-      env['warden'].set_user(user, scope: :user)
+      env["warden"].set_user(user, scope: :user)
       request.session[:user_id] = user.id
-      [302, { 'Location' => '/' }, []]
+      [ 302, { "Location" => "/" }, [] ]
     }
   end
 

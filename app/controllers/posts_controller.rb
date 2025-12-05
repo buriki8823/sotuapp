@@ -1,24 +1,24 @@
 class PostsController < ApplicationController
   def index
     sorted_posts = case params[:sort]
-                   when "cute"
+    when "cute"
                      Post.order_by_kind("cute")
-                   when "cool"
+    when "cool"
                      Post.order_by_kind("cool")
-                   when "stylish"
+    when "stylish"
                      Post.order_by_kind("stylish")
-                   when "healing"
+    when "healing"
                      Post.order_by_kind("healing")
-                   when "aesthetic"
+    when "aesthetic"
                      Post.order_by_kind("aesthetic")
-                   when "popular"
+    when "popular"
                      Post.order_by_total_evaluations
-                   else
+    else
                      Post.all.order(created_at: :desc)
-                   end
+    end
 
     @posts = sorted_posts.page(params[:page]).per(9)
-    @dummy_count = [9 - @posts.length, 0].max
+    @dummy_count = [ 9 - @posts.length, 0 ].max
   end
 
   def show
@@ -46,10 +46,10 @@ class PostsController < ApplicationController
     post = current_user.posts.find_by(uuid: params[:id])
 
     urls = case post.image_urls
-           when String then JSON.parse(post.image_urls) rescue []
-           when Array then post.image_urls
-           else []
-           end
+    when String then JSON.parse(post.image_urls) rescue []
+    when Array then post.image_urls
+    else []
+    end
 
     urls.reject(&:blank?).each do |url|
       public_id = extract_public_id(url)
@@ -67,16 +67,16 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :body, :rating_enabled, image_urls: [], products_attributes: [:title, :description, :url, :image_url])
+    params.require(:post).permit(:title, :body, :rating_enabled, image_urls: [], products_attributes: [ :title, :description, :url, :image_url ])
   end
 
   def extract_public_id(url)
     uri = URI.parse(url)
-    path = uri.path.split('/')
-    upload_index = path.index('upload')
+    path = uri.path.split("/")
+    upload_index = path.index("upload")
     return nil unless upload_index
 
     public_id_path = path[(upload_index + 1)..]
-    public_id_path.join('/').sub(/\.[^\.]+$/, '') rescue nil
+    public_id_path.join("/").sub(/\.[^\.]+$/, "") rescue nil
   end
 end

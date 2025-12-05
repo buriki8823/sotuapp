@@ -1,5 +1,5 @@
 class SearchesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:autocomplete]
+  skip_before_action :authenticate_user!, only: [ :autocomplete ]
 
   def search
     query = params[:q]

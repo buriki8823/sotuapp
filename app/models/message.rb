@@ -29,8 +29,8 @@ class Message < ApplicationRecord
     uuid
   end
 
-  private 
-  
+  private
+
   def recipient_must_exist
     errors.add(:recipient_id, "が存在しません") unless User.exists?(recipient_id)
   end

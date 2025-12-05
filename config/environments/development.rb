@@ -41,7 +41,7 @@ Rails.application.configure do
   # caching is enabled.
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :letter_opener_web
-  
+
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
@@ -88,5 +88,4 @@ Rails.application.configure do
   config.assets.debug = true
 
   config.hosts << "localhost"
-
 end

@@ -1,6 +1,6 @@
 class BookmarksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, only: [:create, :destroy]
+  before_action :set_post, only: [ :create, :destroy ]
 
   def create
     # UUID 化に対応

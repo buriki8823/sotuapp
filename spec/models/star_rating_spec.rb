@@ -14,7 +14,7 @@ RSpec.describe StarRating, type: :model do
       title: "テスト投稿",
       body: "本文",
       user: user,
-      image_urls: ["https://example.com/test.png"] # ← 追加
+      image_urls: [ "https://example.com/test.png" ] # ← 追加
     )
   end
 

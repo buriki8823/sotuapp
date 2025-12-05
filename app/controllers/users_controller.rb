@@ -92,9 +92,9 @@ class UsersController < ApplicationController
     end
 
     room = Room.joins(:entries)
-               .where("CAST(entries.user_id AS BIGINT) IN (?)", [current_user.id, recipient.id])
-               .group('rooms.id')
-               .having('COUNT(DISTINCT entries.user_id) = 2')
+               .where("CAST(entries.user_id AS BIGINT) IN (?)", [ current_user.id, recipient.id ])
+               .group("rooms.id")
+               .having("COUNT(DISTINCT entries.user_id) = 2")
                .first
 
     unless room
@@ -130,7 +130,7 @@ class UsersController < ApplicationController
     users = User.where("name LIKE ?", "%#{params[:q]}%")
     render json: users.select(:uuid, :name)
   end
-  
+
   def reply
     @message = Message.find_by(uuid: params[:id])
     recipient = User.find_by(uuid: params[:recipient_id])

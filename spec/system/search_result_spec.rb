@@ -15,7 +15,7 @@ RSpec.describe "Search result partial", type: :system do
       title: "画像あり投稿",
       body: "本文",
       user: user,
-      image_urls: ["http://example.com/test.png"],
+      image_urls: [ "http://example.com/test.png" ],
       rating_enabled: true
     )
   end
@@ -25,7 +25,7 @@ RSpec.describe "Search result partial", type: :system do
       title: "画像なし投稿",
       body: "本文",
       user: user,
-      image_urls: ["no_image.png"] 
+      image_urls: [ "no_image.png" ]
     )
   end
 

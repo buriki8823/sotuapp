@@ -10,7 +10,7 @@ class Post < ApplicationRecord
    scope :order_by_total_evaluations, -> {
       left_joins(:evaluations)
         .group(:id)
-        .order('COUNT(evaluations.id) DESC')
+        .order("COUNT(evaluations.id) DESC")
     }
 
     # 特定の感性評価順（例：かわいい）
@@ -19,7 +19,7 @@ class Post < ApplicationRecord
       left_joins(:evaluations)
         .where(evaluations: { kind: kind_value })
         .group(:id)
-        .order('COUNT(evaluations.id) DESC')
+        .order("COUNT(evaluations.id) DESC")
     }
 
   has_many :star_ratings, dependent: :destroy
@@ -54,10 +54,10 @@ class Post < ApplicationRecord
 
   def must_have_valid_images
     urls = case image_urls
-           when String then JSON.parse(image_urls) rescue []
-           when Array then image_urls
-           else []
-           end
+    when String then JSON.parse(image_urls) rescue []
+    when Array then image_urls
+    else []
+    end
 
     valid_urls = urls.reject(&:blank?)
 

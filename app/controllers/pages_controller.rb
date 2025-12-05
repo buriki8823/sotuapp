@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:terms, :privacy_policy, :ogp_static]
+  skip_before_action :authenticate_user!, only: [ :terms, :privacy_policy, :ogp_static ]
 
   def terms
   end

@@ -20,7 +20,7 @@ RSpec.describe "Bookmarks page", type: :system do
       body: "本文テスト",
       user: user,
       uuid: SecureRandom.uuid,
-      image_urls: ["https://example.com/test.png"]
+      image_urls: [ "https://example.com/test.png" ]
     )
   end
 
