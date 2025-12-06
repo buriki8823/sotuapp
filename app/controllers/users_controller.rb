@@ -65,23 +65,45 @@ class UsersController < ApplicationController
 
     @focused_message = Message.find_by(uuid: params[:message_id])
 
-    # 既読処理
-    if @focused_message && @focused_message.user_id != current_user.id && !@focused_message.read?
+    # 宛先ユーザーをビューに渡す
+    @recipient = User.find_by(id: @focused_message.recipient_id) if @focused_message
+
+    # メッセージ本体の既読処理
+    if @focused_message && @focused_message.recipient_id == current_user.id && !@focused_message.read?
       @focused_message.update(read: true)
     end
 
+    # ★ 返信の既読処理を追加
+    if @focused_message
+      @focused_message.replies.each do |reply|
+        if reply.recipient_id == current_user.id && !reply.read?
+          reply.update(read: true)
+        end
+      end
+    end
+
     # 未読通知の再評価
-    @has_new_messages = Message.joins("INNER JOIN entries ON entries.room_id = messages.room_id")
-                              .where(entries: { user_id: current_user.id })
-                              .where.not(user_id: current_user.id)
-                              .where(read: false)
-                              .exists?
+    @has_new_messages =
+      Message.joins("INNER JOIN entries ON entries.room_id = messages.room_id")
+             .where(entries: { user_id: current_user.id })
+             .where.not(user_id: current_user.id)
+             .where(read: false)
+             .exists? ||
+      Reply.where(recipient_id: current_user.id, read: false).exists?
 
     @received_messages = Message.includes(:user)
-                           .joins("INNER JOIN entries ON entries.room_id = messages.room_id")
-                           .where(entries: { user_id: current_user.id })
-                           .where.not(user_id: current_user.id)
-                           .order(created_at: :desc)
+                                .joins("INNER JOIN entries ON entries.room_id = messages.room_id")
+                                .where(entries: { user_id: current_user.id })
+                                .where.not(user_id: current_user.id)
+                                .order(created_at: :desc)
+
+    @sent_messages = Message.includes(:user)
+                            .joins("INNER JOIN entries ON entries.room_id = messages.room_id")
+                            .where(entries: { user_id: current_user.id })
+                            .where(user_id: current_user.id)
+                            .order(created_at: :desc)
+
+    @all_messages = (@received_messages + @sent_messages).sort_by(&:created_at).reverse
   end
 
   def send_message
@@ -132,23 +154,42 @@ class UsersController < ApplicationController
   end
 
   def reply
-    @message = Message.find_by(uuid: params[:id])
-    recipient = User.find_by(uuid: params[:recipient_id])
+    Rails.logger.debug "=== replyアクション開始 ==="
+    Rails.logger.debug "params: #{params.inspect}"
 
-    unless recipient_id.present?
-      redirect_to user_dmpage_path(current_user, message_id: @message.id),
+    @message = Message.find_by(uuid: params[:id])
+    Rails.logger.debug "message: #{@message&.uuid}"
+
+
+    recipient = User.find_by(uuid: params[:recipient_uuid])
+    Rails.logger.debug "recipient_uuid param: #{params[:recipient_uuid]}"
+    Rails.logger.debug "recipient: #{recipient&.id}"
+
+
+    unless recipient
+      redirect_to user_dmpage_path(current_user, message_id: @message.uuid),
                   alert: "宛先が指定されていません" and return
     end
 
     @reply = @message.replies.create(
       user: current_user,
       body: params[:body],
-      recipient_id: recipient_id
+      recipient_id: recipient.id,
+      read: false
     )
+    Rails.logger.debug "reply作成: recipient_id=#{@reply.recipient_id}, body=#{@reply.body}"
+
+
+    # ★ 未読通知の再計算
+    @has_new_messages = Message.joins("INNER JOIN entries ON entries.room_id = messages.room_id")
+                               .where(entries: { user_id: current_user.id })
+                               .where.not(user_id: current_user.id)
+                               .where(read: false)
+                               .exists?
 
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_to user_dmpage_path(current_user, message_id: @message.id) }
+      format.html { redirect_to user_dmpage_path(current_user, message_id: @message.uuid) }
     end
   end
 

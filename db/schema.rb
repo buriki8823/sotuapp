@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_27_112607) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_06_131627) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -133,6 +134,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_27_112607) do
     t.integer "recipient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "read", default: false, null: false
     t.index ["message_id"], name: "index_replies_on_message_id"
     t.index ["user_id"], name: "index_replies_on_user_id"
   end
@@ -147,7 +149,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_27_112607) do
   create_table "star_ratings", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "post_id", null: false
-    t.integer "score", null: false
+    t.integer "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false

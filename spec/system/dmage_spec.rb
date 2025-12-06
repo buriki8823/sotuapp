@@ -37,7 +37,7 @@ RSpec.describe "User DM page", type: :system do
 
   it "lists received messages" do
     visit user_dmpage_path(recipient)
-    expect(page).to have_content("受信一覧")
+    expect(page).to have_content("DM一覧")
     expect(page).to have_content("テスト件名")
     expect(page).to have_content("送信者：送信者")
   end

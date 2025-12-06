@@ -14,33 +14,30 @@
 
           <h4 class="text-success text-center mb-0"
               style="border-bottom: 1px solid #000000; padding: 10px;">
-            受信一覧
+            DM一覧
           </h4>
         </div>
 
         <!-- スクロール領域 -->
         <div class="flex-grow-1 overflow-auto">
-          <% @received_messages.each do |message| %>
+          <% @all_messages.each do |message| %>
             <% sender = message.user %>
             <%= link_to user_dmpage_path(current_user, message_id: message.uuid),
                 class: "text-decoration-none text-dark" do %>
               <div class="p-2 border-bottom border-dark d-flex align-items-center gap-3"
-                   style="background-color: <%= message.read ? '#ffffff' : '#DEEAEE' %>;">
+                   style="background-color: <%= message.unread_for?(current_user) ? '#DEEAEE' : '#ffffff' %>;">
                 <% if sender.avatar_url.present? %>
                   <%= image_tag sender.avatar_url.sub('/upload/', '/upload/c_thumb,w_100,h_100,r_max/'),
                       alt: "#{sender.name}のアイコン",
                       class: "rounded-circle",
                       style: "width: 60px; height: 60px; object-fit: cover;" %>
-                  <% end %>
-
-                  <div class="flex-grow-1">
-                    <strong>送信者：<%= sender.name %></strong><br>
-                    <strong>件名：<%= message.subject || "（件名なし）" %></strong><br>
-                    <small class="text-muted">
-                      <%= l(message.created_at, format: :short) %>
-                    </small>
-                  </div>
+                <% end %>
+                <div class="flex-grow-1">
+                  <strong>送信者：<%= sender.name %></strong><br>
+                  <strong>件名：<%= message.subject || "（件名なし）" %></strong><br>
+                  <small class="text-muted"><%= l(message.created_at, format: :short) %></small>
                 </div>
+              </div>
             <% end %>
           <% end %>
         </div>
@@ -97,12 +94,15 @@
 
           <!-- 固定フッター：返信フォーム -->
           <turbo-frame id="reply_form" class="px-3 pt-2 border-top bg-light">
-            <%= form_with url: reply_user_message_path(current_user, @focused_message), method: :post, data: { turbo_frame: "reply_form" } do |f| %>
+            <%= form_with url: reply_user_message_path(current_user, @focused_message.uuid),
+                          method: :post,
+                          scope: nil,
+                          data: { turbo_frame: "reply_form" } do |f| %>
               <div class="mb-2">
                 <%= f.label :body, "返信コメント", class: "form-label" %>
                 <%= f.text_area :body, rows: 2, class: "form-control" %>
               </div>
-              <%= f.hidden_field :recipient_id, value: @focused_message.user.uuid %>
+              <%= hidden_field_tag :recipient_uuid, @recipient.uuid %>
               <%= f.submit "返信", class: "btn btn-success", style: "margin-bottom: 4px;" %>
             <% end %>
           </turbo-frame>

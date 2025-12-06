@@ -29,6 +29,12 @@ class Message < ApplicationRecord
     uuid
   end
 
+  def unread_for?(viewer)
+    # 本体が未読か、返信に未読があるか
+    (!read && recipient_id == viewer.id) ||
+      replies.any? { |r| r.recipient_id == viewer.id && !r.read? }
+  end
+
   private
 
   def recipient_must_exist

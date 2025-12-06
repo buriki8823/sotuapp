@@ -1,6 +1,8 @@
 require 'spec_helper'
 require 'capybara/rspec'
 require 'database_cleaner/active_record'
+require 'factory_bot_rails'
+require 'shoulda/matchers'
 
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'

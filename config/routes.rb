@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     end
     get "newdmpage", on: :member
     resources :messages, only: [] do
-      post "reply", on: :member, to: "messages#reply", as: :reply
+      post "reply", on: :member, to: "users#reply", as: :reply
     end
   end
 

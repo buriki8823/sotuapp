@@ -23,11 +23,11 @@ class ApplicationController < ActionController::Base
 
   def set_new_message_flag
     if user_signed_in?
-      @has_new_messages = Message.joins("INNER JOIN entries ON entries.room_id = messages.room_id")
-                                  .where(entries: { user_id: current_user.id })
-                                  .where.not(user_id: current_user.id)
-                                  .where(read: false)
-                                  .exists?
+      has_unread_messages = Message.where(recipient_id: current_user.id, read: false).exists?
+      has_unread_replies  = Reply.where(recipient_id: current_user.id, read: false).exists?
+      @has_new_messages = has_unread_messages || has_unread_replies
+    else
+      @has_new_messages = false
     end
   end
 end
