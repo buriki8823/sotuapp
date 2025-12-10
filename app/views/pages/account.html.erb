@@ -1,0 +1,117 @@
+<h1 class="mb-4 text-center fw-bold" style="margin-top: 20px;">アカウントの登録方法</h1>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- ステップ1 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 1</span> ログインページ</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            ログインページの背景をクリックする。スマホの場合は背景をタップします。<br>
+            するとログイン用のウィンドウが表示されます。
+          </p>
+          <div class="d-flex justify-content-center align-items-center gap-3">
+            <%= image_tag 'account_step1-1.png', alt: 'アカウント登録のスクリーンショット', class: 'img-fluid mb-3 w-25 mx-auto d-block' %>
+            <span class="fs-3"><i class="bi bi-arrow-right-square-fill" style="color: orange;"></i></span>
+            <%= image_tag 'account_step1-2.png', alt: 'アカウント登録のスクリーンショット', class: 'img-fluid mb-3 w-25 mx-auto d-block' %>
+          </div>
+        </div>
+      </div>
+
+      <!-- ステップ2 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 2</span> 新規登録を選択</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            ウィンドウ内の「新規登録」をクリックまたはタップします。<br>
+            アカウント登録用のページに移動します。<br>
+            <small class="text-muted">
+              ※Googleアカウントをお持ちの方はウィンドウの一番下にあるGoogleの認証でログイン可能です。</br>
+              ※Google認証を使用する場合、以降のステップはスキップされます。
+            </small>
+          </p>
+          <%= image_tag 'account_step2.png', alt: 'アカウント登録のスクリーンショット', class: 'img-fluid mb-3 w-75 mx-auto d-block' %>
+        </div>
+      </div>
+
+      <!-- ステップ3 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 3</span> 情報を入力</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            必要な情報（アカウント名、メールアドレス、パスワード）を入力します。<br>
+            <small class="text-muted">
+              ※メールアドレスは有効なものを使用してください。<br>
+              ※パスワードは6文字以上で設定してください。<br>
+              ※利用規約とプライバシーポリシーは事前によくお読みください。
+            </small>
+          </p>
+          <%= image_tag 'account_step3.png', alt: 'アカウント登録のスクリーンショット', class: 'img-fluid mb-3 w-75 mx-auto d-block' %>
+        </div>
+      </div>
+
+      <!-- ステップ4 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <span class="badge bg-primary me-2">STEP 4</span> アイコン画像の設定
+          </h5>
+          <div class="bg-light p-3 rounded mb-3">
+          <p class="mb-3">
+            画像の設定は任意ですが、設定する場合は以下の手順に従ってください。
+          </p>
+
+          <ol class="bg-light p-3 rounded">
+            <li>挿入ボタンを押す</li>
+            <li>モーダルウィンドウが開く</li>
+            <li>
+          モーダルウィンドウでの操作：
+                <ul class="mt-2">
+                  <li>「画像をアップロード」：自分のデバイスから画像を選択してアップロード</li>
+                  <li>「画像削除」：アップロードした画像を削除</li>
+                  <li>「キャンセル」：画像を取り込まずモーダルを閉じる</li>
+                  <li>「この画像で決定」：アップロードした画像を保存してモーダルを閉じる</li>
+                </ul>
+            </li>
+          </ol>
+
+          <small class="text-muted d-block mt-2">
+          ※アイコン画像は後からマイページで変更できます。<br>
+          ※画像を選択しない場合はデフォルトのアイコンが設定されます。
+          </small>
+          </div>
+
+          <%= image_tag 'account_step4-1.png',
+              alt: 'アカウント登録のスクリーンショット',
+              class: 'img-fluid mb-3 w-75 mx-auto d-block' %>
+        
+        </div>
+      </div>
+
+      <!-- ステップ5 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 5</span> 登録完了</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            「登録する」ボタンを押してください。<br>
+             登録が完了すると、ログインページにリダイレクトされます。
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="text-center my-4">
+  <%= link_to '← 使い方ガイドに戻る', tukaikata_path, class: 'btn btn-secondary' %>
+</div>
+
+<style>
+ .fixed-card {
+  max-width: 700px;
+  margin: 0 auto;
+}
+</style>

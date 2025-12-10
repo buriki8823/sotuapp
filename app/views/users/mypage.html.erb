@@ -9,11 +9,11 @@
   <% end %>
 
   <!-- タイトル -->
-  <h1 class="toukou-title text-center mt-3 mb-5" style="position: relative; top: 30px; font-size: 128px;">マイページ</h1>
+  <h1 class="toukou-title text-center mt-3 mb-5" style="position: relative; top: 30px; font-size: 80px;">マイページ</h1>
 
   <!-- メインボックス -->
   <div class="d-flex justify-content-center align-items-center" style="position: relative; min-height: 70vh; overflow: auto;">
-   <div class="scale-wrapper" style="transform: scale(1); transform-origin: top center;">
+   <div class="scale-wrapper" style="transform: scale(0.8); transform-origin: top center;">
     <div class="mypage-box p-5 rounded shadow position-relative text-center"
          style="width: 978px; min-height: 687px; height: auto; background-color: white; ">
 
@@ -45,7 +45,7 @@
       <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { id: "avatar-form" } do |f| %>
         <%= f.hidden_field :avatar_url, id: "avatar_url_input" %>
           <label onclick="openCloudinary()" class="profile-icon position-absolute" style="cursor: pointer;">
-          <%= image_tag(current_user.avatar_url&.sub('/upload/', '/upload/c_thumb,w_600,h_600,r_max/') || 'default_avatar.png',
+          <%= image_tag(current_user.avatar_url.present? ? current_user.avatar_url&.sub('/upload/', '/upload/c_thumb,w_600,h_600,r_max/') : 'default_avatar.png',
                   alt: 'プロフィール画像',
                   class: 'rounded-circle mypage-avatar',
                   size: '600x600') %>
@@ -161,6 +161,13 @@
 </script>
 
 <style>
+  .mypage-box {
+    max-width: 978px;
+    width: 100%;
+    min-height: 1000px;
+    height: auto;
+  }
+
   .settings-icon {
     position: absolute;
     top: 10px;

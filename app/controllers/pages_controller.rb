@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :terms, :privacy_policy, :ogp_static ]
+  skip_before_action :authenticate_user!, only: [ :terms, :privacy_policy, :ogp_static , :tukaikata, :account, :login, :post, :bookmark, :mypage, :dm, :logout ]
 
   def terms
   end
@@ -24,5 +24,29 @@ class PagesController < ApplicationController
                     card: "summary_large_image",
                     image: @ogp_image_url
                   }
+  end
+
+  def tukaikata
+  end
+
+  def account 
+  end
+
+  def login
+  end
+
+  def post
+  end
+
+  def bookmark
+  end
+
+  def mypage
+  end
+
+  def dm
+  end
+
+  def logout
   end
 end

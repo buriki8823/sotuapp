@@ -1,0 +1,106 @@
+<h1 class="mb-4 text-center fw-bold" style="margin-top: 20px;">投稿の仕方について</h1>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- ステップ1 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 1</span> 投稿ページへ移動</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            ホームページ上部にある投稿のモニターアイコンを選択します。
+          </p>
+          <%= image_tag 'post_step1.png', alt: '投稿ページへ遷移', class: 'img-fluid mb-3 w-75 mx-auto d-block' %>
+          </div>
+        </div>
+      </div>
+
+      <!-- ステップ2 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 2</span> 投稿</h5>
+          <div class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            投稿ページではタイトル、評価機能、画像、概要、お勧めのグッズを入れて投稿できます。<br>
+            それぞれについて以下で説明します。<br>
+            <small class="text-muted">
+              ※オススメグッズの投稿は任意となります。<br>
+            </small>
+            1. タイトル<br>
+            &nbsp;&nbsp;投稿タイトルを入力します。<br>
+            <small class="text-muted">
+            &nbsp;&nbsp;※タイトルは10文字までです。
+            </small><br>
+            <br>
+            2. 評価機能<br>
+            &nbsp;&nbsp;ONとOFFどちらかを選択して切り替えられます。<br>
+            <small class="text-muted">
+            &nbsp;&nbsp;評価されたくない人はOFFにしてください。<br>
+            </small><br>
+            <%= image_tag 'post_step2.png', alt: 'ONとOFF', class: 'img-fluid w-25 float-start me-3 mb-3'%>
+            <div class="clearfix"></div>
+            3. 画像<br>
+            &nbsp;&nbsp;スロットをクリックして画像をアップロードします。<br>
+            &nbsp;&nbsp;最大５枚までお部屋の写真を投稿できます。<br>
+            <br>
+            &nbsp;&nbsp;★画像のアップロード方法<br>
+            &nbsp;&nbsp;①スロットをクリック<br>
+            <br>
+            <%= image_tag 'post_step3.png', alt: '画像選択へ', class: 'img-fluid w-75 float-start me-3 mb-3'%>
+            <div class="clearfix"></div>
+            &nbsp;&nbsp;②ファイル選択ウィンドウが開くので、投稿したい画像を選択<br>
+            <br>
+            <%= image_tag 'post_step3-2.png', alt: '画像選択へ', class: 'img-fluid w-50 float-start me-3 mb-3'%>
+            <div class="clearfix"></div>
+            &nbsp;&nbsp;③選択した画像がスロットに表示される<br>
+            <br>
+            <%= image_tag 'post_step3-3.png', alt: '画像選択へ', class: 'img-fluid w-50 float-start me-3 mb-3'%>
+            <div class="clearfix"></div>
+            <small class="text-muted">
+            &nbsp;&nbsp;※画像はJPEG、PNG形式に対応しています。<br>
+            </small><br>
+            4. 概要<br>
+            &nbsp;&nbsp;自分のPCや作業部屋の特徴やこだわりを説明してください。<br>
+            <small class="text-muted">
+            &nbsp;&nbsp;※概要は200文字までです。
+            </small><br>
+            <br>
+            5. オススメグッズ<br>
+            &nbsp;&nbsp;自分が使っている便利なグッズや周辺機器を紹介してください。<br>
+            <br>
+            &nbsp;&nbsp;★オススメグッズの入力方法<br>
+            &nbsp;&nbsp;①スロットをクリック<br>
+            <br>
+            <%= image_tag 'post_step5.png', alt: 'スロットをクリック', class: 'img-fluid w-50 float-start me-3 mb-3'%>
+            <div class="clearfix"></div>
+            &nbsp;&nbsp;②グッズ名、概要、URL、画像を挿入する<br>
+            <small class="text-muted">
+            &nbsp;&nbsp;※URLは任意になります。<br>
+            </small><br>
+            <br>
+            <%= image_tag 'post_step5-2.png', alt: 'モーダルの説明', class: 'img-fluid w-75 float-start me-3 mb-3'%>
+            <div class="clearfix"></div>
+            <br>
+            &nbsp;&nbsp;③OKを押す<br>
+            <small class="text-muted">
+            &nbsp;&nbsp;※キャンセルを押すと保存されずウィンドウが閉じられます<br>
+            </small><br>
+            <br>
+            以上の情報を入力したら、「投稿する」ボタンをクリックして投稿を完了します。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center my-4">
+  <%= link_to '← 使い方ガイドに戻る', tukaikata_path, class: 'btn btn-secondary' %>
+</div>
+
+<style>
+ .fixed-card {
+  max-width: 700px;
+  margin: 0 auto;
+}
+</style>

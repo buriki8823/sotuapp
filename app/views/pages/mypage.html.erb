@@ -1,0 +1,103 @@
+<h1 class="mb-4 text-center fw-bold" style="margin-top: 20px;">マイページの使い方</h1>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- ステップ1 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 1</span> マイページへ移動</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            ホームページのマイページのアイコンボタンクリックして移動する。<br>
+            <br>
+            <%= image_tag 'mypage_step1.png', alt: 'ブックマークをするボタン', class: 'img-fluid mb-3 w-75 mx-auto d-block' %>
+          </div>
+        </div>
+      </div>
+
+      <!-- ステップ2 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 2</span> マイページの画面</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            マイページは自分のアイコンやマイページの背景をカスタマイズすることができます。<br>
+            <br>
+          </p>
+          <%= image_tag 'mypage_step2.png', alt: 'マイページの画面', class: 'img-fluid mb-3 w-75 mx-auto d-block' %>
+        </div>
+      </div>
+
+      <!-- ステップ3 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 3</span> アイコンの変更</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            アイコンをクリックして新しくアイコンを変更することができます。<br>
+            <br>
+          </p>
+          <%= image_tag 'mypage_step3.png', alt: 'アイコンの変更', class: 'img-fluid mb-3 w-50 mx-auto d-block' %>
+        </div>
+      </div>
+
+      <!-- ステップ4 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 4</span> 背景の変更</h5>
+          <div class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            歯車アイコンをクリックして背景を変更することができます。<br>
+            <br>
+            1. 歯車のアイコンをクリックする<br>
+            <br>
+            <%= image_tag 'mypage_step4.png', alt: '歯車のアイコンをクリック', class: 'img-fluid w-50 float-start me-3 mb-3'%>
+            <div class="clearfix"></div>
+            2. 背景を変更する<br>
+            <div style="font-size: 14px;">&nbsp;&nbsp;・背景変更ボタン①：Window背景の変更</div>
+            <div style="font-size: 14px;">&nbsp;&nbsp;・背景変更ボタン②：マイページ背景の変更</div>
+            <br>
+            <%= image_tag 'mypage_step4-2.png', alt: '背景を変更する', class: 'img-fluid w-50 float-start me-3 mb-3'%>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ステップ5 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 5</span> スコア表示</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            自分が投稿した作品の評価点の合計が表示されます。<br>
+            たくさんの人に評価をもらってスコアを上げましょう！<br>
+            <br>
+          </p>
+          <%= image_tag 'mypage_step5.png', alt: 'スコア表示', class: 'img-fluid mb-3 w-50 mx-auto d-block' %>
+        </div>
+      </div>
+
+      <!-- ステップ6 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 6</span> 別ページへ</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            マイページからは自分の投稿した作品一覧やDMメールへの移動ができます。<br>
+            ぜひご利用ください。<br>
+            <br>
+          </p>
+          <%= image_tag 'mypage_step6.png', alt: '別ページへ', class: 'img-fluid mb-3 w-50 mx-auto d-block' %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="text-center my-4">
+  <%= link_to '← 使い方ガイドに戻る', tukaikata_path, class: 'btn btn-secondary' %>
+</div>
+
+<style>
+ .fixed-card {
+  max-width: 700px;
+  margin: 0 auto;
+}
+</style>

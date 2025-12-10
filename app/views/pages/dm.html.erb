@@ -1,0 +1,109 @@
+<h1 class="mb-4 text-center fw-bold" style="margin-top: 20px;">DMメール機能の使い方</h1>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- ステップ1 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 1</span> DMメール機能について</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            DMメール機能は、ユーザー同士が直接メッセージをやり取りできる機能です。<br>
+            気になる投稿者や友達とコミュニケーションを取りたい場合に便利です。<br>
+            <small class="text-muted">
+            &nbsp;&nbsp;※webページ内での機能になります。メールソフトには届きません。<br>
+            </small><br>
+          </div>
+        </div>
+      </div>
+
+      <!-- ステップ2 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 1</span> DMへの移動方法</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            マイページのメールリンクかヘッダーのメールアイコンボタンから移動できます。<br>
+          </p>
+          <div class="d-flex justify-content-center align-items-center gap-3">
+            <%= image_tag 'dm_step2-1.png', alt: 'ブックマークをするボタン', class: 'img-fluid mb-3 w-50 mx-auto d-block' %>
+            <b style="font-size: 24px; color: orange;">or</b>
+            <%= image_tag 'dm_step2-2.png', alt: '解除するボタン', class: 'img-fluid mb-3 w-25 mx-auto d-block' %>
+          </div>
+        </div>
+      </div>
+
+      <!-- ステップ3 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 3</span> 新規作成</h5>
+          <div class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            新規作成リンクをクリックして新規作成ページへ移動します。<br>
+            <br>
+            1. 新規作成ページへ移動<br>
+            <br>
+            <%= image_tag 'dm_step3-1.png', alt: '新規作成ページへ移動', class: 'img-fluid w-50 float-start me-3 mb-3'%>
+            <div class="clearfix"></div>
+            2. 新規ページで宛先、件名、内容を入れて送信ボタンを押してください<br>
+            <br>
+            <%= image_tag 'dm_step3-2.png', alt: 'ページを編集', class: 'img-fluid w-50 float-start me-3 mb-3'%>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ステップ4 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 4</span> 返信</h5>
+          <div class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            DM一覧からメールルームに入り、返信を行ってください<br>
+            <br>
+            1. DM一覧から選択<br>
+            <br>
+            <%= image_tag 'dm_step4-1.png', alt: 'カード選択', class: 'img-fluid w-25 float-start me-3 mb-3'%>
+            <div class="clearfix"></div>
+            2. 内容を確認する。<br>
+            <br>
+            <%= image_tag 'dm_step4-2.png', alt: '背景を変更する', class: 'img-fluid w-75 float-start me-3 mb-3'%>
+            <div class="clearfix"></div>
+            3. コメントを入れて返信ボタンを押す。<br>
+            <br>
+            <%= image_tag 'dm_step4-3.png', alt: '背景を変更する', class: 'img-fluid w-25 float-start me-3 mb-3'%>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ステップ5 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 5</span> 通知未読について</h5>
+          <div class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            未読の通知がある場合ヘッダーのアイコンに赤丸のマークがつきます。<br>
+            <br>
+            <%= image_tag 'dm_step5-1.png', alt: 'スコア表示', class: 'img-fluid w-25 float-start me-3 mb-3' %>
+            <div class="clearfix"></div><br>
+            未読の通知がある場合、DM一覧の該当カードの色が薄いグレー色となります。<br>
+            <br>
+            <%= image_tag 'dm_step5-2.png', alt: 'スコア表示', class: 'img-fluid w-75 float-start me-3 mb-3' %>
+            <div class="clearfix"></div><br>
+          </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="text-center my-4">
+  <%= link_to '← 使い方ガイドに戻る', tukaikata_path, class: 'btn btn-secondary' %>
+</div>
+
+<style>
+ .fixed-card {
+  max-width: 700px;
+  margin: 0 auto;
+}
+</style>

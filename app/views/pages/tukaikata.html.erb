@@ -1,0 +1,132 @@
+<section class="bg-light py-5">
+  <div class="container text-center">
+    <h1 class="display-5 fw-bold mb-3">Webページの使い方ガイド</h1>
+    <p class="lead text-muted mb-4">
+      このアプリでできることをわかりやすく紹介します。<br>
+      初めての方でも安心して使えるように、基本操作をステップごとに解説します。
+    </p>
+  </div>
+</section>
+
+<section class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-body p-4 text-center">
+          <%= image_tag 'tukaikata_guide.png', alt: '使い方ガイド画像', class: 'img-fluid mb-4 mx-auto d-block w-75' %>
+
+          <h1 class="mb-4">はじめに</h1>
+          <p>
+            このアプリは、PCを使用した作業部屋やゲーム部屋を紹介することが主です。<br>
+            以下の手順に従って、基本的な操作方法を学びましょう。
+          </p>
+
+          <h1 class="mb-4">主な操作方法</h1>
+
+          <!-- 大枠カード -->
+          <div class="card border-primary shadow-sm">
+            <div class="card-body">
+
+              <div class="card mb-3">
+                <%= link_to tukaikata_account_path, class: "text-decoration-none text-dark" do %>
+                  <div class="card-body">
+                    <h3 class="mb-3"><i class="bi bi-person-plus"></i> アカウント登録</h3>
+                    <p>
+                 「新規登録」ボタンをクリックし、必要な情報を入力してアカウントを作成します。<br>
+                  登録後、ログインしてプロフィールを設定しましょう。
+                    </p>
+                  </div>
+                <% end %>
+              </div>
+
+
+              <!-- ログイン -->
+              <div class="card mb-3">
+                <%= link_to tukaikata_login_path, class: "text-decoration-none text-dark" do %>
+                  <div class="card-body">
+                    <h3 class="mb-3"><i class="bi bi-box-arrow-in-right"></i> ログイン</h3>
+                    <p>
+                      「ログイン」ボタンをクリックし、登録したメールアドレスとパスワードを入力してログインします。<br>
+                      ログイン後、マイページにアクセスして自分の情報を確認できます。
+                    </p>
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- 投稿の作成 -->
+              <div class="card mb-3">
+                <%= link_to tukaikata_post_path, class: "text-decoration-none text-dark" do %>
+                  <div class="card-body">
+                    <h3 class="mb-3"><i class="bi bi-pencil-square"></i> 投稿の使い方</h3>
+                    <p>
+                      PCの写真や小物のこだわりを入力して自分の部屋を紹介しましょう。<br>
+                      投稿後は、他のユーザーからのコメントや評価を楽しむことができます。
+                    </p>
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- ブックマーク -->
+              <div class="card mb-3">
+                <%= link_to tukaikata_bookmark_path, class: "text-decoration-none text-dark" do %>
+                  <div class="card-body">
+                    <h3 class="mb-3"><i class="bi bi-bookmark-star"></i> ブックマークの使い方</h3>
+                    <p>
+                      気に入った投稿があれば、ページの右側にある「ブックマークをする」アイコンをクリックして保存しましょう。<br>
+                      ブックマークした投稿は、マイページの「ブックマーク」セクションからいつでも確認できます。
+                    </p>
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- マイページの使い方 -->
+              <div class="card mb-3">
+                <%= link_to tukaikata_mypage_path, class: "text-decoration-none text-dark" do %>
+                  <div class="card-body">
+                    <h3 class="mb-3"><i class="bi bi-person-circle"></i> マイページの使い方</h3>
+                    <p>
+                      トップページのマイページアイコンをクリックし、アイコン画像を変更できます。<br>
+                      マイページでは背景画像も変更できるので自分らしいプロフィールにカスタマイズしましょう。
+                    </p>
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- ダイレクトメッセージ -->
+              <div class="card mb-3">
+                <%= link_to tukaikata_dm_path, class: "text-decoration-none text-dark" do %>
+                  <div class="card-body">
+                   <h3 class="mb-3"><i class="bi bi-chat-dots"></i> ダイレクトメッセージ（DM）の利用</h3>
+                    <p>
+                      他のユーザーと直接コミュニケーションを取りたい場合は、DM機能を利用しましょう。<br>
+                      DMページからメッセージを新規作成しボタンをクリックして、メッセージを送信できます。
+                    </p>
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- ログアウト -->
+              <div class="card mb-3">
+                <%= link_to tukaikata_logout_path, class: "text-decoration-none text-dark" do %>
+                  <div class="card-body">
+                    <h3 class="mb-3"><i class="bi bi-box-arrow-left"></i> ログアウト</h3>
+                    <p>
+                      画面右上の「menu」をクリックし、「ログアウト」ボタンを選択して、安全にアカウントからログアウトしましょう。
+                    </p>
+                  </div>
+                <% end %>
+              </div>
+
+              <p class="mt-4">
+                以上が、このアプリの基本的な使い方ガイドです。<br>
+                ぜひ、アプリを活用して素敵な作業部屋やPCゲーム部屋を見つけたり、自分の部屋を紹介したりしてください！
+              </p>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,51 @@
+<h1 class="mb-4 text-center fw-bold" style="margin-top: 20px;">ログインについて</h1>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- ステップ1 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 1</span> ログインページ</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            ログインページの背景をクリックする。スマホの場合は背景をタップします。<br>
+            するとログイン用のウィンドウが表示されます。
+          </p>
+          <div class="d-flex justify-content-center align-items-center gap-3">
+            <%= image_tag 'account_step1-1.png', alt: 'ログイン用', class: 'img-fluid mb-3 w-25 mx-auto d-block' %>
+            <span class="fs-3"><i class="bi bi-arrow-right-square-fill" style="color: orange;"></i></span>
+            <%= image_tag 'account_step1-2.png', alt: 'ログイン用', class: 'img-fluid mb-3 w-25 mx-auto d-block' %>
+          </div>
+        </div>
+      </div>
+
+      <!-- ステップ2 -->
+      <div class="card mb-3 shadow-sm fixed-card">
+        <div class="card-body">
+          <h5 class="card-title"><span class="badge bg-primary me-2">STEP 2</span> ログインフォームへ入力</h5>
+          <p class="card-text" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px;">
+            ログインフォームへ登録済みのメールアドレスとパスワードを入力して下さい。<br>
+            ログインボタンを押してログインしてください。<br>
+            <small class="text-muted">
+              ※ログイン状態を保持する場合は、「ログイン状態を保持する」にチェックを入れてログインしてください。<br>
+              ※Googleアカウントをお持ちの方はウィンドウの一番下にあるGoogleの認証でログイン可能です。</br>
+            </small>
+          </p>
+          <%= image_tag 'login_step2.png', alt: 'ログイン用', class: 'img-fluid mb-3 w-75 mx-auto d-block' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center my-4">
+  <%= link_to '← 使い方ガイドに戻る', tukaikata_path, class: 'btn btn-secondary' %>
+</div>
+
+<style>
+ .fixed-card {
+  max-width: 700px;
+  margin: 0 auto;
+}
+</style>
