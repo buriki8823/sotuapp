@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :terms, :privacy_policy, :ogp_static , :tukaikata, :account, :login, :post, :bookmark, :mypage, :dm, :logout ]
+  skip_before_action :authenticate_user!, only: [ :terms, :privacy_policy, :ogp_static, :tukaikata, :account, :login, :post, :bookmark, :mypage, :dm, :logout ]
 
   def terms
   end
@@ -29,7 +29,7 @@ class PagesController < ApplicationController
   def tukaikata
   end
 
-  def account 
+  def account
   end
 
   def login
