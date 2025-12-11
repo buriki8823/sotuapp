@@ -13,7 +13,7 @@
 
   <!-- メインボックス -->
   <div class="d-flex justify-content-center align-items-center" style="position: relative; min-height: 70vh; overflow: auto;">
-   <div class="scale-wrapper" style="transform: scale(0.8); transform-origin: top center;">
+   <div class="scale-wrapper" style="transform: scale(0.9); transform-origin: top center;">
     <div class="mypage-box p-5 rounded shadow position-relative text-center"
          style="width: 978px; min-height: 687px; height: auto; background-color: white; ">
 
@@ -39,84 +39,96 @@
         <div class="settings-icon" onclick="toggleModal()">
          <i class="bi bi-gear-fill"></i>
         </div>
+        
 
+      <div class="profile-overlay">
 
-      <!-- プロフィール -->
-      <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { id: "avatar-form" } do |f| %>
-        <%= f.hidden_field :avatar_url, id: "avatar_url_input" %>
-          <label onclick="openCloudinary()" class="profile-icon position-absolute" style="cursor: pointer;">
-          <%= image_tag(current_user.avatar_url.present? ? current_user.avatar_url&.sub('/upload/', '/upload/c_thumb,w_600,h_600,r_max/') : 'default_avatar.png',
-                  alt: 'プロフィール画像',
-                  class: 'rounded-circle mypage-avatar',
-                  size: '600x600') %>
-          </label>
-      <% end %>
+        <!-- アイコン＋名前 -->
+        <div class="profile-row">
+         <label onclick="openCloudinary()" style="cursor: pointer;">
+           <%= image_tag(
+                 current_user.avatar_url.present? ?
+                 current_user.avatar_url.sub('/upload/', '/upload/c_thumb,w_180,h_180,r_max/') :
+                 'default_avatar.png',
+                 alt: 'プロフィール画像',
+                 class: 'rounded-circle mypage-avatar',
+                 size: '180x180'
+               ) %>
+         </label>
 
-      <!-- アカウント名・評価 -->
-      <div class="account-name position-absolute" style="font-size: 50px; color: black; top: 100px; left: 60%; transform: translateX(-50%); z-index: 1;"> <%= current_user.name %> </div>
-      <div class="rating-count position-absolute" style="color: black; top: 180px; left: 60%; transform: translateX(-50%); z-index: 1;">
-        <h5 class="fw-bold">
-         トータルスコア：
-           <% full_stars = [(@total_score.to_f / @received_star_ratings.count).round, 5].min rescue 0 %>
-           <% (1..5).each do |i| %>
+        <div class="account-name"><%= current_user.name %></div>
+      </div>
+
+       <!-- スコア -->
+      <div class="rating-count">
+        <h5 class="fw-bold" style="font-size: 24px; display: flex; align-items: center; gap: 8px;">
+          トータルスコア：
+          <% full_stars = [(@total_score.to_f / @received_star_ratings.count).round, 5].min rescue 0 %>
+          <% (1..5).each do |i| %>
             <% if i <= full_stars %>
               <span class="star-icon text-warning"><i class="bi bi-star-fill"></i></span>
             <% else %>
               <span class="star-icon text-secondary"><i class="bi bi-star"></i></span>
             <% end %>
-           <% end %>
+          <% end %>
           (<%= @total_score %> 点)
         </h5>
       </div>
 
-              <!-- モーダル -->
-        <div id="backgroundModal" class="background-modal d-none">
-          <div class="modal-content">
-
-            <!-- 背景① -->
-            <div class="d-flex justify-content-center gap-2 mb-3">
-              <span class="fw-bold text-dark">背景①：</span>
-              <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { id: "window-form" } do |f| %>
-                <%= f.hidden_field :window_background_url, id: "window_background_url_input" %>
-                <label onclick="openCloudinaryForBackground('window')" class="btn btn-outline-dark custom-bg-change-button">背景を変更</label>
-              <% end %>
-              <%= button_to "デフォルトに戻す", reset_window_background_users_path, method: :patch, class: "btn btn-outline-danger custom-bg-default-button" %>
-            </div>
-
-            <!-- 背景② -->
-            <div class="d-flex justify-content-center gap-2">
-              <span class="fw-bold text-dark">背景②：</span>
-              <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { id: "mypage-form" } do |f| %>
-                <%= f.hidden_field :mypage_background_url, id: "mypage_background_url_input" %>
-                <label onclick="openCloudinaryForBackground('mypage')" class="btn btn-outline-light custom-bg-change-button">背景を変更</label>
-              <% end %>
-              <%= button_to "デフォルトに戻す", reset_mypage_background_users_path, method: :patch, class: "btn btn-outline-danger custom-bg-default-button" %>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <!-- ボタン群（通常フローで配置） -->
-      <div class="d-flex flex-column align-items-center gap-4 mt-5" style="z-index: 2; top: 320px; position: relative;">
+      <!-- ボタン群 -->
+      <div class="button-group">
         <div class="d-flex align-items-center gap-2">
-          <i class="bi bi-bookmark-star" style="font-size: 32px; color: #000;"></i>
+          <i class="bi bi-bookmark-star"></i>
           <%= link_to "ブックマーク", bookmarks_path, class: "plain-button" %>
         </div>
+
         <div class="d-flex align-items-center gap-2">
-          <i class="bi bi-pencil-square" style="font-size: 32px; color: #000;"></i>
+          <i class="bi bi-pencil-square"></i>
           <%= link_to "投稿", new_post_path, class: "plain-button" %>
         </div>
+
         <div class="d-flex align-items-center gap-2">
-          <i class="bi bi-card-list" style="font-size: 32px; color: #000;"></i>
+          <i class="bi bi-card-list"></i>
           <%= link_to "#{current_user.name}さんの投稿一覧", my_posts_path, class: "plain-button account-name-full" %>
           <%= link_to "ユーザーさんの投稿一覧", my_posts_path, class: "plain-button account-name-mobile" %>
         </div>
+
         <div class="d-flex align-items-center gap-2">
-          <i class="bi bi-mailbox" style="font-size: 32px; color: #000;"></i>
+          <i class="bi bi-mailbox"></i>
           <%= link_to "メール", user_dmpage_path(current_user), class: "plain-button" %>
         </div>
       </div>
+    </div>
+
+    <!-- モーダル -->
+    <div id="backgroundModal" class="background-modal d-none">
+      <div class="modal-content">
+
+        <!-- 背景① -->
+        <div class="d-flex justify-content-center gap-2 mb-3">
+          <span class="fw-bold text-dark">背景①：</span>
+          <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { id: "window-form" } do |f| %>
+            <%= f.hidden_field :window_background_url, id: "window_background_url_input" %>
+            <label onclick="openCloudinaryForBackground('window')" class="btn btn-outline-dark custom-bg-change-button">背景を変更</label>
+          <% end %>
+          <%= button_to "デフォルトに戻す", reset_window_background_users_path, method: :patch, class: "btn btn-outline-danger custom-bg-default-button" %>
+        </div>
+
+        <!-- 背景② -->
+        <div class="d-flex justify-content-center gap-2">
+         <span class="fw-bold text-dark">背景②：</span>
+           <%= form_with model: current_user, url: user_path(current_user), method: :patch, local: true, html: { id: "mypage-form" } do |f| %>
+             <%= f.hidden_field :mypage_background_url, id: "mypage_background_url_input" %>
+             <label onclick="openCloudinaryForBackground('mypage')" class="btn btn-outline-light custom-bg-change-button">背景を変更</label>
+           <% end %>
+           <%= button_to "デフォルトに戻す", reset_mypage_background_users_path, method: :patch, class: "btn btn-outline-danger custom-bg-default-button" %>
+         </div>
+       </div>
+     </div>
+   </div>
+
+
+      <!-- ボタン群（通常フローで配置） -->
     </div>
    </div>
   </div>
@@ -161,6 +173,57 @@
 </script>
 
 <style>
+  .profile-overlay {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.4);
+    padding: 40px 50px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 600px;
+    height: 570px;
+    margin-top: 20px;
+    z-index: 10;
+  }
+
+
+  .profile-overlay .account-name {
+    font-size: 40px;
+    color: black;
+    margin-left: 50px;
+  }
+
+  .profile-overlay .rating-count {
+    color: black;
+  }
+
+  .profile-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-right: 100px;
+  }
+
+
+  .star-icon.text-secondary i {
+    color: black !important;
+  }
+
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .button-group i {
+    font-size: 28px;
+    color: black;
+  }
+
   .mypage-box {
     max-width: 978px;
     width: 100%;
