@@ -1,8 +1,11 @@
 <div class="position-relative py-0" style="background-image: url(<%= asset_path('posts-bg.png') %>); background-size: cover; background-position: top center; background-repeat: no-repeat; width: 100%; min-height: 100vh; margin: 0;">
+  
+  <% if user_signed_in? %>
+    <div style="position: absolute; left: 10; right: 0; z-index: 10;">
+      <%= render "shared/navigation_box" %>
+    </div>
+  <% end %>
 
-  <div style="position: absolute; left: 10; right: 0; z-index: 10;">
-    <%= render "shared/navigation_box" %>
-  </div>
 
   <h1 class="toukou-title text-center mb-5" style="position: relative; top: 60px; font-size: 100px;"><%= @post.title %></h1>  
 
@@ -71,9 +74,8 @@
                   <%= @bookmarked ? 'ブックマーク解除' : 'ブックマークする' %>
                 </button>
               </div>
-            <% end %>
-
             <%= link_to "ブックマーク一覧へ", bookmarks_path, class: "btn w-100", style: "background-color: #6c757d; color: white;" %>
+            <% end %>
           
             <% if current_user == @post.user %>
               <%= button_to "投稿を削除",
@@ -96,6 +98,7 @@
     <div class="d-flex flex-wrap align-items-center justify-content-center gap-4 mb-5">
 
       <!-- 感性評価ボタン群 -->
+      <% if user_signed_in? %>
       <div class="d-flex flex-wrap gap-3" style="margin-right: 50px;">
         <% Evaluation.kinds.each do |kind, _| %>
           <% evaluated = @post.evaluations.exists?(user: current_user, kind: kind) %>
@@ -108,8 +111,10 @@
          </button>
         <% end %>
       </div>
+      <% end %>
 
       <!-- ★評価 -->
+      <% if user_signed_in? %>
       <% if @post.rating_enabled? %>
         <% avg_score = @post.average_star_score.to_f.round %>
         <div class="star-rating" data-post-id="<%= @post.uuid %>" style="position: relative;">
@@ -130,6 +135,7 @@
         </div>
       </div>
       <% else %>
+      <% end %>
       <% end %>
   </div>
 
@@ -188,7 +194,13 @@
       <div class="mb-3">
         <%= f.text_area :body, rows: 4, class: "form-control", placeholder: "コメントを入力してください" %>
       </div>
+      <% if user_signed_in? %>
       <%= f.submit "投稿", class: "btn btn-primary" %>
+      <% else %>
+        <div class="text-muted text-start mt-2">
+         ログインするとコメントを投稿できます
+        </div>
+      <% end %>
     <% end %>
   </div>
 
