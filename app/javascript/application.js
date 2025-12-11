@@ -1,6 +1,14 @@
 import "jquery"
 window.$ = window.jQuery = require("jquery")
 
+function showLoading() {
+  document.getElementById("loading-overlay").style.display = "flex";
+}
+function hideLoading() {
+  document.getElementById("loading-overlay").style.display = "none";
+}
+
+
 const initializeImageUpload = () => {
   console.log("initializeImageUpload が呼ばれました");
   const modal = document.getElementById("product-modal");
@@ -22,7 +30,14 @@ const initializeImageUpload = () => {
     uploadPreset: 'ml_default',
     multiple: false
   }, (error, result) => {
-    if (!error && result.event === "success") {
+    if (error) {
+      hideLoading();
+      alert("アップロードに失敗しました");
+      return;
+    }
+
+    if (result.event === "success") {
+      hideLoading();
       const imageUrl = result.info.secure_url;
 
       if (uploadContext === "main" && uploadContextIndex !== null) {
@@ -72,6 +87,7 @@ const initializeImageUpload = () => {
     slot?.addEventListener("click", () => {
       uploadContext = "main";
       uploadContextIndex = index;
+      showLoading();
       widget.open();
     });
   });
@@ -145,6 +161,7 @@ const initializeImageUpload = () => {
 
   modalUploadButton?.addEventListener("click", () => {
     uploadContext = "modal";
+    showLoading();
     widget.open();
   });
 
