@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   end
 
   get "search", to: "searches#search", as: "search"
+  get "search/autocomplete", to: "searches#autocomplete"
 
   get "terms", to: "pages#terms"
   get "privacy_policy", to: "pages#privacy_policy"

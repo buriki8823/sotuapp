@@ -2,22 +2,34 @@ class SearchesController < ApplicationController
   skip_before_action :authenticate_user!, only: [ :autocomplete ]
 
   def search
-    query = params[:q]
+    query = params[:q].to_s.strip
+    normalized = normalize_query(query)
+
     @posts = Post.joins(:user)
-                 .where("posts.title LIKE :q OR users.name LIKE :q", q: "%#{query}%")
+                 .where(
+                   "posts.title LIKE :q OR posts.title LIKE :n OR users.name LIKE :q OR users.name LIKE :n",
+                   q: "%#{query}%",
+                   n: "%#{normalized}%"
+                 )
                  .page(params[:page]).per(12)
 
     @dummy_count = 12 - @posts.size
   end
 
   def autocomplete
-    query = params[:q]
-    return render json: [] if query.blank?
+    q = params[:q].to_s.strip
+    return render json: [] if q.blank?
 
-    title_matches = Post.where("title LIKE ?", "%#{query}%").limit(5).pluck(:title)
-    user_matches = User.where("name LIKE ?", "%#{query}%").limit(5).pluck(:name)
+    normalized = normalize_query(q)
 
-    suggestions = (title_matches + user_matches).uniq
-    render json: suggestions
+    users = User.where("name_hira LIKE ?", "%#{normalized}%")
+                .limit(5)
+                .pluck(:name)
+
+    posts = Post.where("title LIKE ? OR title LIKE ?", "%#{q}%", "%#{normalized}%")
+                .limit(5)
+                .pluck(:title)
+
+    render json: (users + posts).uniq
   end
 end

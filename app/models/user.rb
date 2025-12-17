@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  before_save :set_name_hira
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -60,5 +62,11 @@ class User < ApplicationRecord
     if password.present? && password.strip.empty?
       errors.add(:password, :blank_only)
     end
+  end
+
+  private
+
+  def set_name_hira
+    self.name_hira = ApplicationController.new.send(:normalize_query, name)
   end
 end

@@ -219,6 +219,9 @@ GEM
       logger
     mini_mime (1.1.5)
     minitest (5.25.5)
+    moji (1.6)
+    mojinizer (0.2.2)
+      moji (~> 1.6)
     msgpack (1.8.0)
     multi_xml (0.7.2)
       bigdecimal (~> 3.1)
@@ -235,6 +238,7 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.4)
+    nkf (0.2.0)
     nokogiri (1.18.10-aarch64-linux-gnu)
       racc (~> 1.4)
     nokogiri (1.18.10-aarch64-linux-musl)
@@ -352,6 +356,9 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.4.4)
+    romaji (0.3.0)
+      nkf (>= 0.2.0)
+      rake (>= 0.8.0)
     rspec-core (3.13.6)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.5)
@@ -487,6 +494,7 @@ DEPENDENCIES
   letter_opener_web
   meta-tags
   mini_magick
+  mojinizer
   omniauth
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
@@ -494,6 +502,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 7.2.2, >= 7.2.2.2)
   rake (~> 13.3)
+  romaji
   rspec-rails
   rubocop-rails-omakase
   selenium-webdriver
