@@ -49,7 +49,7 @@ RSpec.describe "Devise login page", type: :system do
   it "has links to sign up and forgot password" do
     visit new_user_session_path
     expect(page).to have_link("新規登録", href: new_user_registration_path)
-    expect(page).to have_link("パスワードを忘れた方", href: new_user_password_path)
+    expect(page).to have_link("こちら", href: new_user_password_path)
   end
 
   it "has a Google login button" do

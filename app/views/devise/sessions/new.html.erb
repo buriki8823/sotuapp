@@ -1,22 +1,37 @@
-<h1 class="text-center fw-bold" style="
-  font-size: 80px;
-  color: #3378C8; /* 濃い青緑 */
-  text-shadow: 1px 1px 0 #75FB22, -1px -1px 0 #75FB22; /* 黄緑の外枠風 */
-">
-  <%= t("user.session.catchphrase") %>
-
-</h1>
-
-<div id="login-background" style="background-image: url(<%= asset_path 'login_backimage.png' %>);
-            background-size: 80%;
+<div id="login-background" style="position: relative; background-image: url(<%= asset_path 'login_backimage.png' %>);
+            background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            height: 110vh;
+            height: 100vh;
             cursor: pointer;">
-  <div id="login-form-container" class="login-form-container container d-flex justify-content-center align-items-center" style="height: 100%;">
+
+  <h1 class="text-center fw-bold" style="
+    font-size: 80px;
+    color: #3378C8; /* 濃い青緑 */
+    text-shadow: 1px 1px 0 #75FB22, -1px -1px 0 #75FB22; /* 黄緑の外枠風 */
+  ">
+    <%= t("user.session.catchphrase") %>
+
+  </h1>
+
+  <h1 class="text-center fw-bold" style="
+    position: relative;
+    margin-top: 200px;
+    font-size: 80px;
+    color: #6f42c1;
+    text-shadow: 0.5px 0.5px 0 #75FB22, -0.5px -0.5px 0 #75FB22;
+  ">
+    ～ クリックしてログインしよう ～
+  </h1>
+
+
+  <div id="login-form-container" class="login-form-container" style="position: absolute; top: 0px; ; left: 50%; transform: translateX(-50%) scale(0.85); width: 100%; display: flex; justify-content: center;">
     <div class="card p-4 login-card" style="max-width: 400px; width: 100%;">
+      <div class="d-flex justify-content-center" style=" margin-bottom: 20px; font-weight: bold; font-size: 32px; color: #75FB22;">
+      PCPACK Login
+      </div>
       <%= form_with(model: resource, as: resource_name, url: session_path(resource_name), html: { class: "form" }) do |f| %>
-        <div class="mb-3">
+        <div class="mb-3" style="border-color: black;">
           <%= f.email_field :email, class: "form-control", placeholder: t("activerecord.attributes.user.email") %>
         </div>
 
@@ -30,28 +45,84 @@
         </div>
 
         <div class="d-flex justify-content-center mt-3">
-          <%= f.submit t("helpers.submit.session.create"), class: "btn btn-primary fw-bold px-4 py-2" %>
+          <%= f.submit t("helpers.submit.session.create"), class: "btn btn-primary fw-bold px-4 py-2 w-100" %>
         </div>
       <% end %>
-      <div class="d-flex justify-content-center mt-3 text-center">
-       <%= link_to t("devise.links.sign_up"), new_user_registration_path, class: "text-decoration-none", style: "color: #1762A8;" %>
-       <%= link_to t("devise.links.forgot_password"), new_user_password_path, class: "text-decoration-none", style: "margin-left: 50px; color: #1762A8;" %>
+
+      <div class="text-center mt-4" style="font-size: 16px;">
+      パスワードを忘れた方は
+      <%= link_to "こちら", new_user_password_path,
+            class: "text-decoration-underline",
+            style: "color: #1762A8;" %>
       </div>
+
+      <hr style="margin: 15px auto; width: 100%; border-top: 1px solid brack;">
+
+      <div class="d-flex justify-content-center" style="font-weight: bold; font-size: 24px; color: #75FB22;">
+       SNS認証
+      </div>
+
       <%= link_to user_google_oauth2_omniauth_authorize_path, method: :post, class: "google-login-button" do %>
         <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" class="google-logo">
         Google でログイン
       <% end %>
-      <div class="text-center mt-3">
-        <%= link_to "試しに投稿一覧を見てみる？", posts_path,
-              class: "text-decoration-none fw-bold",
-              style: "color: #1762A8; font-size: 18px;" %>
+
+      <hr style="margin: 15px auto; width: 100%; border-top: 1px solid brack;">
+
+      <div class="d-flex justify-content-center" style="font-weight: bold; font-size: 24px; color: #75FB22;">
+       NEW
       </div>
 
+      <%= link_to new_user_registration_path,
+            class: "btn custom-signup-btn fw-bold px-4 py-2 mt-3 mb-3 w-100" do %>
+       <i class="bi bi-person-plus"></i>
+       <span class="ms-2"><%= t("devise.links.sign_up") %></span>
+      <% end %>
+
+      <hr style="margin: 15px auto; width: 100%; border-top: 1px solid brack;">
+
+      <div class="d-flex justify-content-center" style="font-weight: bold; font-size: 24px; color: orange;">
+        ~お試し閲覧はこちら~
+      </div>
+      <div class="d-flex justify-content-center" style="font-weight: bold; font-size: 14px; color: orange;">
+        ※一部機能が制限されます
+      </div>
+
+      <%= link_to posts_path,
+            class: "btn custom-outline-green fw-bold px-4 py-2 mt-3 w-100" do %>
+        <i class="bi bi-hand-thumbs-up"></i>
+        <span class="ms-2">お試し</span>
+      <% end %>
     </div>
   </div>
 </div>
 
 <style>
+.custom-outline-green {
+  color: black;
+  border: 1px solid black;
+  background-color: transparent;
+  font-size: 18px;
+}
+
+.custom-outline-green:hover {
+  color: black;
+  border-color: black;
+  background-color: #f2f2f2;
+}
+
+.custom-signup-btn {
+  color: black;
+  border: 1px solid black;
+  background-color: transparent;
+}
+
+.custom-signup-btn:hover {
+  color: black;
+  border-color: black;
+  background-color: #f2f2f2;
+}
+
 .google-login-button {
   display: inline-flex;
   align-items: center;
@@ -67,6 +138,7 @@
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
   transition: background-color 0.2s ease;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .google-login-button:hover {
@@ -81,14 +153,15 @@
 
 @media (max-width: 768px) {
   h1.text-center.fw-bold {
-    font-size: 22px !important;
+    font-size: 24px !important;
     text-shadow: 0.5px 0.5px 0 #75FB22, -0.5px -0.5px 0 #75FB22;
   }
 
   #login-background {
-    background-size: 100% !important;
+    background-size: cover !important;
     background-position: top center !important;
-    height: auto !important;
+    min-height: 100dvh; !important;
+    overflow: auto;
     padding-top: 40px;
     padding-bottom: 40px;
   }
@@ -100,6 +173,7 @@
   .login-card {
     max-width: 90% !important;
     padding: 16px !important;
+    top: 0 !important;
   }
 
   .form-control {
