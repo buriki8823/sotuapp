@@ -25,7 +25,6 @@ Rails.application.routes.draw do
 
   get "my_posts", to: "posts#my_posts", as: :my_posts
 
-  get "share", to: "pages#ogp_static"
   get "tukaikata", to: "pages#tukaikata"
   get "tukaikata/account",      to: "pages#account"
   get "tukaikata/login",        to: "pages#login"

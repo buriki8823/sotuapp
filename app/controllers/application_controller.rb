@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!, unless: :devise_controller?
   before_action :set_new_message_flag
+  before_action :set_default_meta_tags
+
 
 
   def after_sign_in_path_for(resource)
@@ -29,6 +31,10 @@ class ApplicationController < ActionController::Base
     else
       @has_new_messages = false
     end
+  end
+
+  def set_default_meta_tags
+    set_meta_tags default_meta_tags
   end
 
   def normalize_query(q)

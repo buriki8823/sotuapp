@@ -27,4 +27,22 @@ module ApplicationHelper
     base_title = "PCPACK"
     page_title.present? ? "#{page_title} | #{base_title}" : base_title
   end
+
+  def default_meta_tags
+    {
+      site: "PCPACK",
+      title: "PCPACK - あなたの創造を形にする",
+      description: "PCPACKはPCの部屋や仕事部屋を魅せるためのプラットフォームです。",
+      og: {
+        title: :title,
+        description: :description,
+        image: "https://res.cloudinary.com/dqjb4apad/image/upload/v1763618882/web_ogp_oyika6.png",
+        url: request.original_url
+      },
+      twitter: {
+        card: "summary_large_image",
+        image: image_url("ogp.png")
+      }
+    }
+  end
 end
