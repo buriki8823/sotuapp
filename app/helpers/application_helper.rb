@@ -41,7 +41,7 @@ module ApplicationHelper
       },
       twitter: {
         card: "summary_large_image",
-        image: image_url("ogp.png")
+        image: "https://res.cloudinary.com/dqjb4apad/image/upload/v1763618882/web_ogp_oyika6.png"
       }
     }
   end
