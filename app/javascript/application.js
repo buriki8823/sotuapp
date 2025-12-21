@@ -30,10 +30,15 @@ const initializeImageUpload = () => {
     uploadPreset: 'ml_default',
     multiple: false
   }, (error, result) => {
+    console.log("Cloudinary callback:", result?.event, error);
     if (error) {
       hideLoading();
       alert("アップロードに失敗しました");
       return;
+    }
+
+    if (result.event === "upload-added" || result.event === "upload-start") {
+      showLoading();
     }
 
     if (result.event === "success") {
@@ -87,7 +92,6 @@ const initializeImageUpload = () => {
     slot?.addEventListener("click", () => {
       uploadContext = "main";
       uploadContextIndex = index;
-      showLoading();
       widget.open();
     });
   });

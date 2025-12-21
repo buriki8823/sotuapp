@@ -1,3 +1,5 @@
+<% content_for :title, "マイページ" %>
+
 <div class="mypage-bg text-white text-center py-0"
      style="background-image: url(<%= current_user.mypage_background_url_or_default || asset_path('mypage_bg.png') %>)">
   <div class="bg-control-buttons d-flex justify-content-end gap-3 pt-3" style="margin-right: 20px;">
